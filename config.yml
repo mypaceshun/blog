@@ -5,6 +5,7 @@ title: "mypaceshun blog"
 theme: "beautifulhugo"
 canonifyurls: true
 disqusShortname: https-mypaceshun-github-io-blog
+googleAnalytics: G-G00JGTHDLH
 publishdir: "docs/"
 permalinks:
   posts: /:year/:month/:title/
