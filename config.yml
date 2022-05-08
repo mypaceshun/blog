@@ -8,7 +8,7 @@ disqusShortname: https-mypaceshun-github-io-blog
 googleAnalytics: G-G00JGTHDLH
 publishdir: "docs/"
 permalinks:
-  posts: /:year/:month/:title/
+  posts: /:year/:month/:filename/
 
 params:
   subtitle: "mypaceshunの独り言ブログ"

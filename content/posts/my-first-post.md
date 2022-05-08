@@ -1,6 +1,7 @@
 ---
-title: "初投稿"
+title: 初投稿
 date: 2022-05-08T17:12:33+09:00
+description: hugoを利用してblogを作成してみました
 tags:
   - blog
 ---
