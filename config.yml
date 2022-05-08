@@ -1,6 +1,6 @@
 baseURL: "https://mypaceshun.github.io/blog/"
 languageCode: "ja-jp"
-defaultContentLanguage: ja
+#defaultContentLanguage: ja
 title: "mypaceshun blog"
 theme: "beautifulhugo"
 canonifyurls: true
