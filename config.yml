@@ -1,5 +1,6 @@
 baseURL: "https://mypaceshun.github.io/blog/"
 languageCode: "ja-jp"
+defaultContentLanguage: ja
 title: "mypaceshun blog"
 theme: "beautifulhugo"
 canonifyurls: true
@@ -7,8 +8,27 @@ publishdir: "docs/"
 permalinks:
   posts: /:year/:month/:title/
 
+params:
+  subtitle: "mypaceshunの独り言ブログ"
+  mainSections:
+    - posts
+  logo: "images/mypaceshun.png"
+  favicon: "images/favicon.ico"
+  commit: true
+  rss: true
+  comments: true
+  readingTime: true
+  socialShare: true
+
+author:
+  name: "KAWAI Shun"
+  website: https://mypaceshun.github.io/blog/
+  github: mypaceshun
+  twitter: rikanodorei_823
+  instagram: rikanodorei
+
 menu:
   main:
     - identifier: about
-      name: about mypaceshun
-      url: /about/
+      name: about me
+      url: /page/about/

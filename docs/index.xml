@@ -8,22 +8,26 @@
     <language>ja-jp</language>
     <lastBuildDate>Sun, 08 May 2022 17:12:33 +0900</lastBuildDate><atom:link href="https://mypaceshun.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My First Post</title>
-      <link>https://mypaceshun.github.io/blog/2022/05/my-first-post/</link>
+      <title>初投稿</title>
+      <link>https://mypaceshun.github.io/blog/2022/05/%E5%88%9D%E6%8A%95%E7%A8%BF/</link>
       <pubDate>Sun, 08 May 2022 17:12:33 +0900</pubDate>
       
-      <guid>https://mypaceshun.github.io/blog/2022/05/my-first-post/</guid>
-      <description>This is My First Post hugo を利用してblogを作成してみました。
-{{ &amp;lt; figure src=&amp;quot;/images/mypaceshun.png&amp;quot; &amp;gt; }}</description>
+      <guid>https://mypaceshun.github.io/blog/2022/05/%E5%88%9D%E6%8A%95%E7%A8%BF/</guid>
+      <description>hugoを利用してblogを作成してみました。
+    技術的な備忘録をメモするために利用できればいいと思っています。
+Markdownから静的なサイトを生成するのに興味があったので、 良さそうなツールを探しhugoでコンテンツを生成しGitHub Pagesで公開しました。
+この構成を作るのに興味があったから作成してみた所もあります。</description>
     </item>
     
     <item>
-      <title></title>
-      <link>https://mypaceshun.github.io/blog/about/</link>
+      <title>自己紹介</title>
+      <link>https://mypaceshun.github.io/blog/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mypaceshun.github.io/blog/about/</guid>
-      <description>About me  name  mypaceshun    Social  GitHub  </description>
+      <guid>https://mypaceshun.github.io/blog/page/about/</guid>
+      <description>About me  20代男性 ヲタク 会社員  mypaceshunだったりrikanodoreiだったりします。
+プログラム(主にPython)が好きなエンジニアだったり、NGT48の中井りかちゃんが好きなヲタクだったりします。
+技術的な備忘録を残そうと本ブログを作成しました。 本サイトは hugo で作成しましたが、これを使ってみたかった意図もあります。</description>
     </item>
     
   </channel>
