@@ -1,0 +1,14 @@
+baseURL: "https://mypaceshun.github.io/blog/"
+languageCode: "ja-jp"
+title: "mypaceshun blog"
+theme: "beautifulhugo"
+canonifyurls: true
+publishdir: "docs/"
+permalinks:
+  posts: /:year/:month/:title/
+
+menu:
+  main:
+    - identifier: about
+      name: about mypaceshun
+      url: /about/
