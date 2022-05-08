@@ -10,5 +10,5 @@ description: my first post
 
 hugo を利用してblogを作成してみました。
 
-{{ < figure src="/images/mypaceshun.png" > }}
+{{< figure src="/images/mypaceshun.png" >}}
 
