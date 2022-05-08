@@ -4,6 +4,7 @@ defaultContentLanguage: ja
 title: "mypaceshun blog"
 theme: "beautifulhugo"
 canonifyurls: true
+disqusShortname: https-mypaceshun-github-io-blog
 publishdir: "docs/"
 permalinks:
   posts: /:year/:month/:title/
