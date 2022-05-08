@@ -20,6 +20,7 @@ params:
   comments: true
   readingTime: true
   socialShare: true
+  delayDisqus: true
 
 author:
   name: "KAWAI Shun"
