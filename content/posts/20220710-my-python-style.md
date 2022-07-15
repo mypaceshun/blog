@@ -50,9 +50,9 @@ sample-project
 特に設定をしなくてもそのまま利用出来たところです。
 ただ、[pytestのベストプラクティス](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#choosing-a-test-layout-import-rules)を眺めていた時にこの構成を見つけ、
 なにやら[非常におすすめらしい](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure)ので(よくわかってない)この構成を使ってみました。
-個人的には後述する `pyproject.toml` 内で `src/` と指定することで、別プロジェクトでも追加回しが出来るようになったことが気に入ってますw
+個人的には後述する `pyproject.toml` 内で `src/` と指定することで、別プロジェクトでも使い回しが出来るようになったことが気に入ってますw
 
-また、特に重要となる `pyproject.toml` ファイルの内容もまとめて紹介します。
+また、特に重要となる `pyproject.toml` の内容もまとめて紹介します。
 
 ```
 [tool.poetry]
@@ -88,7 +88,7 @@ help = "check syntax"
 ignore_fail = "return_non_zero"
 
 [tool.poe.tasks.format]
-sequence = [ 
+sequence = [
   { cmd = "autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/" },
   { cmd = "isort src/" },
   { cmd = "black src/" },
@@ -156,7 +156,7 @@ src/sample_project/command.py:5:5: F841 local variable 'no_use_var' is assigned 
 そこで見つけたのが`pyproject-flake8`で読んで字のごとく`pyproject.toml`に`flake8`の設定を記述出来るようになります。
 
 もちろん将来的に`flake8`が`pyproject.toml`を設定ファイルとして参照してくれるようになったらお役御免なのですが、
-現状は非常に助かっているので私のなかで欠かせないライブラリになりました。
+現状は非常に助かっているので私のなかでは欠かせないライブラリになりました。
 
 注意点として `flake8` を実行するときのコマンドは `flake8` ですが、 `pyproject-flake8` を利用して実行する際のコマンドは `pflake8` になります。
 
@@ -198,7 +198,7 @@ var = 1 + 2
 例として以下のコードを並び替えてもらうと、
 
 ```
-import sys 
+import sys
 from pathlib import Path
 import click
 import os
@@ -208,7 +208,7 @@ import os
 
 ```
 import os
-import sys 
+import sys
 from pathlib import Path
 
 import click
@@ -246,7 +246,7 @@ def cli():
     click.echo("Sample Project")
 ```
 
-E30エラーは修正されていますね！
+E302エラーは修正されていますね！
 F841エラーはそのままです。 `autoflake`で述べたようにこれの修正は難しいのだと思ってます。
 また注目すべき点としては `'no use'` が `"no use"` になってます。
 Pythonのコードではシングルクオートでもダブルクオートでもエラーになりません。
@@ -259,7 +259,113 @@ Pythonのコードではシングルクオートでもダブルクオートで�
 
 ## タスクランナーの導入
 
+タスクランナーとはよく実行するコマンドを登録しておけるものです。
+例えば `autoflake` を実行する場合 `autoflake -ir --remove-all-unused-impoprts --ignore-init-module-imports src/` というコマンドを実行します。
+これを毎回入力して実行するのはあまりにも大変です。
+そこで活躍するのが `poethepoet` というライブラリです。
+
+前述した `pyproject.toml` 内の `tool.poe` で始まるセクションはすべて `poethepoet` の設定になります。
+
+```
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = "pflake8 src/" },
+]
+help = "check syntax"
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = "autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/" },
+  { cmd = "isort src/" },
+  { cmd = "black src/" },
+  "lint"
+]
+help = "format code style"
+```
+
+このようによく使うコマンドを設定に書いておくことで簡単に呼び出せるようになります。
+例えば `[tool.poe.tasks.lint]` に記載されているコマンドは、以下のコマンドで呼び出せます。
+
+```
+poetry run poe lint
+```
+
+`tool.poe.tasks` のあとは任意の文字列を設定でき、呼び出す際にはその文字列を利用します。
+`tool.poe.tasks.format` だとしたら呼び出す際のコマンドは `poetry run poe format` となるわけです。
+
+上記の設定では `poetry run poe lint` でリンターの実行。
+`poetry run poe format` でフォーマッターの実行が可能になります。
+
+これで長いオプションを入力する必要もなくなり、`autoflake`や`isort`や`black`もコマンド一発で全て実行出来るようになります。
+`poethepoet` が無かったらここまで `poetry` をガッツリ使うようになることも無かったかもしれません。
+それくらい助かってます。
+
 ## `pre-commit`の導入
+
+`pre-commit` というのはもともと `git` の `hook` のひとつです。[参考](https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA-Git-%E3%83%95%E3%83%83%E3%82%AF)
+`git commit` する際に自動で実行されるスクリプトを設定しやすくしたライブラリが `pre-commit` です。
+
+`pre-commit` の設定は `.pre-commit-config.yaml` に記述します。
+例として私が使っている設定を晒します。
+
+```
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+  - id: black
+    language_version: python3
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+    - id: isort
+      args: ["--profile", "black"]
+
+- repo: https://github.com/myint/autoflake.git
+  rev: v1.4
+  hooks:
+  - id: autoflake
+    args:
+      - "-i"
+      - "--remove-all-unused-imports"
+      - "--ignore-init-module-imports"
+
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.9.2
+  hooks:
+  - id: flake8
+    # max-line-length setting is the same as black
+    # commit cannot be done when cyclomatic complexity is more than 10.
+    args: [--max-line-length, "88"]
+```
+
+コミット時に含まれてるファイルをチェックし、設定に記述されているコマンドを実行していきます。
+他にも設定ファイルをフォーマットしたり、rstファイルをスタイルチェックしてくれたりするのですが、
+正直うまく使いこなせていません。
+
+というのも、それぞれのコマンドの設定が `.pre-commit-config-yaml` と `pyproject.toml` に分かれてしまっているのが一番納得のいっていないポイントです。
+あまり変更しない箇所なのでいいっちゃいいのですが、たまーに変更したくなったときに両者のファイルを修正しなければならないのがうまくありません。
+
+これに関してはよりよい構成を探している最中です、アドバイス等いただけると飛んで喜びます...
+
+`pre-commit` のフックはインストールする必要があります。
+インストールというのも `.git/hooks/` にスクリプトを配置する必要があるのですが、
+もちろん手動で配置する必要はありません。
+以下のコマンドでフックのインストールが完了します。
+
+```
+poetry run pre-commit install
+```
+
+これでコミットするたびに `flake8` 等が実行されるようになりました。
+私は基本的にコード書きながら `poetry run poe format` するので必要無いと言えば無いのですが、
+忘れてコミットしようとすることもあるので、その時は `pre-commit` がエラーになり、
+フォーマット前のコードをコミットすることを防いでくれます。
+
 
 # 少し真面目に書く時の構成
 
@@ -290,10 +396,226 @@ sample-project
 
 ```
 
+雑に書く時の構成から変更されたポイントとしては `tests/` ディレクトリや、`.github/` ディレクトリが増えた点でしょうか。
+このくらいからはテストコードもしっかり書こうとします。作業が増えるのであまり好きではないですが(小声)
+他人に見られることを考えるなら最低限のテストコードは書きます。
+また `GitHub Actions` の設定も追加します。`GitHub Actions`を使うようになったのは最近ですが(さらに小声)
+自動でテストしてくれるので使わない理由はありません。
+テストコードをしっかり書き、`GitHub Actions`でテストを実行することでプログラムの動作が保証されます。
+`GitHub Actions` を使うためにもテストコードを書く必要が出てきます。
+
+`CHANGELOG.rst` が増えていますがこれには改定履歴をせっせと書きます。
+「`changelog`あるとそれっぽいよな〜」くらいの軽い気持ちで追加してます。
+実際機能追加した時期などわかると後々便利なのでしょうが、
+あとから `changelog` を確認しなければならないほど長いことこの構成を使っていないので、
+あまり恩恵は受けていませんw
+
+また他人に利用してもらうことを想定するので利用手順やインストール手順をちゃんと書きます。
+これは `README.rst` にせっせと書きます。
+`README.md` ではなく `README.rst` なのは後述する `Sphinx` でインポートすることを想定しているためです。
+そこまでするつもりのない場合は `README.md` で書いたりします。正直どっちでもいいです。
+
+またこの構成での `pyproject.toml` の内容も晒します。
+
+```
+[tool.poetry]
+name = "sample-project"
+version = "0.9.0"
+description = "sample project"
+authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+packages = [
+  { from = "src/", include = "sample_project" }
+]
+include = [
+  "CHANGELOG.rst"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+pyproject-flake8 = "^0.0.1-alpha.4"
+isort = "^5.10.1"
+autoflake = "^1.4"
+black = "^22.6.0"
+poethepoet = "^0.15.0"
+pre-commit = "^2.19.0"
+pytest = "^7.1.1"
+pytest-cov = "^3.0.0"
+mypy = "^0.942"
+types-setuptools = "^57.4.12"
+
+[tool.poetry.scripts]
+command = "sample_project.command:cli"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = "pflake8 src/ tests/" },
+  { cmd = "mypy src/ tests/" }
+]
+help = "check syntax"
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = "autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/ tests/" },
+  { cmd = "isort src/ tests/" },
+  { cmd = "black src/ tests/" },
+  "lint"
+]
+help = "format code style"
+
+[tool.poe.tasks.test]
+cmd = "pytest -v --cov=src/ --cov-report=html --cov-report=xml --cov-report=term tests/"
+help = "run test"
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
+
+雑に書く時の構成に追加して `poetry add -D pytest pytest-cov mypy types-setuptools` としています。
+ポイントとしては以下です。
+
 * mypyの導入
 * テストコードの導入(`pytest`、`pytest-cov`)
 * poetry-dynamic-versioningの導入
 * GitHub Actionsの導入
+
+## mypyの導入
+
+Pythonの[型ヒント](https://docs.python.org/ja/3/library/typing.html)というやつですね。最近少しづつ付けられるようになりました。
+`mypy`は型ヒントを見てチェックをしてくれます。[公式](https://mypy.readthedocs.io/en/stable/)曰く「static type checker」です。
+
+もともとPythonは動的に型を判断する動的型付け言語です。
+プログラム内で変数の中に入る型はプログラム実行中に決まります。
+
+```
+>>> def printType(var):
+...   print(type(var))
+...
+>>> printType(123)
+<class 'int'>
+>>> printType("abc")
+<class 'str'>
+```
+
+静的型付け言語や動的型付け言語などしらべるとたくさん情報が出てくると思います。
+
+Python3.5から `typing` というモジュールが追加され、Pythonでも静的型付けが出来るようになってきました。
+先程の関数の引数 `var` を `str` 型を受け付けるように型ヒントを付けると以下のようになります。
+
+```
+def printType(var: str):
+  print(type(var))
+```
+
+ただPythonは「型ヒント」というように、型の情報はあくまでヒントにすぎず、これに沿わなくてもプログラムは動作します。
+
+```
+>>> def printType(var: str):
+...   print(type(var))
+...
+>>> printType(123)
+<class 'int'>
+>>> printType("abc")
+<class 'str'>
+```
+
+そしてこの型ヒントを見てコードのチェックをしてくれる賢いやつが `mypy` というツールになります。
+`mypy` は型ヒントを見てコード実行前に不正な代入が行われていないかチェックしてくれます。
+先程のコードを `mypy` を使ってチェックすると以下のようなエラーになります。
+
+```
+error: Argument 1 to "printType" has incompatible type "int"; expected "str"
+```
+
+`printType`には`str`が渡されるはずなのに`int`が渡されていると言われてますね。
+リンター同様に未来のバグを発見することが出来ます。
+例えば以下のようなコードがあるとします。
+
+```
+from typing import Union
+
+def func(var: Union[str, int]) -> int:
+    return len(var)
+
+length = func("abc")
+print(length)
+```
+
+`Union` というのは `typing` モジュールに含まれるもので、
+`Union[str, int]` というのは「`str`か`int`のどちらか」という意味になります。
+
+`def func(var: Union[str, int]) -> int:` というのは、
+「`var`という引数は`str`か`int`の型を受け取り、この関数の返り値は `int` になる」という意味です。
+
+このプログラムはエラーなく動作します。
+
+```
+$ python3 test.py
+3
+```
+
+ですが`mypy`を実行するとエラーになります。
+
+```
+$ mypy test.py
+test.py:4: error: Argument 1 to "len" has incompatible type "Union[str, int]"; expected "Sized"
+Found 1 error in 1 file (checked 1 source file)
+```
+
+`var` は `int` と `str` を許容するはずですが、関数内で利用されている `len(var)` は `int` では動作しないためです。
+将来的に `int` 型の値を入れていたらエラーになっていたことでしょう。
+こういった将来的にバグをうむ可能性がある箇所を事前にチェックしてくれるのでとても気に入っています。
+先程のプログラムは以下の用に修正すると `mypy` のチェックに通るようになります。
+
+```
+from typing import Union
+
+def func(var: Union[str, int]) -> int:
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+length = func("abc")
+print(length)
+```
+
+(そもそもどういう意図のコードなのかは置いておいてください私もわかりません)
+
+最近ようやく慣れてきましたがまだ直し方のわからないエラーに遭遇することがあります...
+
+また`poetry run poe lint` で `mypy` の実行も出来るように`[tool.poe.tasks.lint]` の設定も追加されています。
+
+
+## テストコードの導入
+
+コードの動作を保証するためにテストコードも導入します。
+テストコードは実際に動作するコードとは別に、それの動作をテストするためのコードです。
+Pythonのテストコードを導入するライブラリとしては `pytest` がメジャーだと思います(自分調べ)
+私はそれに加え `pytest-cov` というライブラリも合わせて導入しています。
+
+私の構成ではテストコードは `tests/` ディレクトリ配下にまとめます。
+`pytest` は指定したディレクトリ内の `test_*.py` というファイルか `*_test.py` というファイルをテストコードと認識し、
+テストを実行していきます。
+詳しくは (公式)[https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#test-discovery]に記載されています。
+
+## poetry-dynamic-versioningの導入
+
+## GitHub Actionsの導入
 
 
 # 真剣に書くときの構成
