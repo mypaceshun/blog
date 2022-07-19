@@ -1,6 +1,6 @@
 ---
 title: Pythonで開発する時のディレクトリ構成を晒します
-date: 2022-07-09T22:42:13+09:00
+date: 2022-07-19T22:42:13+09:00
 description: 私がPythonで開発をするときのディレクトリ構成を紹介します。
 draft: false
 
@@ -611,7 +611,151 @@ Pythonのテストコードを導入するライブラリとしては `pytest` �
 私の構成ではテストコードは `tests/` ディレクトリ配下にまとめます。
 `pytest` は指定したディレクトリ内の `test_*.py` というファイルか `*_test.py` というファイルをテストコードと認識し、
 テストを実行していきます。
-詳しくは (公式)[https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#test-discovery]に記載されています。
+詳しくは [公式](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#test-discovery)に記載されています。
+
+例えば先程のコード
+
+```
+from typing import Union
+
+def func(var: Union[str, int]) -> int:
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+length = func("abc")
+print(length)
+```
+
+これのテストコードの例としては以下のようになります。
+
+```
+from sample_project.main import func
+
+
+def test_func_success_str():
+    assert func("test") == 4
+```
+
+`from sample_project.main import func` は先程のコードが `src/sample_project/main.py` に記載されていることを想定しています。
+今回テストする `func` 関数をインポートしています。
+
+このテストを実行するには `pytest tests/` と実行してください。
+
+```
+$ poetry run pytest tests/
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /tmp/sample-project
+plugins: cov-3.0.0
+collected 1 items                                                                                                                          
+
+tests/test_func.py  .                                                                                                                [100%]
+
+============================================================ 1 passed in 0.01s =============================================================
+
+```
+
+よい感じに出力してくれます。
+
+テストの書き方は様々な考え方があるのでこう書くべき！みたいなのはここでは言及しませんが、
+関数ごとに最低限の機能を満たしているか確認するようなテストコードはあると将来の自分が助かります。
+
+少し時間をあけた後にプログラムの改修をした際などに、既存の機能が破壊されていないことを手軽に確認出来ますし、
+手作業で確認するのと違って確認漏れなどが発生しづらいので、将来の自分が安心して手を加えられるようにもテストコードはあるに越したことはないと思っています。
+
+### カバレッジ
+
+テストにはカバレッジ(coverage)というもの(?)があります。
+テストカバー率と言えばまだわかりやすいかもしれません。
+簡単に言うと「コード全体の内テストコードでカバー出来た部分の割合」でしょうか。
+
+`pytest` では `pytest-cov` というプラグインを使うことで簡単に計測できます。
+`pytest-cov` がインストールされている環境では `pytest` に新しいオプションが追加されます。
+それが `--cov` や `--cov-report` です。
+
+先程のテストコードをもとに実行するコマンドを `pytest --cov=src/ tests/` としてみましょう。
+
+```
+$ poetry run pytest --cov=src/ tests/                       
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /home/shun/document/tmp/sample-project
+plugins: cov-3.0.0
+collected 1 item                                                                                                                           
+
+tests/test_func.py .                                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.10.4-final-0 -----------
+Name                         Stmts   Miss  Cover
+------------------------------------------------
+src/sample_project/main.py       7      1    86%
+------------------------------------------------
+TOTAL                            7      1    86%
+
+
+============================================================ 1 passed in 0.02s =============================================================
+```
+
+86%となっていますね。これはテストコード実行時に `src/sample_project/main.py` の86%の行が実行されたことを示します。
+
+さらに `--cov-report` オプションを追加してみましょう。
+これは計測結果の出力形式を指定できます。
+私のお気に入りは `--cov-report=html` です。
+
+```
+$ poetry run pytest --cov=src/ --cov-report=html tests/
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /home/shun/document/tmp/sample-project
+plugins: cov-3.0.0
+collected 1 item                                                                                                                           
+
+tests/test_func.py .                                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.10.4-final-0 -----------
+Coverage HTML written to dir htmlcov
+
+
+============================================================ 1 passed in 0.03s =============================================================
+```
+
+`Coverage HTML written to dir htmlcov` と書かれているように、計測結果がHTMLファイルで`htmlcov`配下に出力されます。
+お好きなWebブラウザで `htmlcov/index.html` を表示すると計測結果がとても見やすく表示されます。
+
+{{< figure src="/images/20220719/coverage_report_top.png" >}}
+
+また、コードを直接表示し、テストで実行された行と実行されなかった行を見やすく表示してくれます。
+
+{{< figure src="/images/20220719/coverage_report_main_86.png" >}}
+
+今回は6行目 `return var` の行が実行されていませんでした。
+つまり `var` が `int` だった場合のテストが無かったわけです。
+これを解消するにはテストを増やしましょう。
+
+```
+from sample_project.main import func
+
+
+def test_func_success_str():
+    assert func("test") == 4
+
+def test_func_success_int():
+    assert func(10) == 10
+```
+
+{{< figure src="/images/20220719/coverage_report_main_100.png" >}}
+
+全てのコードがテストで実行され、カバレッジが100%になりました。
+
+今回のように「テストコードの作成漏れ」を探すのにとても助かります。
+ただ「カバレッジが100%のコードがいいコード」とは限りません。
+カバレッジを100%にしたいがために追加したテストコードは、
+必ずしも適切なテストコードになるとは限らないからです。
+
+ただカバレッジが100%になったときは達成感があるので、100%に出来るならしてしまいます。(小声)
+
+カバレッジをどこまで求めるかは人によって意見の分かれそうなところですね。
 
 ## poetry-dynamic-versioningの導入
 
