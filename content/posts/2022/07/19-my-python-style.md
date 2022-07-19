@@ -759,7 +759,243 @@ def test_func_success_int():
 
 ## poetry-dynamic-versioningの導入
 
+[`poetry-dynamic-versiong`](https://github.com/mtkennerly/poetry-dynamic-versioning)というライブラリを導入します。
+導入するといってもこれは今までのライブとは少しテイストが違います。
+
+というのも、`Poetry` 自体の拡張ライブラリになります。
+`Poetry` が導入されている環境にインストールする必要があるので `pyproject.toml` には記載しません。
+例えば `Poetry` を `python3 -m pip install --user poetry` としてインストールした場合は `python3 -m pip install --user poetry-dynamic-versioning` とします。
+
+結局 `poetry-dynamic-versioning` とは何かと言うと、パッケージのバージョンを外部から取得出来るようにするツールです。
+
+というのも `Poetry` ではパッケージのバージョンは `pyproject.toml` に記述するしか方法がありません。
+`setup.cfg` の頃は[コード内の変数から取得出来たり](https://setuptools.pypa.io/en/latest/userguide/declarative_config.html#specifying-values)、
+[`setuptools-scm`](https://github.com/pypa/setuptools_scm/) というライブラリを利用して、gitのタグをそのままバージョンとする方法がありました。
+
+`poetry-dynamic-versioning`はまさにそれらと同等のことを `Poetry` で実現するためのライブラリです。
+
+`poetry-dynamic-versioning` の設定は`pyproject.toml`の`[tool.poetry-dynamic-versioning]`に記述します。
+私が使っている設定は以下になります。
+
+```
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+```
+
+ほぼデフォルトのままですね。さらに言えば `vcs = "git"` は明示的に書かなくても動作するので実際は `enable = true` の1行で動作します。
+
+これを設定し、`v0.0.0`の形式でgitのタグを設定すると、タグの値をバージョンとして認識してくれます。
+
+```
+$ git tag v0.9.1
+
+$ poetry version
+sample-project 0.9.1
+```
+
+設定をすることでタグから追加のコミットがあった場合、バージョン名に開発版を示すタグをつけたり出来ます。
+私はそこまでは必要としていないので使っていません。興味がある方は公式のドキュメントを読んでみてください。
+結構いろんなことが出来ます。
+
+### `__version__`
+
+ライブラリには `__version__` という変数を設定しているものをよく見ます。
+~~正直必要性はよくわかっていませんが~~ せっかくなら定義しておきたいですね。
+
+私がよく書く `__init__.py` はこちらです。
+
+```
+__name__ = "sample-project"
+import pkg_resources
+
+__version__ = pkg_resources.get_distribution(__name__).version
+```
+
+`pkg_resources` を使ってインストールされているライブラリのメタデータを参照する形になります。
+こうすることで `pyproject.toml` と別に直接バージョンを書く必要がなくなります。
+
+PoetryのどこかしらのIssueで見てから参考にさせてもらってます。
+
+実はこの書き方、このまま `mypy` を通すとエラーになります。
+
+```
+$ poetry run poe lint
+Poe => pflake8 src/ tests/
+Poe => mypy src/
+src/sample_project/__init__.py:2: error: Library stubs not installed for "pkg_resources" (or incompatible with Python 3.10)
+src/sample_project/__init__.py:2: note: Hint: "python3 -m pip install types-setuptools"
+src/sample_project/__init__.py:2: note: (or run "mypy --install-types" to install all missing stub packages)
+src/sample_project/__init__.py:2: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+Found 1 error in 1 file (checked 2 source files)
+Error: Subtasks lint[1] returned non-zero exit status
+```
+
+`pkg_resources` の型情報を追加でインストールする必要があるのですね。
+そのために `types-setuptools` をあわせてインストールしています。
+
+```
+$ poetry add -D types-setuptools 
+Using version ^63.2.0 for types-setuptools
+
+Updating dependencies
+Resolving dependencies... (0.2s)
+
+Writing lock file
+
+Package operations: 1 install, 0 updates, 0 removals
+
+  - Installing types-setuptools (63.2.0)
+
+$ poetry run poe lint
+Poe => pflake8 src/ tests/
+Poe => mypy src/
+Success: no issues found in 2 source files
+
+```
+
+
 ## GitHub Actionsの導入
+
+GitHub ActionsはGitHubが提供しているCIツールです。
+CIとは継続的インテグレーションというもので、継続的インテグレーションが何かと言うと...なんでしょう()
+
+テストコードの実行やカバレッジ計測、パッケージのリリースなどの自動化が出来ます。
+
+[`Travis CI`](https://www.travis-ci.com/)や[`Circle CI`](https://circleci.com/ja/)などのサービスもありますが、
+私はGitHubのリポジトリであればそのまま利用出来る`GitHub Actions`に落ち着きました。
+
+`Github Actions`の設定は、`.github/workflows/`内にYAMLファイルで記述します。
+これも一度作ったものをコピペし続けてる秘伝のタレになってますw
+そんな私の `GitHub Actions`の設定はこちらになります。
+
+```
+name: Test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '*'
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  lint:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: '3.10', python: '3.10', os: ubuntu-latest}
+          - {name: '3.9', python: '3.9', os: ubuntu-latest}
+          - {name: '3.8', python: '3.8', os: ubuntu-latest}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: update pip
+        run: pip install -U pip setuptools wheel
+      - name: install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: install libraries
+        run: poetry install
+      - name: run lint
+        run: poetry run poe lint
+  test:
+    needs: lint
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: '3.10', python: '3.10', os: ubuntu-latest}
+          - {name: '3.9', python: '3.9', os: ubuntu-latest}
+          - {name: '3.8', python: '3.8', os: ubuntu-latest}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: update pip
+        run: pip install -U pip setuptools wheel
+      - name: install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: install libraries
+        run: poetry install
+      - name: run test
+        run: poetry run poe test
+      - name: upload codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+  release:
+    needs: test
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          REF: ${{ github.ref }}
+        run: echo "${REF##*/}"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Update pip
+        run: pip install -U pip setuptools wheel
+      - name: Install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: Install dependent libraries
+        run: poetry install
+      - name: Build package
+        run: poetry build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: 'dist'
+          path: 'dist'
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'dist/*'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+      #- name: Publish to PyPI
+      #  if: startsWith(github.ref, 'refs/tags/v')
+      #  env:
+      #    POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      #  run: poetry publish
+```
+
+軽く説明すると、`on` でこのワークフローを動かすタイミングを定義しており、
+`jobs` でこのワークフローのジョブを定義しています。
+
+`job` には `lint`、`test`、`release`の3つのジョブが定義されています。
+
+`lint`ジョブでは `Python3.8`、`Python3.9`、`Python3.10`の3つのバージョンで `poetry run poe lint` を実行しています。
+
+`lint`ジョブに成功した場合は`test`ジョブが実行されます。
+`test`ジョブでは `Python3.8`、`Python3.9`、`Python3.10`のバージョンで`poetry run poe test`を実行しています。
+また、[Codecov](https://about.codecov.io/)というサービスを使ってカバレッジの記録をしています。
+そのため事前に`CODECOV_TOKEN`という変数に`Codecove`のアクセストークンを設定しておく必要があります。
+`GitHub Actions`ではアクセストークンなど、リポジトリには入れずに利用したい変数をリポジトリの`Settings->Security->Secrets->Actions->New repository secret`で設定することが出来ます。
+
+`test`ジョブに成功した場合は`release`ジョブが実行されます。
+`release`ジョブでは`poetry build`を実行しGitHubのリリースページを作成しています。
+`Create Release`ステップでは `if: startsWith(github.ref, 'refs/tags/v')`としています。
+こうすることでgitのタグをプッシュした時のみ動作するようになります。
+
+まとめると、コミット時に`lint -> test -> release(poetry build のみ)`の順にジョブが動作し、タグをプッシュした時に `lint -> test -> release(Releaseの作成も込み)`という順でジョブが実行されます。
+
+開発中は特に気にせずコミットし続けるだけでテストやカバレッジの計測をしてくれる上、
+タグをプッシュした際はパッケージを作成しReleaseの作成まで自動でしてくれます。
+
+上の設定はどのプロジェクトでもほぼコピペで動作するのでとても重宝しています。
 
 
 # 真剣に書くときの構成
@@ -798,5 +1034,135 @@ sample-project
 
 ```
 
+少し真面目に書く時の構成から変更されたポイントとしてはやはり `docs/` ディレクトリでしょうか。
+自分以外にプログラムを利用してもらおうと思った時一番大事になる部分がドキュメントだと最近思うようになりました。
+そのためPyPIに公開するようなプログラムは `Sphinx` でちゃんとドキュメントを整備すべきだと思い、
+この構成に落ち着きました。
+実際に他人がドキュメントを見るかどうかはわかりませんが、
+ここで言う「自分以外」には「未来の自分」も含まれます。
+と言うか多分一番助かってるのが未来の自分だと思いますw
+
+`LINCENSE`ファイルなども増えていますが、これは`GitHub`でリポジトリ作成時に自動生成されるものを利用しています。
+
+また、この構成での `pyproject.toml` を晒します。
+
+```
+[tool.poetry]
+name = "sample-project"
+version = "0.9.0"
+description = "sample project"
+authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+packages = [
+  { from = "src/", include = "sample_project" }
+]
+include = [
+  "CHANGELOG.rst"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+pyproject-flake8 = "^0.0.1-alpha.4"
+isort = "^5.10.1"
+autoflake = "^1.4"
+black = "^22.6.0"
+poethepoet = "^0.15.0"
+pre-commit = "^2.19.0"
+pytest = "^7.1.1"
+pytest-cov = "^3.0.0"
+mypy = "^0.942"
+types-setuptools = "^57.4.12"
+Sphinx = "^5.0.2"
+
+[tool.poetry.scripts]
+command = "sample_project.command:cli"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = "pflake8 src/ tests/" },
+  { cmd = "mypy src/ tests/" }
+]
+help = "check syntax"
+ignore_fail = "return_non_zero"
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = "autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/ tests/" },
+  { cmd = "isort src/ tests/" },
+  { cmd = "black src/ tests/" },
+  "lint"
+]
+help = "format code style"
+
+[tool.poe.tasks.test]
+cmd = "pytest -v --cov=src/ --cov-report=html --cov-report=xml --cov-report=term tests/"
+help = "run test"
+
+[tool.poe.tasks.doc]
+sequence = [ 
+  { cmd = "sphinx-apidoc -f -e -o pre-docs/ src/"},
+]
+help = "build document"
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
+
+少し真面目に書く時の構成に追加して `poetry add -D Sphinx` としています。
+また `Sphinx` の初期設定のため `sphinx-quickstart` を実行します。
+`sphinx-quickstart`を実行すると対話的に設定を入力し、
+`source/index.rst`と`source/conf.py`を生成してくれます。
+
+```
+$ poetry run sphinx-quickstart --sep -l ja --ext-autodoc --no-makefile --no-batchfile --extensions sphinx.ext.napoleon
+Sphinx 5.0.2 クイックスタートユーティリティへようこそ。
+
+以下の設定値を入力してください（Enter キーのみ押した場合、
+かっこで囲まれた値をデフォルト値として受け入れます）。
+
+選択されたルートパス: .
+
+プロジェクト名は、ビルドされたドキュメントのいくつかの場所にあります。
+> プロジェクト名: sample-project
+> 著者名（複数可）: KAWAI Shun <mypaceshun@gmail.com>
+> プロジェクトのリリース []: 0.9.0
+
+ファイル /tmp/sample-project/source/conf.py を作成しています。
+ファイル /tmp/sample-project/source/index.rst を作成しています。
+
+終了：初期ディレクトリ構造が作成されました。
+
+マスターファイル /tmp/sample-project/source/index.rst を作成して
+他のドキュメントソースファイルを作成します。次のように、ドキュメントを構築するには sphinx-build コマンドを使用してください。
+ sphinx-build -b builder /tmp/sample-project/source /tmp/sample-project/build
+"builder" はサポートされているビルダーの 1 つです。 例: html, latex, または linkcheck
+```
+
+また `source`ディレクトリだと `src`と被ってしまうので、`mv source/ docs/` としディレクトリ名をリネームします。
+ここまでやってこの構成は完成です。
+
+それではこの構成のポイントをまとめます。
+
 * Sphinxの導入
 * `.readthedocs.yaml` の導入
+* PyPIへの公開
+
+## Sphinxの導入
+
+## Read the Docsの導入
+
+## PyPIへの公開
