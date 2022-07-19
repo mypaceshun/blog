@@ -25,3 +25,9 @@ hugo
 ```
 hugo server
 ```
+
+## dockerでテストサーバーの起動
+
+```
+docker run --rm -it -v $(pwd):/src -p 1313:1313 klakegg/hugo server
+```
