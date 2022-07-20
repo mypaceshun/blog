@@ -26,6 +26,12 @@ hugo
 hugo server
 ```
 
+## dockerでブログページのビルド
+
+```
+docker run --rm -it -v $(pwd):/src klakegg/hugo
+```
+
 ## dockerでテストサーバーの起動
 
 ```

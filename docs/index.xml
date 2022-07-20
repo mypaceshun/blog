@@ -6,7 +6,18 @@
     <description>Recent content on mypaceshun blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Mon, 06 Jun 2022 22:58:56 +0900</lastBuildDate><atom:link href="https://mypaceshun.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Jul 2022 22:42:13 +0900</lastBuildDate><atom:link href="https://mypaceshun.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pythonで開発する時のディレクトリ構成を晒します</title>
+      <link>https://mypaceshun.github.io/blog/2022/07/19-my-python-style/</link>
+      <pubDate>Tue, 19 Jul 2022 22:42:13 +0900</pubDate>
+      
+      <guid>https://mypaceshun.github.io/blog/2022/07/19-my-python-style/</guid>
+      <description>&lt;p&gt;Pythonでコードを書き始めて気づけば5年くらい経ってました&amp;hellip;
+時の流れが早すぎる&amp;hellip;
+Pythonで開発をする際の構成がおおよそ落ち着いてきたので、まとめる意味も含めここで紹介しようと思います。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Poetryがとてもいいという話</title>
       <link>https://mypaceshun.github.io/blog/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/</link>
@@ -24,7 +35,7 @@
       
       <guid>https://mypaceshun.github.io/blog/2022/05/my-first-post/</guid>
       <description>hugoを利用してblogを作成してみました。
-    技術的な備忘録をメモするために利用できればいいと思っています。
+技術的な備忘録をメモするために利用できればいいと思っています。
 Markdownから静的なサイトを生成するのに興味があったので、 良さそうなツールを探しhugoでコンテンツを生成しGitHub Pagesで公開しました。
 この構成を作るのに興味があったから作成してみた所もあります。</description>
     </item>
@@ -35,7 +46,7 @@ Markdownから静的なサイトを生成するのに興味があったので、
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mypaceshun.github.io/blog/page/about/</guid>
-      <description>About me  20代男性 ヲタク 会社員  mypaceshunだったりrikanodoreiだったりします。
+      <description>About me 20代男性 ヲタク 会社員 mypaceshunだったりrikanodoreiだったりします。
 プログラム(主にPython)が好きなエンジニアだったり、NGT48の中井りかちゃんが好きなヲタクだったりします。
 技術的な備忘録を残そうと本ブログを作成しました。 本サイトは hugo で作成しましたが、これを使ってみたかった意図もあります。</description>
     </item>

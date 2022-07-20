@@ -14,7 +14,7 @@
       
       <guid>https://mypaceshun.github.io/blog/2022/05/my-first-post/</guid>
       <description>hugoを利用してblogを作成してみました。
-    技術的な備忘録をメモするために利用できればいいと思っています。
+技術的な備忘録をメモするために利用できればいいと思っています。
 Markdownから静的なサイトを生成するのに興味があったので、 良さそうなツールを探しhugoでコンテンツを生成しGitHub Pagesで公開しました。
 この構成を作るのに興味があったから作成してみた所もあります。</description>
     </item>
