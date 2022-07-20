@@ -1528,7 +1528,7 @@ GitHub Actionsの`PYPI_TOKEN` という変数にアクセストークンの値�
 長々と書きましたがここまで全て設定すると以下のことが出来るようになっているはずです。
 
 * `poetry run poe format` で自動でコードスタイル整形
-* コードをコミット前に `poetry run poe format` を自動で実施
+* コードをコミット前にリンターを自動で実施
 * コードをGitHubにプッシュするとリンターとテストが自動で実行され、codecovがカバレッジを計測してくれる
 * `poetry run poe doc` でAPIリファレンス自動生成
 * コードをGitHubにプッシュするとreadthedocsがドキュメントを自動でビルド・公開してくれる
