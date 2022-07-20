@@ -1023,6 +1023,7 @@ sample-project
 ├── docs
 │   ├── conf.py
 │   ├── index.rst
+│   ├── quickstart.rst
 │   └── changelog.rst
 ├── src
 │   └── sample_project
@@ -1107,7 +1108,8 @@ help = "run test"
 
 [tool.poe.tasks.doc]
 sequence = [ 
-  { cmd = "sphinx-apidoc -f -e -o pre-docs/ src/"},
+  { cmd = "sphinx-apidoc -f -e -o docs/ src/sample_project/ "},
+  { cmd = "sphinx-build docs/ build-docs/"},
 ]
 help = "build document"
 
@@ -1163,6 +1165,381 @@ Sphinx 5.0.2 クイックスタートユーティリティへようこそ。
 
 ## Sphinxの導入
 
+[`Sphinx`](https://www.sphinx-doc.org/ja/master/)とはドキュメント生成ツールです。
+[`reStructuredText`](https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html)というマークアップランゲージを利用してドキュメントを記述出来ます。
+まだあまり長い文章を書いたことはありませんが、当然1からHTMLを書くよりははるかに楽です。
+
+Sphinxの設定ファイルは `docs/conf.py` になります。
+Pythonファイルなのでコードを書くことも出来ますが、あまり必要になったことはありません。
+
+上述したように設定ファイルは`sphinx-quickstart`コマンドで生成します。
+
+```
+$ poetry run sphinx-quickstart --sep -l ja --ext-autodoc --no-makefile --no-batchfile --extensions sphinx.ext.napoleon
+```
+
+`--extensions sphinx.ext.napoleon` で `napoleon`拡張を有効にし、 `--ext-autodoc`で`autodoc`拡張を有効にしています。
+
+ドキュメントのビルドは次のコマンドで実行できます。
+
+```
+$ poetry run sphinx-build docs/ build-docs/
+```
+
+ビルドされたドキュメントは `build-docs/index.html` を手頃なブラウザで表示すると閲覧できます。
+
+後述しますがビルドは `Read the Docs` に任せてしまうので自分でビルドする必要はありません。
+ですが書きながら体裁を確認するのに、やはりビルドする必要は出てきます。
+そのため`[tool.poe.tasks.doc]`にコマンドを定義し、`poetry run poe doc` でドキュメントがビルド出来るようにしています。
+ビルドされたドキュメントは `build-docs/` ディレクトリに保存されますので、
+このディレクトリを `.gitignore` でgitから除外しています。
+
+私が最初に作成する `docs/index.rst` と `docs/changelog.rst` ファイルの内容を晒します。
+
+* `index.rst`
+```
+Welcome to Sample Project's documentation!
+==========================================
+
+.. include:: ../README.rst
+
+Document
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+
+Chagelog
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   changelog.rst
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+```
+
+* `changelog.rst`
+
+```
+.. include:: ../CHANGELOG.rst
+```
+
+`changelog.rst` はとてもシンプルで `CHANGELOG.rst` の内容をそのまま出力しています。
+
+`index.rst` の `.. include:: ../README.rst` に関しても同様で、
+`README.rst`の内容をそのまま出力しています。
+
+`.. toctree::` がリンクのような機能を果たします。
+
+```
+.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+```
+
+とすることで `quickstart.rst` へのリンクが作成されます。
+あとは `quickstart.rst` をせっせと書いたり、
+はたまた追加のreSTファイルを作成し、toctreeに追記したりします。
+
+### sphinx-apidoc
+
+Sphinxをインストールした環境には`sphinx-apidoc` というコマンドが存在します。
+これが非常に便利でこれを使うだけでそれっぽいAPIリファレンスが生成出来ます。
+
+sphinx-apidocは適切な箇所(関数やクラスの先頭)に適切な構文でコメントを書くと、
+それを認識し、APIドキュメントを生成してくれます。
+`docstring` で検索すると色々出てきます。
+
+例として先程のサンプルコードにdocstringを追加しましょう。
+
+```
+from typing import Union
+
+
+def func(var: Union[str, int]) -> int:
+    """
+    文字列か数値を受け取る。
+    数値はそのまま返し、
+    文字列は文字列の長さを返す。
+
+    :param var: 文字列か数値
+    :type var: Union[str, int]
+    :return: 文字列の長さか数値
+    :rtype: int
+    """
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+
+length = func("abc")
+print(length)
+```
+
+`def func` のすぐ下の行からdocstringが記述されています。
+まず関数やクラスの説明文を書き、その後に引数などの定義を書きます。
+それぞれ次のような意味になります。
+
+  * `:param <変数名>:` <変数名>という引数の説明
+  * `:type <変数名>:` <変数名>という引数の型
+  * `:return:` 関数の戻り値の説明
+  * `:rtype:` 関数の戻り値の型
+
+これで `sphinx-apidoc` を実行します。
+
+```
+$ poetry run sphinx-apidoc -f -e -o docs/ src/sample_project/
+```
+
+`docs/` 内に新しいファイルが生成されました。
+
+```
+$ ls docs 
+_static  _templates  changelog.rst  conf.py  index.rst  modules.rst  sample_project.main.rst  sample_project.rst
+```
+
+`sample_project.rst`や`sample_project.main.rst`がモジュールごとのファイルとなり、
+`modules.rst`ファイルがメインのファイルになります。
+
+しかし、このままでは `modules.rst` がどこにもリンクの無いページになってしまいますので、
+`index.rst`から飛べるようにリンクを追記しましょう。
+
+```
+Welcome to Sample Project's documentation!
+==========================================
+
+.. include:: ../README.rst
+
+Document
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+
+API Reference
+-------------
+
+.. toctree::
+   :maxdepth: 2
+
+   modules.rst
+
+Chagelog
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   changelog.rst
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+```
+
+上述したようにtoctreeを追加することでリンクを生成します。
+実際にビルドしたら以下のようになります。
+
+{{< figure src="/images/20220719/docstring_reST.png" >}}
+
+コメント書くだけでここまで自動生成してくれるのは便利ですよね。
+これが `sphinx-apidoc` です。
+
+### `sphinx.ext.napoleon`
+
+`docstring` の書き方には様々な流派があります。
+中でも`Google Style`というのがわかりやすくて良いという記事を見たことがあります。
+
+* [Google Styleの例](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+
+Google Style で先程のdocstringを記述すると次のようになります。
+
+```
+from typing import Union
+
+
+def func(var: Union[str, int]) -> int:
+    """
+    文字列か数値を受け取る。
+    数値はそのまま返し、
+    文字列は文字列の長さを返す。
+
+    Args:
+        var (Union[str, int]): 文字列か数値を指定する
+
+    Returns:
+        int: 文字列の長さか数値が返る
+    """
+    if isinstance(var, int):
+        return var
+    return len(var)
+```
+
+うーん少し見やすくなった気もしますが、この程度の量だとあまり恩恵を感じられませんね。
+
+Google Styleのdocstringを解釈出来るようにするために `sphinx.ext.napoleon` という拡張を有効にする必要があります。
+有効にしてはいるもののGoogle Styleをあまり使っていないので、これもまた私は使いこなせていませんw
+
+ビルド結果は先程と同様になるので割愛します。
+
 ## Read the Docsの導入
 
+[`Read the Docs`](https://readthedocs.org/) はドキュメントの自動ホスティングサービスで、
+`Sphinx`と相性がいいので多くのPythonライブラリのドキュメントに利用されています。
+
+ログイン時にGitHubと連携することで簡単にプロジェクトと連携することができます。
+
+Read the Docsの設定は `.readthedocs.yaml` というファイルで行います。
+私のよく使う `.readthedocs.yaml` ファイルが以下になります。
+
+```
+version: 2
+
+build:
+  os: ubuntu-20.04
+  tools:
+    python: "3.9"
+
+sphinx:
+  configuration: docs/conf.py
+
+python:
+  install:
+    - method: pip
+      path: .
+```
+
+`install: `でビルド前に自身をインストールするように設定しているので、
+`docs/conf.py` 内で `sample_project` のコードを利用出来るようになります。
+
+ですがこれもまた `docs/conf.py` 内で `sample_project` を利用することがほぼ無いので
+あまり意味はなしていません。
+一応`docs/conf.py`内の`release`を次のようにしたりしていたのですが、
+
+```
+from sample_project import __version__
+release = __version__
+```
+
+そもそもこの`release`の値がドキュメントのどこに反映されているのかよくわかっていませんw
+
+なのでこのようなことをしない場合は `.readthedocs.yaml` ファイルは配置しなくても大丈夫だと思います。
+
+Read the Docsの設定画面から簡単にプロジェクトを連携でき、
+またRead the Docsでドキュメントをビルド、公開までしてくれるのでとても楽ちんです。
+
+https://mypaceshun-sample-project.readthedocs.io/en/latest/
+
 ## PyPIへの公開
+
+[PyPI](https://pypi.org/) とはPythonのパッケージレポジトリ(?)です。
+自分の作ったPythonパッケージを公開することが出来ます。
+そもそも `pip install click` とした場合、clickの実体はPyPIから検索されます。
+つまり今回であれば `sample-project` をPyPIに登録すれば `pip install sample-project`とするだけで、
+どこからでも自分のプログラムをインストールすることが出来るようになります。
+
+今回はサンプルのプロジェクトなのでPyPIには登録しませんがw
+
+またPyPIの性質上すでに登録されているパッケージ名を重複して登録することは出来ないので、
+自分が登録しようとしている名前がすでに使われていないか、
+コードを書く前に確認したほうがいいかもしれません。
+
+PyPIに公開するにはPyPIのアカウントが必要なので、事前にアカウント登録をしてください。
+
+PyPIへ登録する前に`pyproject.toml`内`[tool.poetry]` の項目を少し増やします。
+
+```
+[tool.poetry]
+name = "sample-project"
+version = "0.9.0"
+description = "Python Sample Project"
+authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+license = "MIT"
+readme = "README.rst"
+repository = "https://github.com/mypaceshun/sample-project"
+documentation = "https://mypaceshun-sample-project.readthedocs.io/"
+keywords = [ 
+  "Python",
+  "sample",
+]
+packages = [ 
+  { include = "sample_project", from = "src" }
+]
+include = [
+  "CHANGELOG.rst",
+]
+```
+
+`readme`で指定したファイルがPyPI内のトップに表示されます。
+また、`repository`や`documentation`を指定することでPyPI内でリンクが生成されます。
+
+PyPIへの登録はPoetryを利用すればあっという間に出来てしまいます。
+
+```
+$ poetry publish --build --dry-run     
+Building sample-project (1.0.0)
+  - Building sdist
+  - Built sample-project-1.0.0.tar.gz
+  - Building wheel
+  - Built sample_project-1.0.0-py3-none-any.whl
+
+Username: xxxxxx
+Password: xxxxxx
+Publishing sample-project (1.0.0) to PyPI
+ - Uploading sample-project-1.0.0.tar.gz 100%
+ - Uploading sample_project-1.0.0-py3-none-any.whl 100%
+```
+
+今回は `--dry-dun` オプションを付けていますが、これを外せば実際にPyPIに登録されます。
+またユーザー名/パスワードで認証していますがアクセストークンを利用することも出来ます。
+
+GitHub Actionsの`PYPI_TOKEN` という変数にアクセストークンの値を設定し、
+先程はコメントアウトされていた以下の設定をコメント解除します。
+
+```
+      #- name: Publish to PyPI
+      #  if: startsWith(github.ref, 'refs/tags/v')
+      #  env:
+      #    POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      #  run: poetry publish
+```
+
+そうすると、タグをプッシュした際にPyPIへのアップロードまで実施してくれるようになります。
+
+# まとめ
+
+長々と書きましたがここまで全て設定すると以下のことが出来るようになっているはずです。
+
+* `poetry run poe format` で自動でコードスタイル整形
+* コードをコミット前に `poetry run poe format` を自動で実施
+* コードをGitHubにプッシュするとリンターとテストが自動で実行され、codecovがカバレッジを計測してくれる
+* `poetry run poe doc` でAPIリファレンス自動生成
+* コードをGitHubにプッシュするとreadthedocsがドキュメントを自動でビルド・公開してくれる
+* タグをプッシュするとパッケージのビルドが自動で実行され、Releaseを作成し、PyPIにアップロードしてくれる
+
+コードを書く以外の自動化出来る箇所はほぼほぼ自動化出来ていると思います。
+
+`pyproject.toml`なんかはかなり量が多くなって自分でも秘伝のタレと化していたので、今回整理する意味でもまとめられてよかったです。
+現状はこの構成に落ち着いていますが、よりよいサービスやツールがあれば取り入れていきたいと思っているので、
+オススメのツールなどあれば教えていただけると嬉しいです。
+Pythonの書き方に悩んでいるどこかの誰かの参考になれば幸いです。
+
+(今回サンプル用に作成した`sample-project`は https://github.com/mypaceshun/sample-project/ に置いてあります)
+
