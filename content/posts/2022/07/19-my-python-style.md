@@ -59,7 +59,7 @@ sample-project
 name = "sample-project"
 version = "0.9.0"
 description = "sample project"
-authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+authors = ["KAWAI Shun <your@mail.example.com>"]
 packages = [
   { from = "src/", include = "sample_project" }
 ]
@@ -422,7 +422,7 @@ sample-project
 name = "sample-project"
 version = "0.9.0"
 description = "sample project"
-authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+authors = ["KAWAI Shun <your@mail.example.com>"]
 packages = [
   { from = "src/", include = "sample_project" }
 ]
@@ -1052,7 +1052,7 @@ sample-project
 name = "sample-project"
 version = "0.9.0"
 description = "sample project"
-authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+authors = ["KAWAI Shun <your@mail.example.com>"]
 packages = [
   { from = "src/", include = "sample_project" }
 ]
@@ -1140,7 +1140,7 @@ Sphinx 5.0.2 クイックスタートユーティリティへようこそ。
 
 プロジェクト名は、ビルドされたドキュメントのいくつかの場所にあります。
 > プロジェクト名: sample-project
-> 著者名（複数可）: KAWAI Shun <mypaceshun@gmail.com>
+> 著者名（複数可）: KAWAI Shun <your@mail.example.com>
 > プロジェクトのリリース []: 0.9.0
 
 ファイル /tmp/sample-project/source/conf.py を作成しています。
@@ -1470,7 +1470,7 @@ PyPIへ登録する前に`pyproject.toml`内`[tool.poetry]` の項目を少し�
 name = "sample-project"
 version = "0.9.0"
 description = "Python Sample Project"
-authors = ["KAWAI Shun <mypaceshun@gmail.com>"]
+authors = ["KAWAI Shun <your@mail.example.com>"]
 license = "MIT"
 readme = "README.rst"
 repository = "https://github.com/mypaceshun/sample-project"
