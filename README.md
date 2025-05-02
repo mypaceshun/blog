@@ -25,6 +25,17 @@ hugo
 ```
 hugo server
 ```
+# dockerを利用した開発方法
+
+hugoを直接インストールせずdockerでも実行できるようにしました
+dockerはrootlessモードでインストールすることを前提としています。
+
+
+## dockerでブログページの作成
+
+```
+make new NEW_FILENAME=ファイル名
+```
 
 ## dockerでブログページのビルド
 
