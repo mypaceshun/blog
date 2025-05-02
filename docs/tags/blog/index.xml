@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>blog on mypaceshun blog</title>
+    <title>Blog on mypaceshun blog</title>
     <link>https://mypaceshun.github.io/blog/tags/blog/</link>
-    <description>Recent content in blog on mypaceshun blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-jp</language>
-    <lastBuildDate>Sun, 08 May 2022 17:12:33 +0900</lastBuildDate><atom:link href="https://mypaceshun.github.io/blog/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Blog on mypaceshun blog</description>
+    <generator>Hugo</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sun, 08 May 2022 17:12:33 +0900</lastBuildDate>
+    <atom:link href="https://mypaceshun.github.io/blog/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>初投稿</title>
-      <link>https://mypaceshun.github.io/blog/2022/05/my-first-post/</link>
+      <link>https://mypaceshun.github.io/blog/posts/2022/05/my-first-post/</link>
       <pubDate>Sun, 08 May 2022 17:12:33 +0900</pubDate>
-      
-      <guid>https://mypaceshun.github.io/blog/2022/05/my-first-post/</guid>
-      <description>hugoを利用してblogを作成してみました。
-    技術的な備忘録をメモするために利用できればいいと思っています。
-Markdownから静的なサイトを生成するのに興味があったので、 良さそうなツールを探しhugoでコンテンツを生成しGitHub Pagesで公開しました。
-この構成を作るのに興味があったから作成してみた所もあります。</description>
+      <guid>https://mypaceshun.github.io/blog/posts/2022/05/my-first-post/</guid>
+      <description>&lt;p&gt;&lt;code&gt;hugo&lt;/code&gt;を利用してblogを作成してみました。&lt;/p&gt;&#xA;&#xA;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://mypaceshun.github.io/blog/css/hugo-easy-gallery.css&#34; /&gt;&#xA;&lt;div class=&#34;box&#34; &gt;&#xA;  &lt;figure  itemprop=&#34;associatedMedia&#34; itemscope itemtype=&#34;http://schema.org/ImageObject&#34;&gt;&#xA;    &lt;div class=&#34;img&#34;&gt;&#xA;      &lt;img itemprop=&#34;thumbnail&#34; src=&#34;https://mypaceshun.github.io/blog/images/mypaceshun.png&#34; alt=&#34;/images/mypaceshun.png&#34;/&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;a href=&#34;https://mypaceshun.github.io/blog/images/mypaceshun.png&#34; itemprop=&#34;contentUrl&#34;&gt;&lt;/a&gt;&#xA;  &lt;/figure&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;技術的な備忘録をメモするために利用できればいいと思っています。&lt;/p&gt;&#xA;&lt;p&gt;Markdownから静的なサイトを生成するのに興味があったので、&#xA;良さそうなツールを探し&lt;code&gt;hugo&lt;/code&gt;でコンテンツを生成し&lt;code&gt;GitHub Pages&lt;/code&gt;で公開しました。&lt;/p&gt;&#xA;&lt;p&gt;この構成を作るのに興味があったから作成してみた所もあります。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

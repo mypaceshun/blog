@@ -1,0 +1,1693 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Pythonで開発する時のディレクトリ構成を晒します - mypaceshun blog</title>
+  <meta name="description" content="私がPythonで開発をするときのディレクトリ構成を紹介します。"><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "mypaceshun blog",
+    
+    "url": "https:\/\/mypaceshun.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/mypaceshun.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2022\/07\/19-my-python-style\/",
+          "name": "Pythonで開発する時のディレクトリ構成を晒します"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "KAWAI Shun"
+  },
+  "headline": "Pythonで開発する時のディレクトリ構成を晒します",
+  "description" : "私がPythonで開発をするときのディレクトリ構成を紹介します。",
+  "inLanguage" : "en",
+  "wordCount":  2882 ,
+  "datePublished" : "2022-07-19T22:42:13\u002b09:00",
+  "dateModified" : "2022-07-19T22:42:13\u002b09:00",
+  "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+  "keywords" : [ "tech, Python, Poetry" ],
+  "mainEntityOfPage" : "https:\/\/mypaceshun.github.io\/blog\/posts\/2022\/07\/19-my-python-style\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/mypaceshun.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Pythonで開発する時のディレクトリ構成を晒します" />
+<meta property="og:description" content="私がPythonで開発をするときのディレクトリ構成を紹介します。">
+<meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+<meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2022/07/19-my-python-style/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="mypaceshun blog" />
+
+  <meta name="twitter:title" content="Pythonで開発する時のディレクトリ構成を晒します" />
+  <meta name="twitter:description" content="私がPythonで開発をするときのディレクトリ構成を紹介します。">
+  <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@rikanodorei_823" />
+  <meta name="twitter:creator" content="@rikanodorei_823" />
+  <link href='https://mypaceshun.github.io/blog/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.145.0">
+  <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-G00JGTHDLH"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-G00JGTHDLH');
+        }
+      </script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="about me" href="/blog/page/about/">about me</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="mypaceshun blog" href="https://mypaceshun.github.io/blog/">
+            <img class="avatar-img" src="https://mypaceshun.github.io/blog/images/mypaceshun.png" alt="mypaceshun blog" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Pythonで開発する時のディレクトリ構成を晒します</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>Pythonでコードを書き始めて気づけば5年くらい経ってました&hellip;
+時の流れが早すぎる&hellip;
+Pythonで開発をする際の構成がおおよそ落ち着いてきたので、まとめる意味も含めここで紹介しようと思います。</p>
+<h1 id="概要">概要</h1>
+<p>一概にPythonを書く時といってもPyPIに公開することを見据えて書く時と、
+自分だけが使う予定のコードを書く時ではさすがに真剣度(とは)が違います。
+そこで今回は雑に書く時、少し真面目に書く時、真剣に書く時の3種類に分けて紹介しようと思います。
+全体を通して <code>Poetry</code> を使った開発、<code>git</code>でバージョン管理し<code>GitHub</code>をリモートリポジトリとすることを前提としています。
+私の開発環境はUbuntuですが、今回の内容ではあまり関係ないと思います。</p>
+<h1 id="雑に書く時の構成">雑に書く時の構成</h1>
+<p>「雑に書く」の基準としては、自分以外に見せる予定が無い、自分も将来使いまわす予定がない、をイメージしています。
+逆に言うならどんなコードを書くときも絶対にしている基本の部分です。
+まず最初にディレクトリ構成がこちらです。</p>
+<pre tabindex="0"><code>sample-project
+├── .gitignore
+├── .pre-commit-config.yaml
+├── README.rst
+├── poetry.lock
+├── pyproject.toml
+└── src
+    └── sample_project
+        ├── __init__.py
+        ├── main.py
+        └── command.py
+</code></pre><p>ディレクトリ構成としては <code>src/</code> 配下にコードをまとめているのがポイントですかね。
+最初はpyptoject.tomlと同レベルに <code>sample_project</code> ディレクトリを作成する構成をとっていました。
+これの利点としては <code>Poetry</code> がプロジェクト名と同名のディレクトリを自動でインポートしてくれるので、
+特に設定をしなくてもそのまま利用出来たところです。
+ただ、<a href="https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#choosing-a-test-layout-import-rules">pytestのベストプラクティス</a>を眺めていた時にこの構成を見つけ、
+なにやら<a href="https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure">非常におすすめらしい</a>ので(よくわかってない)この構成を使ってみました。
+個人的には後述する <code>pyproject.toml</code> 内で <code>src/</code> と指定することで、別プロジェクトでも使い回しが出来るようになったことが気に入ってますw</p>
+<p>また、特に重要となる <code>pyproject.toml</code> の内容もまとめて紹介します。</p>
+<pre tabindex="0"><code>[tool.poetry]
+name = &#34;sample-project&#34;
+version = &#34;0.9.0&#34;
+description = &#34;sample project&#34;
+authors = [&#34;KAWAI Shun &lt;your@mail.example.com&gt;&#34;]
+packages = [
+  { from = &#34;src/&#34;, include = &#34;sample_project&#34; }
+]
+
+[tool.poetry.dependencies]
+python = &#34;^3.10&#34;
+click = &#34;^8.1.3&#34;
+
+[tool.poetry.dev-dependencies]
+flake8 = &#34;^4.0.1&#34;
+pyproject-flake8 = &#34;^0.0.1-alpha.4&#34;
+isort = &#34;^5.10.1&#34;
+autoflake = &#34;^1.4&#34;
+black = &#34;^22.6.0&#34;
+poethepoet = &#34;^0.15.0&#34;
+pre-commit = &#34;^2.19.0&#34;
+
+[tool.poetry.scripts]
+command = &#34;sample_project.command:cli&#34;
+
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = &#34;pflake8 src/&#34; },
+]
+help = &#34;check syntax&#34;
+ignore_fail = &#34;return_non_zero&#34;
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = &#34;autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/&#34; },
+  { cmd = &#34;isort src/&#34; },
+  { cmd = &#34;black src/&#34; },
+  &#34;lint&#34;
+]
+help = &#34;format code style&#34;
+
+[tool.isort]
+profile = &#34;black&#34;
+
+[tool.flake8]
+max-line-length = 88
+
+[build-system]
+requires = [&#34;poetry-core&gt;=1.0.0&#34;]
+build-backend = &#34;poetry.core.masonry.api&#34;
+</code></pre><p><code>[build-system]</code> は <code>poetry init</code>で自動生成されたままのものなので割愛します。
+<code>poetry init</code> した後、<code>poetry add -D flake8 pyproject-flake8 autoflake isort black poethepoet pre-commit</code>としています。
+ポイントとしては以下です。</p>
+<ul>
+<li>リンターの導入(<code>flake8</code>、<code>pyproject-flake8</code>)</li>
+<li>フォーマッターの導入(<code>autoflake</code>、<code>isort</code>、<code>black</code>)</li>
+<li>タスクランナーの導入(<code>poethepoet</code>)</li>
+<li><code>pre-commit</code>の導入</li>
+</ul>
+<h2 id="リンターの導入">リンターの導入</h2>
+<p>リンターとはコードのスタイルチェックをしてくれるツールです。
+コードとしてはエラーにならないが、コード記述のルールに沿わないものをチェックしてくれます。
+例として以下のコードに<code>flake8</code>を実行するとエラーになります。</p>
+<pre tabindex="0"><code>import click
+
+@click.command()
+def cli():
+    no_use_var = &#39;no use&#39;
+    click.echo(&#34;Sample Project&#34;)
+</code></pre><p>こんな感じで怒られます。</p>
+<pre tabindex="0"><code>src/sample_project/command.py:3:1: E302 expected 2 blank lines, found 1
+src/sample_project/command.py:5:5: F841 local variable &#39;no_use_var&#39; is assigned to but never used
+</code></pre><p><code>E302 expected 2 blank lines, found 1</code> <a href="https://www.flake8rules.com/rules/E302.html">E302エラー</a>は簡単に言うと、
+関数間の改行は2行開けようねということです。
+これくらいだと別にいいだろ！となりますねw</p>
+<p><code>F841 local variable 'no_use_var' is assigned to but never used</code> <a href="https://www.flake8rules.com/rules/F841.html">F841エラー</a>は見ての通り、
+<code>no_use_var</code>という変数は使われていないよと教えてくれてます。
+こういう「動作上問題無いが、書き方として望ましくない箇所」をエラーにして教えてくれます。
+これらは将来的にバグを生む可能性があるので全て潰しておくのが吉です。</p>
+<p>ただ、ひたすらコード書いた後にこのエラーが100個とか出てきて白目を剥くことが多々あるのですが、
+それの対処法は後述するフォーマッターがうまいことしてくれます。</p>
+<p><code>pyproject-flake8</code>は最近見つけたライブラリで痒いところに手が届くやつです。
+というのも、<code>flake8</code>の設定は <code>setup.cfg</code>、<code>tox.ini</code>、<code>.flake8</code>のいずれかに書く必要があります。
+私の構成では<code>max-line-length = 88</code>を設定する必要があったのですが(後述)このためだけにファイルが一つ増えるのは億劫でした。
+そこで見つけたのが<code>pyproject-flake8</code>で読んで字のごとく<code>pyproject.toml</code>に<code>flake8</code>の設定を記述出来るようになります。</p>
+<p>もちろん将来的に<code>flake8</code>が<code>pyproject.toml</code>を設定ファイルとして参照してくれるようになったらお役御免なのですが、
+現状は非常に助かっているので私のなかでは欠かせないライブラリになりました。</p>
+<p>注意点として <code>flake8</code> を実行するときのコマンドは <code>flake8</code> ですが、 <code>pyproject-flake8</code> を利用して実行する際のコマンドは <code>pflake8</code> になります。</p>
+<h2 id="フォーマッターの導入">フォーマッターの導入</h2>
+<p>フォーマッターとはコードのスタイル整形をしてくれるツールです。
+リンターがエラーとする箇所を出来る限り自動で直してくれます。
+現状私が使っているフォーマッターは<code>autoflake</code>、<code>isort</code>、<code>black</code>の3つです。</p>
+<p>それぞれ、順番に解説していきます。</p>
+<h3 id="autoflake">autoflake</h3>
+<p><code>autoflake</code> は使っていない変数や使っていないインポートを削除してくれます。
+特に使っていないインポートを削除してくれる機能が嬉しく、そのためだけに導入していると言っても過言ではありません。</p>
+<p>逆に使っていない変数を削除してくれる機能は最近は使わなくなってきました。</p>
+<pre tabindex="0"><code>var = 1 + 2
+</code></pre><p>というコードの<code>var</code>という変数が利用されていない場合、<code>autoflake</code>を実行すると以下のようになります。</p>
+<pre tabindex="0"><code>1 + 2
+</code></pre><p>いやそこは残るのか！</p>
+<p>確かに右辺で大事な関数の呼び出しなどしている可能性もあるので、迂闊に削除出来ないのでしょう。
+ただこうなってしまうとコード上問題は無いので、リンターにもかからず永遠に意味のないコードが埋もれてしまう可能性があります。
+そのため利用されていない変数はリンターにエラーとして出してもらい自分で対処するのが一番良さそうです。</p>
+<h3 id="isort">isort</h3>
+<p><code>isort</code> はインポート文をいい感じに並び替えてくれます。</p>
+<p>例として以下のコードを並び替えてもらうと、</p>
+<pre tabindex="0"><code>import sys
+from pathlib import Path
+import click
+import os
+</code></pre><p>こうなります。</p>
+<pre tabindex="0"><code>import os
+import sys
+from pathlib import Path
+
+import click
+</code></pre><p>インポート文をアルファベット順で並べ替えるのがメインの機能ですが、標準ライブラリとそうでないライブラリを分けてくれる機能もあります。
+また <code>import</code> 形式と <code>from</code> 形式も区別してくれてますね。
+この後紹介する <code>black</code> と足並みを揃えてもらうために <code>profile = &quot;black&quot;</code> の設定が必須です。</p>
+<h3 id="black">black</h3>
+<p>これも最近知ったフォーマッターですがかなり気に入ってます。
+<code>black</code>に関しては先に紹介した<code>autoflake</code>、<code>isort</code>以外のフォーマットを全てしてくれます。
+最強便利マンだと思ってます。
+先述した <code>flake8</code> に怒られるコードを例に紹介します。</p>
+<pre tabindex="0"><code>import click
+
+@click.command()
+def cli():
+    no_use_var = &#39;no use&#39;
+    click.echo(&#34;Sample Project&#34;)
+</code></pre><p>これに対し <code>black</code> を実行すると以下のようになります。</p>
+<pre tabindex="0"><code>import click
+
+
+@click.command()
+def cli():
+    no_use_var = &#34;no use&#34;
+    click.echo(&#34;Sample Project&#34;)
+</code></pre><p>E302エラーは修正されていますね！
+F841エラーはそのままです。 <code>autoflake</code>で述べたようにこれの修正は難しいのだと思ってます。
+また注目すべき点としては <code>'no use'</code> が <code>&quot;no use&quot;</code> になってます。
+Pythonのコードではシングルクオートでもダブルクオートでもエラーになりません。
+<a href="https://pep8-ja.readthedocs.io/ja/latest/#section-11">pep8</a>では、
+「どちらでもいいけど統一しよう」ということらしいです。</p>
+<p><code>black</code>では全てダブルクオートで統一するように修正してくれます。
+勝手に統一してくれるという点で非常に気に入ってます。
+シングルクオート派の人がいたら鬱陶しい機能でしょうが、私は特にこだわりりがないので問題になっていません。</p>
+<h2 id="タスクランナーの導入">タスクランナーの導入</h2>
+<p>タスクランナーとはよく実行するコマンドを登録しておけるものです。
+例えば <code>autoflake</code> を実行する場合 <code>autoflake -ir --remove-all-unused-impoprts --ignore-init-module-imports src/</code> というコマンドを実行します。
+これを毎回入力して実行するのはあまりにも大変です。
+そこで活躍するのが <code>poethepoet</code> というライブラリです。</p>
+<p>前述した <code>pyproject.toml</code> 内の <code>tool.poe</code> で始まるセクションはすべて <code>poethepoet</code> の設定になります。</p>
+<pre tabindex="0"><code>[tool.poe.tasks.lint]
+sequence = [
+  { cmd = &#34;pflake8 src/&#34; },
+]
+help = &#34;check syntax&#34;
+ignore_fail = &#34;return_non_zero&#34;
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = &#34;autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/&#34; },
+  { cmd = &#34;isort src/&#34; },
+  { cmd = &#34;black src/&#34; },
+  &#34;lint&#34;
+]
+help = &#34;format code style&#34;
+</code></pre><p>このようによく使うコマンドを設定に書いておくことで簡単に呼び出せるようになります。
+例えば <code>[tool.poe.tasks.lint]</code> に記載されているコマンドは、以下のコマンドで呼び出せます。</p>
+<pre tabindex="0"><code>poetry run poe lint
+</code></pre><p><code>tool.poe.tasks</code> のあとは任意の文字列を設定でき、呼び出す際にはその文字列を利用します。
+<code>tool.poe.tasks.format</code> だとしたら呼び出す際のコマンドは <code>poetry run poe format</code> となるわけです。</p>
+<p>上記の設定では <code>poetry run poe lint</code> でリンターの実行。
+<code>poetry run poe format</code> でフォーマッターの実行が可能になります。</p>
+<p>これで長いオプションを入力する必要もなくなり、<code>autoflake</code>や<code>isort</code>や<code>black</code>もコマンド一発で全て実行出来るようになります。
+<code>poethepoet</code> が無かったらここまで <code>poetry</code> をガッツリ使うようになることも無かったかもしれません。
+それくらい助かってます。</p>
+<h2 id="pre-commitの導入"><code>pre-commit</code>の導入</h2>
+<p><code>pre-commit</code> というのはもともと <code>git</code> の <code>hook</code> のひとつです。<a href="https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA-Git-%E3%83%95%E3%83%83%E3%82%AF">参考</a>
+<code>git commit</code> する際に自動で実行されるスクリプトを設定しやすくしたライブラリが <code>pre-commit</code> です。</p>
+<p><code>pre-commit</code> の設定は <code>.pre-commit-config.yaml</code> に記述します。
+例として私が使っている設定を晒します。</p>
+<pre tabindex="0"><code># See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+  - id: black
+    language_version: python3
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+    - id: isort
+      args: [&#34;--profile&#34;, &#34;black&#34;]
+
+- repo: https://github.com/myint/autoflake.git
+  rev: v1.4
+  hooks:
+  - id: autoflake
+    args:
+      - &#34;-i&#34;
+      - &#34;--remove-all-unused-imports&#34;
+      - &#34;--ignore-init-module-imports&#34;
+
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.9.2
+  hooks:
+  - id: flake8
+    # max-line-length setting is the same as black
+    # commit cannot be done when cyclomatic complexity is more than 10.
+    args: [--max-line-length, &#34;88&#34;]
+</code></pre><p>コミット時に含まれてるファイルをチェックし、設定に記述されているコマンドを実行していきます。
+他にも設定ファイルをフォーマットしたり、rstファイルをスタイルチェックしてくれたりするのですが、
+正直うまく使いこなせていません。</p>
+<p>というのも、それぞれのコマンドの設定が <code>.pre-commit-config-yaml</code> と <code>pyproject.toml</code> に分かれてしまっているのが一番納得のいっていないポイントです。
+あまり変更しない箇所なのでいいっちゃいいのですが、たまーに変更したくなったときに両者のファイルを修正しなければならないのがうまくありません。</p>
+<p>これに関してはよりよい構成を探している最中です、アドバイス等いただけると飛んで喜びます&hellip;</p>
+<p><code>pre-commit</code> のフックはインストールする必要があります。
+インストールというのも <code>.git/hooks/</code> にスクリプトを配置する必要があるのですが、
+もちろん手動で配置する必要はありません。
+以下のコマンドでフックのインストールが完了します。</p>
+<pre tabindex="0"><code>poetry run pre-commit install
+</code></pre><p>これでコミットするたびに <code>flake8</code> 等が実行されるようになりました。
+私は基本的にコード書きながら <code>poetry run poe format</code> するので必要無いと言えば無いのですが、
+忘れてコミットしようとすることもあるので、その時は <code>pre-commit</code> がエラーになり、
+フォーマット前のコードをコミットすることを防いでくれます。</p>
+<h1 id="少し真面目に書く時の構成">少し真面目に書く時の構成</h1>
+<p>「少し真面目に書く」の基準としては、知人や職場の人も見る予定がある、自分でも今後複数回使う予定がある、をイメージしています。
+ある程度他人に見られる想定をしてコードを書きますが、最終的には直接説明したりすればいいかなという温度感です。
+あと自分以外に利用してもらうことを想定するので、コードの完成度も少し考えるようになります。</p>
+<p>ディレクトリ構成はこちらです。</p>
+<pre tabindex="0"><code>sample-project
+├── .gitignore
+├── .pre-commit-config.yaml
+├── README.rst
+├── CHANGELOG.rst
+├── poetry.lock
+├── pyproject.toml
+├── .github
+│   └── workflows
+│       └── main.yml
+├── src
+│   └── sample_project
+│       ├── __init__.py
+│       ├── main.py
+│       └── command.py
+└── tests
+    └── test_command.py
+</code></pre><p>雑に書く時の構成から変更されたポイントとしては <code>tests/</code> ディレクトリや、<code>.github/</code> ディレクトリが増えた点でしょうか。
+このくらいからはテストコードもしっかり書こうとします。作業が増えるのであまり好きではないですが(小声)
+他人に見られることを考えるなら最低限のテストコードは書きます。
+また <code>GitHub Actions</code> の設定も追加します。<code>GitHub Actions</code>を使うようになったのは最近ですが(さらに小声)
+自動でテストしてくれるので使わない理由はありません。
+テストコードをしっかり書き、<code>GitHub Actions</code>でテストを実行することでプログラムの動作が保証されます。
+<code>GitHub Actions</code> を使うためにもテストコードを書く必要が出てきます。</p>
+<p><code>CHANGELOG.rst</code> が増えていますがこれには改定履歴をせっせと書きます。
+「<code>changelog</code>あるとそれっぽいよな〜」くらいの軽い気持ちで追加してます。
+実際機能追加した時期などわかると後々便利なのでしょうが、
+あとから <code>changelog</code> を確認しなければならないほど長いことこの構成を使っていないので、
+あまり恩恵は受けていませんw</p>
+<p>また他人に利用してもらうことを想定するので利用手順やインストール手順をちゃんと書きます。
+これは <code>README.rst</code> にせっせと書きます。
+<code>README.md</code> ではなく <code>README.rst</code> なのは後述する <code>Sphinx</code> でインポートすることを想定しているためです。
+そこまでするつもりのない場合は <code>README.md</code> で書いたりします。正直どっちでもいいです。</p>
+<p>またこの構成での <code>pyproject.toml</code> の内容も晒します。</p>
+<pre tabindex="0"><code>[tool.poetry]
+name = &#34;sample-project&#34;
+version = &#34;0.9.0&#34;
+description = &#34;sample project&#34;
+authors = [&#34;KAWAI Shun &lt;your@mail.example.com&gt;&#34;]
+packages = [
+  { from = &#34;src/&#34;, include = &#34;sample_project&#34; }
+]
+include = [
+  &#34;CHANGELOG.rst&#34;
+]
+
+[tool.poetry.dependencies]
+python = &#34;^3.10&#34;
+click = &#34;^8.1.3&#34;
+
+[tool.poetry.dev-dependencies]
+flake8 = &#34;^4.0.1&#34;
+pyproject-flake8 = &#34;^0.0.1-alpha.4&#34;
+isort = &#34;^5.10.1&#34;
+autoflake = &#34;^1.4&#34;
+black = &#34;^22.6.0&#34;
+poethepoet = &#34;^0.15.0&#34;
+pre-commit = &#34;^2.19.0&#34;
+pytest = &#34;^7.1.1&#34;
+pytest-cov = &#34;^3.0.0&#34;
+mypy = &#34;^0.942&#34;
+types-setuptools = &#34;^57.4.12&#34;
+
+[tool.poetry.scripts]
+command = &#34;sample_project.command:cli&#34;
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = &#34;git&#34;
+
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = &#34;pflake8 src/ tests/&#34; },
+  { cmd = &#34;mypy src/ tests/&#34; }
+]
+help = &#34;check syntax&#34;
+ignore_fail = &#34;return_non_zero&#34;
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = &#34;autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/ tests/&#34; },
+  { cmd = &#34;isort src/ tests/&#34; },
+  { cmd = &#34;black src/ tests/&#34; },
+  &#34;lint&#34;
+]
+help = &#34;format code style&#34;
+
+[tool.poe.tasks.test]
+cmd = &#34;pytest -v --cov=src/ --cov-report=html --cov-report=xml --cov-report=term tests/&#34;
+help = &#34;run test&#34;
+
+[tool.isort]
+profile = &#34;black&#34;
+
+[tool.flake8]
+max-line-length = 88
+
+[build-system]
+requires = [&#34;poetry-core&gt;=1.0.0&#34;]
+build-backend = &#34;poetry.core.masonry.api&#34;
+</code></pre><p>雑に書く時の構成に追加して <code>poetry add -D pytest pytest-cov mypy types-setuptools</code> としています。
+ポイントとしては以下です。</p>
+<ul>
+<li>mypyの導入</li>
+<li>テストコードの導入(<code>pytest</code>、<code>pytest-cov</code>)</li>
+<li>poetry-dynamic-versioningの導入</li>
+<li>GitHub Actionsの導入</li>
+</ul>
+<h2 id="mypyの導入">mypyの導入</h2>
+<p>Pythonの<a href="https://docs.python.org/ja/3/library/typing.html">型ヒント</a>というやつですね。最近少しづつ付けられるようになりました。
+<code>mypy</code>は型ヒントを見てチェックをしてくれます。<a href="https://mypy.readthedocs.io/en/stable/">公式</a>曰く「static type checker」です。</p>
+<p>もともとPythonは動的に型を判断する動的型付け言語です。
+プログラム内で変数の中に入る型はプログラム実行中に決まります。</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; def printType(var):
+...   print(type(var))
+...
+&gt;&gt;&gt; printType(123)
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; printType(&#34;abc&#34;)
+&lt;class &#39;str&#39;&gt;
+</code></pre><p>静的型付け言語や動的型付け言語などしらべるとたくさん情報が出てくると思います。</p>
+<p>Python3.5から <code>typing</code> というモジュールが追加され、Pythonでも静的型付けが出来るようになってきました。
+先程の関数の引数 <code>var</code> を <code>str</code> 型を受け付けるように型ヒントを付けると以下のようになります。</p>
+<pre tabindex="0"><code>def printType(var: str):
+  print(type(var))
+</code></pre><p>ただPythonは「型ヒント」というように、型の情報はあくまでヒントにすぎず、これに沿わなくてもプログラムは動作します。</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; def printType(var: str):
+...   print(type(var))
+...
+&gt;&gt;&gt; printType(123)
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; printType(&#34;abc&#34;)
+&lt;class &#39;str&#39;&gt;
+</code></pre><p>そしてこの型ヒントを見てコードのチェックをしてくれる賢いやつが <code>mypy</code> というツールになります。
+<code>mypy</code> は型ヒントを見てコード実行前に不正な代入が行われていないかチェックしてくれます。
+先程のコードを <code>mypy</code> を使ってチェックすると以下のようなエラーになります。</p>
+<pre tabindex="0"><code>error: Argument 1 to &#34;printType&#34; has incompatible type &#34;int&#34;; expected &#34;str&#34;
+</code></pre><p><code>printType</code>には<code>str</code>が渡されるはずなのに<code>int</code>が渡されていると言われてますね。
+リンター同様に未来のバグを発見することが出来ます。
+例えば以下のようなコードがあるとします。</p>
+<pre tabindex="0"><code>from typing import Union
+
+def func(var: Union[str, int]) -&gt; int:
+    return len(var)
+
+length = func(&#34;abc&#34;)
+print(length)
+</code></pre><p><code>Union</code> というのは <code>typing</code> モジュールに含まれるもので、
+<code>Union[str, int]</code> というのは「<code>str</code>か<code>int</code>のどちらか」という意味になります。</p>
+<p><code>def func(var: Union[str, int]) -&gt; int:</code> というのは、
+「<code>var</code>という引数は<code>str</code>か<code>int</code>の型を受け取り、この関数の返り値は <code>int</code> になる」という意味です。</p>
+<p>このプログラムはエラーなく動作します。</p>
+<pre tabindex="0"><code>$ python3 test.py
+3
+</code></pre><p>ですが<code>mypy</code>を実行するとエラーになります。</p>
+<pre tabindex="0"><code>$ mypy test.py
+test.py:4: error: Argument 1 to &#34;len&#34; has incompatible type &#34;Union[str, int]&#34;; expected &#34;Sized&#34;
+Found 1 error in 1 file (checked 1 source file)
+</code></pre><p><code>var</code> は <code>int</code> と <code>str</code> を許容するはずですが、関数内で利用されている <code>len(var)</code> は <code>int</code> では動作しないためです。
+将来的に <code>int</code> 型の値を入れていたらエラーになっていたことでしょう。
+こういった将来的にバグをうむ可能性がある箇所を事前にチェックしてくれるのでとても気に入っています。
+先程のプログラムは以下の用に修正すると <code>mypy</code> のチェックに通るようになります。</p>
+<pre tabindex="0"><code>from typing import Union
+
+def func(var: Union[str, int]) -&gt; int:
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+length = func(&#34;abc&#34;)
+print(length)
+</code></pre><p>(そもそもどういう意図のコードなのかは置いておいてください私もわかりません)</p>
+<p>最近ようやく慣れてきましたがまだ直し方のわからないエラーに遭遇することがあります&hellip;</p>
+<p>また<code>poetry run poe lint</code> で <code>mypy</code> の実行も出来るように<code>[tool.poe.tasks.lint]</code> の設定も追加されています。</p>
+<h2 id="テストコードの導入">テストコードの導入</h2>
+<p>コードの動作を保証するためにテストコードも導入します。
+テストコードは実際に動作するコードとは別に、それの動作をテストするためのコードです。
+Pythonのテストコードを導入するライブラリとしては <code>pytest</code> がメジャーだと思います(自分調べ)
+私はそれに加え <code>pytest-cov</code> というライブラリも合わせて導入しています。</p>
+<p>私の構成ではテストコードは <code>tests/</code> ディレクトリ配下にまとめます。
+<code>pytest</code> は指定したディレクトリ内の <code>test_*.py</code> というファイルか <code>*_test.py</code> というファイルをテストコードと認識し、
+テストを実行していきます。
+詳しくは <a href="https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#test-discovery">公式</a>に記載されています。</p>
+<p>例えば先程のコード</p>
+<pre tabindex="0"><code>from typing import Union
+
+def func(var: Union[str, int]) -&gt; int:
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+length = func(&#34;abc&#34;)
+print(length)
+</code></pre><p>これのテストコードの例としては以下のようになります。</p>
+<pre tabindex="0"><code>from sample_project.main import func
+
+
+def test_func_success_str():
+    assert func(&#34;test&#34;) == 4
+</code></pre><p><code>from sample_project.main import func</code> は先程のコードが <code>src/sample_project/main.py</code> に記載されていることを想定しています。
+今回テストする <code>func</code> 関数をインポートしています。</p>
+<p>このテストを実行するには <code>pytest tests/</code> と実行してください。</p>
+<pre tabindex="0"><code>$ poetry run pytest tests/
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /tmp/sample-project
+plugins: cov-3.0.0
+collected 1 items                                                                                                                          
+
+tests/test_func.py  .                                                                                                                [100%]
+
+============================================================ 1 passed in 0.01s =============================================================
+</code></pre><p>よい感じに出力してくれます。</p>
+<p>テストの書き方は様々な考え方があるのでこう書くべき！みたいなのはここでは言及しませんが、
+関数ごとに最低限の機能を満たしているか確認するようなテストコードはあると将来の自分が助かります。</p>
+<p>少し時間をあけた後にプログラムの改修をした際などに、既存の機能が破壊されていないことを手軽に確認出来ますし、
+手作業で確認するのと違って確認漏れなどが発生しづらいので、将来の自分が安心して手を加えられるようにもテストコードはあるに越したことはないと思っています。</p>
+<h3 id="カバレッジ">カバレッジ</h3>
+<p>テストにはカバレッジ(coverage)というもの(?)があります。
+テストカバー率と言えばまだわかりやすいかもしれません。
+簡単に言うと「コード全体の内テストコードでカバー出来た部分の割合」でしょうか。</p>
+<p><code>pytest</code> では <code>pytest-cov</code> というプラグインを使うことで簡単に計測できます。
+<code>pytest-cov</code> がインストールされている環境では <code>pytest</code> に新しいオプションが追加されます。
+それが <code>--cov</code> や <code>--cov-report</code> です。</p>
+<p>先程のテストコードをもとに実行するコマンドを <code>pytest --cov=src/ tests/</code> としてみましょう。</p>
+<pre tabindex="0"><code>$ poetry run pytest --cov=src/ tests/                       
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /home/shun/document/tmp/sample-project
+plugins: cov-3.0.0
+collected 1 item                                                                                                                           
+
+tests/test_func.py .                                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.10.4-final-0 -----------
+Name                         Stmts   Miss  Cover
+------------------------------------------------
+src/sample_project/main.py       7      1    86%
+------------------------------------------------
+TOTAL                            7      1    86%
+
+
+============================================================ 1 passed in 0.02s =============================================================
+</code></pre><p>86%となっていますね。これはテストコード実行時に <code>src/sample_project/main.py</code> の86%の行が実行されたことを示します。</p>
+<p>さらに <code>--cov-report</code> オプションを追加してみましょう。
+これは計測結果の出力形式を指定できます。
+私のお気に入りは <code>--cov-report=html</code> です。</p>
+<pre tabindex="0"><code>$ poetry run pytest --cov=src/ --cov-report=html tests/
+=========================================================== test session starts ============================================================
+platform linux -- Python 3.10.4, pytest-7.1.2, pluggy-1.0.0
+rootdir: /home/shun/document/tmp/sample-project
+plugins: cov-3.0.0
+collected 1 item                                                                                                                           
+
+tests/test_func.py .                                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.10.4-final-0 -----------
+Coverage HTML written to dir htmlcov
+
+
+============================================================ 1 passed in 0.03s =============================================================
+</code></pre><p><code>Coverage HTML written to dir htmlcov</code> と書かれているように、計測結果がHTMLファイルで<code>htmlcov</code>配下に出力されます。
+お好きなWebブラウザで <code>htmlcov/index.html</code> を表示すると計測結果がとても見やすく表示されます。</p>
+
+<link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/hugo-easy-gallery.css" />
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/images/20220719/coverage_report_top.png" alt="/images/20220719/coverage_report_top.png"/>
+    </div>
+    <a href="/images/20220719/coverage_report_top.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>また、コードを直接表示し、テストで実行された行と実行されなかった行を見やすく表示してくれます。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/images/20220719/coverage_report_main_86.png" alt="/images/20220719/coverage_report_main_86.png"/>
+    </div>
+    <a href="/images/20220719/coverage_report_main_86.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>今回は6行目 <code>return var</code> の行が実行されていませんでした。
+つまり <code>var</code> が <code>int</code> だった場合のテストが無かったわけです。
+これを解消するにはテストを増やしましょう。</p>
+<pre tabindex="0"><code>from sample_project.main import func
+
+
+def test_func_success_str():
+    assert func(&#34;test&#34;) == 4
+
+def test_func_success_int():
+    assert func(10) == 10
+</code></pre>
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/images/20220719/coverage_report_main_100.png" alt="/images/20220719/coverage_report_main_100.png"/>
+    </div>
+    <a href="/images/20220719/coverage_report_main_100.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>全てのコードがテストで実行され、カバレッジが100%になりました。</p>
+<p>今回のように「テストコードの作成漏れ」を探すのにとても助かります。
+ただ「カバレッジが100%のコードがいいコード」とは限りません。
+カバレッジを100%にしたいがために追加したテストコードは、
+必ずしも適切なテストコードになるとは限らないからです。</p>
+<p>ただカバレッジが100%になったときは達成感があるので、100%に出来るならしてしまいます。(小声)</p>
+<p>カバレッジをどこまで求めるかは人によって意見の分かれそうなところですね。</p>
+<h2 id="poetry-dynamic-versioningの導入">poetry-dynamic-versioningの導入</h2>
+<p><a href="https://github.com/mtkennerly/poetry-dynamic-versioning"><code>poetry-dynamic-versiong</code></a>というライブラリを導入します。
+導入するといってもこれは今までのライブとは少しテイストが違います。</p>
+<p>というのも、<code>Poetry</code> 自体の拡張ライブラリになります。
+<code>Poetry</code> が導入されている環境にインストールする必要があるので <code>pyproject.toml</code> には記載しません。
+例えば <code>Poetry</code> を <code>python3 -m pip install --user poetry</code> としてインストールした場合は <code>python3 -m pip install --user poetry-dynamic-versioning</code> とします。</p>
+<p>結局 <code>poetry-dynamic-versioning</code> とは何かと言うと、パッケージのバージョンを外部から取得出来るようにするツールです。</p>
+<p>というのも <code>Poetry</code> ではパッケージのバージョンは <code>pyproject.toml</code> に記述するしか方法がありません。
+<code>setup.cfg</code> の頃は<a href="https://setuptools.pypa.io/en/latest/userguide/declarative_config.html#specifying-values">コード内の変数から取得出来たり</a>、
+<a href="https://github.com/pypa/setuptools_scm/"><code>setuptools-scm</code></a> というライブラリを利用して、gitのタグをそのままバージョンとする方法がありました。</p>
+<p><code>poetry-dynamic-versioning</code>はまさにそれらと同等のことを <code>Poetry</code> で実現するためのライブラリです。</p>
+<p><code>poetry-dynamic-versioning</code> の設定は<code>pyproject.toml</code>の<code>[tool.poetry-dynamic-versioning]</code>に記述します。
+私が使っている設定は以下になります。</p>
+<pre tabindex="0"><code>[tool.poetry-dynamic-versioning]
+enable = true
+vcs = &#34;git&#34;
+</code></pre><p>ほぼデフォルトのままですね。さらに言えば <code>vcs = &quot;git&quot;</code> は明示的に書かなくても動作するので実際は <code>enable = true</code> の1行で動作します。</p>
+<p>これを設定し、<code>v0.0.0</code>の形式でgitのタグを設定すると、タグの値をバージョンとして認識してくれます。</p>
+<pre tabindex="0"><code>$ git tag v0.9.1
+
+$ poetry version
+sample-project 0.9.1
+</code></pre><p>設定をすることでタグから追加のコミットがあった場合、バージョン名に開発版を示すタグをつけたり出来ます。
+私はそこまでは必要としていないので使っていません。興味がある方は公式のドキュメントを読んでみてください。
+結構いろんなことが出来ます。</p>
+<h3 id="__version__"><code>__version__</code></h3>
+<p>ライブラリには <code>__version__</code> という変数を設定しているものをよく見ます。
+<del>正直必要性はよくわかっていませんが</del> せっかくなら定義しておきたいですね。</p>
+<p>私がよく書く <code>__init__.py</code> はこちらです。</p>
+<pre tabindex="0"><code>__name__ = &#34;sample-project&#34;
+import pkg_resources
+
+__version__ = pkg_resources.get_distribution(__name__).version
+</code></pre><p><code>pkg_resources</code> を使ってインストールされているライブラリのメタデータを参照する形になります。
+こうすることで <code>pyproject.toml</code> と別に直接バージョンを書く必要がなくなります。</p>
+<p>PoetryのどこかしらのIssueで見てから参考にさせてもらってます。</p>
+<p>実はこの書き方、このまま <code>mypy</code> を通すとエラーになります。</p>
+<pre tabindex="0"><code>$ poetry run poe lint
+Poe =&gt; pflake8 src/ tests/
+Poe =&gt; mypy src/
+src/sample_project/__init__.py:2: error: Library stubs not installed for &#34;pkg_resources&#34; (or incompatible with Python 3.10)
+src/sample_project/__init__.py:2: note: Hint: &#34;python3 -m pip install types-setuptools&#34;
+src/sample_project/__init__.py:2: note: (or run &#34;mypy --install-types&#34; to install all missing stub packages)
+src/sample_project/__init__.py:2: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+Found 1 error in 1 file (checked 2 source files)
+Error: Subtasks lint[1] returned non-zero exit status
+</code></pre><p><code>pkg_resources</code> の型情報を追加でインストールする必要があるのですね。
+そのために <code>types-setuptools</code> をあわせてインストールしています。</p>
+<pre tabindex="0"><code>$ poetry add -D types-setuptools 
+Using version ^63.2.0 for types-setuptools
+
+Updating dependencies
+Resolving dependencies... (0.2s)
+
+Writing lock file
+
+Package operations: 1 install, 0 updates, 0 removals
+
+  - Installing types-setuptools (63.2.0)
+
+$ poetry run poe lint
+Poe =&gt; pflake8 src/ tests/
+Poe =&gt; mypy src/
+Success: no issues found in 2 source files
+</code></pre><h2 id="github-actionsの導入">GitHub Actionsの導入</h2>
+<p>GitHub ActionsはGitHubが提供しているCIツールです。
+CIとは継続的インテグレーションというもので、継続的インテグレーションが何かと言うと&hellip;なんでしょう()</p>
+<p>テストコードの実行やカバレッジ計測、パッケージのリリースなどの自動化が出来ます。</p>
+<p><a href="https://www.travis-ci.com/"><code>Travis CI</code></a>や<a href="https://circleci.com/ja/"><code>Circle CI</code></a>などのサービスもありますが、
+私はGitHubのリポジトリであればそのまま利用出来る<code>GitHub Actions</code>に落ち着きました。</p>
+<p><code>Github Actions</code>の設定は、<code>.github/workflows/</code>内にYAMLファイルで記述します。
+これも一度作ったものをコピペし続けてる秘伝のタレになってますw
+そんな私の <code>GitHub Actions</code>の設定はこちらになります。</p>
+<pre tabindex="0"><code>name: Test
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - &#39;*&#39;
+    tags:
+      - &#39;v*.*.*&#39;
+
+jobs:
+  lint:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: &#39;3.10&#39;, python: &#39;3.10&#39;, os: ubuntu-latest}
+          - {name: &#39;3.9&#39;, python: &#39;3.9&#39;, os: ubuntu-latest}
+          - {name: &#39;3.8&#39;, python: &#39;3.8&#39;, os: ubuntu-latest}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: update pip
+        run: pip install -U pip setuptools wheel
+      - name: install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: install libraries
+        run: poetry install
+      - name: run lint
+        run: poetry run poe lint
+  test:
+    needs: lint
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: &#39;3.10&#39;, python: &#39;3.10&#39;, os: ubuntu-latest}
+          - {name: &#39;3.9&#39;, python: &#39;3.9&#39;, os: ubuntu-latest}
+          - {name: &#39;3.8&#39;, python: &#39;3.8&#39;, os: ubuntu-latest}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: update pip
+        run: pip install -U pip setuptools wheel
+      - name: install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: install libraries
+        run: poetry install
+      - name: run test
+        run: poetry run poe test
+      - name: upload codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+  release:
+    needs: test
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - if: startsWith(github.ref, &#39;refs/tags/v&#39;)
+        env:
+          REF: ${{ github.ref }}
+        run: echo &#34;${REF##*/}&#34;
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: &#39;3.9&#39;
+      - name: Update pip
+        run: pip install -U pip setuptools wheel
+      - name: Install poetry
+        run: pip install poetry poetry-dynamic-versioning
+      - name: Install dependent libraries
+        run: poetry install
+      - name: Build package
+        run: poetry build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: &#39;dist&#39;
+          path: &#39;dist&#39;
+      - name: Create Release
+        if: startsWith(github.ref, &#39;refs/tags/v&#39;)
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: &#39;dist/*&#39;
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+      #- name: Publish to PyPI
+      #  if: startsWith(github.ref, &#39;refs/tags/v&#39;)
+      #  env:
+      #    POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      #  run: poetry publish
+</code></pre><p>軽く説明すると、<code>on</code> でこのワークフローを動かすタイミングを定義しており、
+<code>jobs</code> でこのワークフローのジョブを定義しています。</p>
+<p><code>job</code> には <code>lint</code>、<code>test</code>、<code>release</code>の3つのジョブが定義されています。</p>
+<p><code>lint</code>ジョブでは <code>Python3.8</code>、<code>Python3.9</code>、<code>Python3.10</code>の3つのバージョンで <code>poetry run poe lint</code> を実行しています。</p>
+<p><code>lint</code>ジョブに成功した場合は<code>test</code>ジョブが実行されます。
+<code>test</code>ジョブでは <code>Python3.8</code>、<code>Python3.9</code>、<code>Python3.10</code>のバージョンで<code>poetry run poe test</code>を実行しています。
+また、<a href="https://about.codecov.io/">Codecov</a>というサービスを使ってカバレッジの記録をしています。
+そのため事前に<code>CODECOV_TOKEN</code>という変数に<code>Codecove</code>のアクセストークンを設定しておく必要があります。
+<code>GitHub Actions</code>ではアクセストークンなど、リポジトリには入れずに利用したい変数をリポジトリの<code>Settings-&gt;Security-&gt;Secrets-&gt;Actions-&gt;New repository secret</code>で設定することが出来ます。</p>
+<p><code>test</code>ジョブに成功した場合は<code>release</code>ジョブが実行されます。
+<code>release</code>ジョブでは<code>poetry build</code>を実行しGitHubのリリースページを作成しています。
+<code>Create Release</code>ステップでは <code>if: startsWith(github.ref, 'refs/tags/v')</code>としています。
+こうすることでgitのタグをプッシュした時のみ動作するようになります。</p>
+<p>まとめると、コミット時に<code>lint -&gt; test -&gt; release(poetry build のみ)</code>の順にジョブが動作し、タグをプッシュした時に <code>lint -&gt; test -&gt; release(Releaseの作成も込み)</code>という順でジョブが実行されます。</p>
+<p>開発中は特に気にせずコミットし続けるだけでテストやカバレッジの計測をしてくれる上、
+タグをプッシュした際はパッケージを作成しReleaseの作成まで自動でしてくれます。</p>
+<p>上の設定はどのプロジェクトでもほぼコピペで動作するのでとても重宝しています。</p>
+<h1 id="真剣に書くときの構成">真剣に書くときの構成</h1>
+<p>「真剣に書く」の基準としては、PyPIに公開する予定がある、をイメージしています。
+赤の他人が見て利用出来ることを想定するので、ドキュメントをしっかり書きます。
+逆にここまでしっかり作り込まない時は<code>README</code>につらつら書いて済ませてしまいます。</p>
+<p>ディレクトリ構成はこちらです。</p>
+<pre tabindex="0"><code>sample-project
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .readthedocs.yaml
+├── README.rst
+├── CHANGELOG.rst
+├── LICENSE
+├── poetry.lock
+├── pyproject.toml
+├── .github
+│   └── workflows
+│       └── main.yml
+├── docs
+│   ├── conf.py
+│   ├── index.rst
+│   ├── quickstart.rst
+│   └── changelog.rst
+├── src
+│   └── sample_project
+│       ├── __init__.py
+│       ├── main.py
+│       └── command.py
+└── tests
+    └── test_command.py
+</code></pre><p>少し真面目に書く時の構成から変更されたポイントとしてはやはり <code>docs/</code> ディレクトリでしょうか。
+自分以外にプログラムを利用してもらおうと思った時一番大事になる部分がドキュメントだと最近思うようになりました。
+そのためPyPIに公開するようなプログラムは <code>Sphinx</code> でちゃんとドキュメントを整備すべきだと思い、
+この構成に落ち着きました。
+実際に他人がドキュメントを見るかどうかはわかりませんが、
+ここで言う「自分以外」には「未来の自分」も含まれます。
+と言うか多分一番助かってるのが未来の自分だと思いますw</p>
+<p><code>LINCENSE</code>ファイルなども増えていますが、これは<code>GitHub</code>でリポジトリ作成時に自動生成されるものを利用しています。</p>
+<p>また、この構成での <code>pyproject.toml</code> を晒します。</p>
+<pre tabindex="0"><code>[tool.poetry]
+name = &#34;sample-project&#34;
+version = &#34;0.9.0&#34;
+description = &#34;sample project&#34;
+authors = [&#34;KAWAI Shun &lt;your@mail.example.com&gt;&#34;]
+packages = [
+  { from = &#34;src/&#34;, include = &#34;sample_project&#34; }
+]
+include = [
+  &#34;CHANGELOG.rst&#34;
+]
+
+[tool.poetry.dependencies]
+python = &#34;^3.10&#34;
+click = &#34;^8.1.3&#34;
+
+[tool.poetry.dev-dependencies]
+flake8 = &#34;^4.0.1&#34;
+pyproject-flake8 = &#34;^0.0.1-alpha.4&#34;
+isort = &#34;^5.10.1&#34;
+autoflake = &#34;^1.4&#34;
+black = &#34;^22.6.0&#34;
+poethepoet = &#34;^0.15.0&#34;
+pre-commit = &#34;^2.19.0&#34;
+pytest = &#34;^7.1.1&#34;
+pytest-cov = &#34;^3.0.0&#34;
+mypy = &#34;^0.942&#34;
+types-setuptools = &#34;^57.4.12&#34;
+Sphinx = &#34;^5.0.2&#34;
+
+[tool.poetry.scripts]
+command = &#34;sample_project.command:cli&#34;
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = &#34;git&#34;
+
+[tool.poe.tasks.lint]
+sequence = [
+  { cmd = &#34;pflake8 src/ tests/&#34; },
+  { cmd = &#34;mypy src/ tests/&#34; }
+]
+help = &#34;check syntax&#34;
+ignore_fail = &#34;return_non_zero&#34;
+
+[tool.poe.tasks.format]
+sequence = [
+  { cmd = &#34;autoflake -ir --remove-all-unused-imports --ignore-init-module-imports src/ tests/&#34; },
+  { cmd = &#34;isort src/ tests/&#34; },
+  { cmd = &#34;black src/ tests/&#34; },
+  &#34;lint&#34;
+]
+help = &#34;format code style&#34;
+
+[tool.poe.tasks.test]
+cmd = &#34;pytest -v --cov=src/ --cov-report=html --cov-report=xml --cov-report=term tests/&#34;
+help = &#34;run test&#34;
+
+[tool.poe.tasks.doc]
+sequence = [ 
+  { cmd = &#34;sphinx-apidoc -f -e -o docs/ src/sample_project/ &#34;},
+  { cmd = &#34;sphinx-build docs/ build-docs/&#34;},
+]
+help = &#34;build document&#34;
+
+[tool.isort]
+profile = &#34;black&#34;
+
+[tool.flake8]
+max-line-length = 88
+
+[build-system]
+requires = [&#34;poetry-core&gt;=1.0.0&#34;]
+build-backend = &#34;poetry.core.masonry.api&#34;
+</code></pre><p>少し真面目に書く時の構成に追加して <code>poetry add -D Sphinx</code> としています。
+また <code>Sphinx</code> の初期設定のため <code>sphinx-quickstart</code> を実行します。
+<code>sphinx-quickstart</code>を実行すると対話的に設定を入力し、
+<code>source/index.rst</code>と<code>source/conf.py</code>を生成してくれます。</p>
+<pre tabindex="0"><code>$ poetry run sphinx-quickstart --sep -l ja --ext-autodoc --no-makefile --no-batchfile --extensions sphinx.ext.napoleon
+Sphinx 5.0.2 クイックスタートユーティリティへようこそ。
+
+以下の設定値を入力してください（Enter キーのみ押した場合、
+かっこで囲まれた値をデフォルト値として受け入れます）。
+
+選択されたルートパス: .
+
+プロジェクト名は、ビルドされたドキュメントのいくつかの場所にあります。
+&gt; プロジェクト名: sample-project
+&gt; 著者名（複数可）: KAWAI Shun &lt;your@mail.example.com&gt;
+&gt; プロジェクトのリリース []: 0.9.0
+
+ファイル /tmp/sample-project/source/conf.py を作成しています。
+ファイル /tmp/sample-project/source/index.rst を作成しています。
+
+終了：初期ディレクトリ構造が作成されました。
+
+マスターファイル /tmp/sample-project/source/index.rst を作成して
+他のドキュメントソースファイルを作成します。次のように、ドキュメントを構築するには sphinx-build コマンドを使用してください。
+ sphinx-build -b builder /tmp/sample-project/source /tmp/sample-project/build
+&#34;builder&#34; はサポートされているビルダーの 1 つです。 例: html, latex, または linkcheck
+</code></pre><p>また <code>source</code>ディレクトリだと <code>src</code>と被ってしまうので、<code>mv source/ docs/</code> としディレクトリ名をリネームします。
+ここまでやってこの構成は完成です。</p>
+<p>それではこの構成のポイントをまとめます。</p>
+<ul>
+<li>Sphinxの導入</li>
+<li><code>.readthedocs.yaml</code> の導入</li>
+<li>PyPIへの公開</li>
+</ul>
+<h2 id="sphinxの導入">Sphinxの導入</h2>
+<p><a href="https://www.sphinx-doc.org/ja/master/"><code>Sphinx</code></a>とはドキュメント生成ツールです。
+<a href="https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html"><code>reStructuredText</code></a>というマークアップランゲージを利用してドキュメントを記述出来ます。
+まだあまり長い文章を書いたことはありませんが、当然1からHTMLを書くよりははるかに楽です。</p>
+<p>Sphinxの設定ファイルは <code>docs/conf.py</code> になります。
+Pythonファイルなのでコードを書くことも出来ますが、あまり必要になったことはありません。</p>
+<p>上述したように設定ファイルは<code>sphinx-quickstart</code>コマンドで生成します。</p>
+<pre tabindex="0"><code>$ poetry run sphinx-quickstart --sep -l ja --ext-autodoc --no-makefile --no-batchfile --extensions sphinx.ext.napoleon
+</code></pre><p><code>--extensions sphinx.ext.napoleon</code> で <code>napoleon</code>拡張を有効にし、 <code>--ext-autodoc</code>で<code>autodoc</code>拡張を有効にしています。</p>
+<p>ドキュメントのビルドは次のコマンドで実行できます。</p>
+<pre tabindex="0"><code>$ poetry run sphinx-build docs/ build-docs/
+</code></pre><p>ビルドされたドキュメントは <code>build-docs/index.html</code> を手頃なブラウザで表示すると閲覧できます。</p>
+<p>後述しますがビルドは <code>Read the Docs</code> に任せてしまうので自分でビルドする必要はありません。
+ですが書きながら体裁を確認するのに、やはりビルドする必要は出てきます。
+そのため<code>[tool.poe.tasks.doc]</code>にコマンドを定義し、<code>poetry run poe doc</code> でドキュメントがビルド出来るようにしています。
+ビルドされたドキュメントは <code>build-docs/</code> ディレクトリに保存されますので、
+このディレクトリを <code>.gitignore</code> でgitから除外しています。</p>
+<p>私が最初に作成する <code>docs/index.rst</code> と <code>docs/changelog.rst</code> ファイルの内容を晒します。</p>
+<ul>
+<li><code>index.rst</code></li>
+</ul>
+<pre tabindex="0"><code>Welcome to Sample Project&#39;s documentation!
+==========================================
+
+.. include:: ../README.rst
+
+Document
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+
+Chagelog
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   changelog.rst
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+</code></pre><ul>
+<li><code>changelog.rst</code></li>
+</ul>
+<pre tabindex="0"><code>.. include:: ../CHANGELOG.rst
+</code></pre><p><code>changelog.rst</code> はとてもシンプルで <code>CHANGELOG.rst</code> の内容をそのまま出力しています。</p>
+<p><code>index.rst</code> の <code>.. include:: ../README.rst</code> に関しても同様で、
+<code>README.rst</code>の内容をそのまま出力しています。</p>
+<p><code>.. toctree::</code> がリンクのような機能を果たします。</p>
+<pre tabindex="0"><code>.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+</code></pre><p>とすることで <code>quickstart.rst</code> へのリンクが作成されます。
+あとは <code>quickstart.rst</code> をせっせと書いたり、
+はたまた追加のreSTファイルを作成し、toctreeに追記したりします。</p>
+<h3 id="sphinx-apidoc">sphinx-apidoc</h3>
+<p>Sphinxをインストールした環境には<code>sphinx-apidoc</code> というコマンドが存在します。
+これが非常に便利でこれを使うだけでそれっぽいAPIリファレンスが生成出来ます。</p>
+<p>sphinx-apidocは適切な箇所(関数やクラスの先頭)に適切な構文でコメントを書くと、
+それを認識し、APIドキュメントを生成してくれます。
+<code>docstring</code> で検索すると色々出てきます。</p>
+<p>例として先程のサンプルコードにdocstringを追加しましょう。</p>
+<pre tabindex="0"><code>from typing import Union
+
+
+def func(var: Union[str, int]) -&gt; int:
+    &#34;&#34;&#34;
+    文字列か数値を受け取る。
+    数値はそのまま返し、
+    文字列は文字列の長さを返す。
+
+    :param var: 文字列か数値
+    :type var: Union[str, int]
+    :return: 文字列の長さか数値
+    :rtype: int
+    &#34;&#34;&#34;
+    if isinstance(var, int):
+        return var
+    return len(var)
+
+
+length = func(&#34;abc&#34;)
+print(length)
+</code></pre><p><code>def func</code> のすぐ下の行からdocstringが記述されています。
+まず関数やクラスの説明文を書き、その後に引数などの定義を書きます。
+それぞれ次のような意味になります。</p>
+<ul>
+<li><code>:param &lt;変数名&gt;:</code> &lt;変数名&gt;という引数の説明</li>
+<li><code>:type &lt;変数名&gt;:</code> &lt;変数名&gt;という引数の型</li>
+<li><code>:return:</code> 関数の戻り値の説明</li>
+<li><code>:rtype:</code> 関数の戻り値の型</li>
+</ul>
+<p>これで <code>sphinx-apidoc</code> を実行します。</p>
+<pre tabindex="0"><code>$ poetry run sphinx-apidoc -f -e -o docs/ src/sample_project/
+</code></pre><p><code>docs/</code> 内に新しいファイルが生成されました。</p>
+<pre tabindex="0"><code>$ ls docs 
+_static  _templates  changelog.rst  conf.py  index.rst  modules.rst  sample_project.main.rst  sample_project.rst
+</code></pre><p><code>sample_project.rst</code>や<code>sample_project.main.rst</code>がモジュールごとのファイルとなり、
+<code>modules.rst</code>ファイルがメインのファイルになります。</p>
+<p>しかし、このままでは <code>modules.rst</code> がどこにもリンクの無いページになってしまいますので、
+<code>index.rst</code>から飛べるようにリンクを追記しましょう。</p>
+<pre tabindex="0"><code>Welcome to Sample Project&#39;s documentation!
+==========================================
+
+.. include:: ../README.rst
+
+Document
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   quickstart.rst
+
+API Reference
+-------------
+
+.. toctree::
+   :maxdepth: 2
+
+   modules.rst
+
+Chagelog
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   changelog.rst
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+</code></pre><p>上述したようにtoctreeを追加することでリンクを生成します。
+実際にビルドしたら以下のようになります。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/images/20220719/docstring_reST.png" alt="/images/20220719/docstring_reST.png"/>
+    </div>
+    <a href="/images/20220719/docstring_reST.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>コメント書くだけでここまで自動生成してくれるのは便利ですよね。
+これが <code>sphinx-apidoc</code> です。</p>
+<h3 id="sphinxextnapoleon"><code>sphinx.ext.napoleon</code></h3>
+<p><code>docstring</code> の書き方には様々な流派があります。
+中でも<code>Google Style</code>というのがわかりやすくて良いという記事を見たことがあります。</p>
+<ul>
+<li><a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google Styleの例</a></li>
+</ul>
+<p>Google Style で先程のdocstringを記述すると次のようになります。</p>
+<pre tabindex="0"><code>from typing import Union
+
+
+def func(var: Union[str, int]) -&gt; int:
+    &#34;&#34;&#34;
+    文字列か数値を受け取る。
+    数値はそのまま返し、
+    文字列は文字列の長さを返す。
+
+    Args:
+        var (Union[str, int]): 文字列か数値を指定する
+
+    Returns:
+        int: 文字列の長さか数値が返る
+    &#34;&#34;&#34;
+    if isinstance(var, int):
+        return var
+    return len(var)
+</code></pre><p>うーん少し見やすくなった気もしますが、この程度の量だとあまり恩恵を感じられませんね。</p>
+<p>Google Styleのdocstringを解釈出来るようにするために <code>sphinx.ext.napoleon</code> という拡張を有効にする必要があります。
+有効にしてはいるもののGoogle Styleをあまり使っていないので、これもまた私は使いこなせていませんw</p>
+<p>ビルド結果は先程と同様になるので割愛します。</p>
+<h2 id="read-the-docsの導入">Read the Docsの導入</h2>
+<p><a href="https://readthedocs.org/"><code>Read the Docs</code></a> はドキュメントの自動ホスティングサービスで、
+<code>Sphinx</code>と相性がいいので多くのPythonライブラリのドキュメントに利用されています。</p>
+<p>ログイン時にGitHubと連携することで簡単にプロジェクトと連携することができます。</p>
+<p>Read the Docsの設定は <code>.readthedocs.yaml</code> というファイルで行います。
+私のよく使う <code>.readthedocs.yaml</code> ファイルが以下になります。</p>
+<pre tabindex="0"><code>version: 2
+
+build:
+  os: ubuntu-20.04
+  tools:
+    python: &#34;3.9&#34;
+
+sphinx:
+  configuration: docs/conf.py
+
+python:
+  install:
+    - method: pip
+      path: .
+</code></pre><p><code>install: </code>でビルド前に自身をインストールするように設定しているので、
+<code>docs/conf.py</code> 内で <code>sample_project</code> のコードを利用出来るようになります。</p>
+<p>ですがこれもまた <code>docs/conf.py</code> 内で <code>sample_project</code> を利用することがほぼ無いので
+あまり意味はなしていません。
+一応<code>docs/conf.py</code>内の<code>release</code>を次のようにしたりしていたのですが、</p>
+<pre tabindex="0"><code>from sample_project import __version__
+release = __version__
+</code></pre><p>そもそもこの<code>release</code>の値がドキュメントのどこに反映されているのかよくわかっていませんw</p>
+<p>なのでこのようなことをしない場合は <code>.readthedocs.yaml</code> ファイルは配置しなくても大丈夫だと思います。</p>
+<p>Read the Docsの設定画面から簡単にプロジェクトを連携でき、
+またRead the Docsでドキュメントをビルド、公開までしてくれるのでとても楽ちんです。</p>
+<p><a href="https://mypaceshun-sample-project.readthedocs.io/en/latest/">https://mypaceshun-sample-project.readthedocs.io/en/latest/</a></p>
+<h2 id="pypiへの公開">PyPIへの公開</h2>
+<p><a href="https://pypi.org/">PyPI</a> とはPythonのパッケージレポジトリ(?)です。
+自分の作ったPythonパッケージを公開することが出来ます。
+そもそも <code>pip install click</code> とした場合、clickの実体はPyPIから検索されます。
+つまり今回であれば <code>sample-project</code> をPyPIに登録すれば <code>pip install sample-project</code>とするだけで、
+どこからでも自分のプログラムをインストールすることが出来るようになります。</p>
+<p>今回はサンプルのプロジェクトなのでPyPIには登録しませんがw</p>
+<p>またPyPIの性質上すでに登録されているパッケージ名を重複して登録することは出来ないので、
+自分が登録しようとしている名前がすでに使われていないか、
+コードを書く前に確認したほうがいいかもしれません。</p>
+<p>PyPIに公開するにはPyPIのアカウントが必要なので、事前にアカウント登録をしてください。</p>
+<p>PyPIへ登録する前に<code>pyproject.toml</code>内<code>[tool.poetry]</code> の項目を少し増やします。</p>
+<pre tabindex="0"><code>[tool.poetry]
+name = &#34;sample-project&#34;
+version = &#34;0.9.0&#34;
+description = &#34;Python Sample Project&#34;
+authors = [&#34;KAWAI Shun &lt;your@mail.example.com&gt;&#34;]
+license = &#34;MIT&#34;
+readme = &#34;README.rst&#34;
+repository = &#34;https://github.com/mypaceshun/sample-project&#34;
+documentation = &#34;https://mypaceshun-sample-project.readthedocs.io/&#34;
+keywords = [ 
+  &#34;Python&#34;,
+  &#34;sample&#34;,
+]
+packages = [ 
+  { include = &#34;sample_project&#34;, from = &#34;src&#34; }
+]
+include = [
+  &#34;CHANGELOG.rst&#34;,
+]
+</code></pre><p><code>readme</code>で指定したファイルがPyPI内のトップに表示されます。
+また、<code>repository</code>や<code>documentation</code>を指定することでPyPI内でリンクが生成されます。</p>
+<p>PyPIへの登録はPoetryを利用すればあっという間に出来てしまいます。</p>
+<pre tabindex="0"><code>$ poetry publish --build --dry-run     
+Building sample-project (1.0.0)
+  - Building sdist
+  - Built sample-project-1.0.0.tar.gz
+  - Building wheel
+  - Built sample_project-1.0.0-py3-none-any.whl
+
+Username: xxxxxx
+Password: xxxxxx
+Publishing sample-project (1.0.0) to PyPI
+ - Uploading sample-project-1.0.0.tar.gz 100%
+ - Uploading sample_project-1.0.0-py3-none-any.whl 100%
+</code></pre><p>今回は <code>--dry-dun</code> オプションを付けていますが、これを外せば実際にPyPIに登録されます。
+またユーザー名/パスワードで認証していますがアクセストークンを利用することも出来ます。</p>
+<p>GitHub Actionsの<code>PYPI_TOKEN</code> という変数にアクセストークンの値を設定し、
+先程はコメントアウトされていた以下の設定をコメント解除します。</p>
+<pre tabindex="0"><code>      #- name: Publish to PyPI
+      #  if: startsWith(github.ref, &#39;refs/tags/v&#39;)
+      #  env:
+      #    POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      #  run: poetry publish
+</code></pre><p>そうすると、タグをプッシュした際にPyPIへのアップロードまで実施してくれるようになります。</p>
+<h1 id="まとめ">まとめ</h1>
+<p>長々と書きましたがここまで全て設定すると以下のことが出来るようになっているはずです。</p>
+<ul>
+<li><code>poetry run poe format</code> で自動でコードスタイル整形</li>
+<li>コードをコミット前にリンターを自動で実施</li>
+<li>コードをGitHubにプッシュするとリンターとテストが自動で実行され、codecovがカバレッジを計測してくれる</li>
+<li><code>poetry run poe doc</code> でAPIリファレンス自動生成</li>
+<li>コードをGitHubにプッシュするとreadthedocsがドキュメントを自動でビルド・公開してくれる</li>
+<li>タグをプッシュするとパッケージのビルドが自動で実行され、Releaseを作成し、PyPIにアップロードしてくれる</li>
+</ul>
+<p>コードを書く以外の自動化出来る箇所はほぼほぼ自動化出来ていると思います。</p>
+<p><code>pyproject.toml</code>なんかはかなり量が多くなって自分でも秘伝のタレと化していたので、今回整理する意味でもまとめられてよかったです。
+現状はこの構成に落ち着いていますが、よりよいサービスやツールがあれば取り入れていきたいと思っているので、
+オススメのツールなどあれば教えていただけると嬉しいです。
+Pythonの書き方に悩んでいるどこかの誰かの参考になれば幸いです。</p>
+<p>(今回サンプル用に作成した<code>sample-project</code>は <a href="https://github.com/mypaceshun/sample-project/">https://github.com/mypaceshun/sample-project/</a> に置いてあります)</p>
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/tech/">tech</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/python/">Python</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/poetry/">Poetry</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f&amp;text=Python%e3%81%a7%e9%96%8b%e7%99%ba%e3%81%99%e3%82%8b%e6%99%82%e3%81%ae%e3%83%87%e3%82%a3%e3%83%ac%e3%82%af%e3%83%88%e3%83%aa%e6%a7%8b%e6%88%90%e3%82%92%e6%99%92%e3%81%97%e3%81%be%e3%81%99&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f&amp;title=Python%e3%81%a7%e9%96%8b%e7%99%ba%e3%81%99%e3%82%8b%e6%99%82%e3%81%ae%e3%83%87%e3%82%a3%e3%83%ac%e3%82%af%e3%83%88%e3%83%aa%e6%a7%8b%e6%88%90%e3%82%92%e6%99%92%e3%81%97%e3%81%be%e3%81%99" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f&amp;title=Python%e3%81%a7%e9%96%8b%e7%99%ba%e3%81%99%e3%82%8b%e6%99%82%e3%81%ae%e3%83%87%e3%82%a3%e3%83%ac%e3%82%af%e3%83%88%e3%83%aa%e6%a7%8b%e6%88%90%e3%82%92%e6%99%92%e3%81%97%e3%81%be%e3%81%99" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f&amp;title=Python%e3%81%a7%e9%96%8b%e7%99%ba%e3%81%99%e3%82%8b%e6%99%82%e3%81%ae%e3%83%87%e3%82%a3%e3%83%ac%e3%82%af%e3%83%88%e3%83%aa%e6%a7%8b%e6%88%90%e3%82%92%e6%99%92%e3%81%97%e3%81%be%e3%81%99" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f07%2f19-my-python-style%2f&amp;description=Python%e3%81%a7%e9%96%8b%e7%99%ba%e3%81%99%e3%82%8b%e6%99%82%e3%81%ae%e3%83%87%e3%82%a3%e3%83%ac%e3%82%af%e3%83%88%e3%83%aa%e6%a7%8b%e6%88%90%e3%82%92%e6%99%92%e3%81%97%e3%81%be%e3%81%99" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://mypaceshun.github.io/blog/posts/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/" data-toggle="tooltip" data-placement="top" title="Poetryがとてもいいという話">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://mypaceshun.github.io/blog/posts/2023/01/15-python-command-create/" data-toggle="tooltip" data-placement="top" title="Pythonで自作コマンドをサクっと作る">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-mypaceshun-github-io-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="https://github.com/mypaceshun" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://twitter.com/rikanodorei_823" title="Twitter">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-x-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.instagram.com/rikanodorei" title="Instagram">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.youtube.com/@rikanodorei" title="Youtube">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://mypaceshun.github.io">KAWAI Shun</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2023
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.145.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://mypaceshun.github.io/blog/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://mypaceshun.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

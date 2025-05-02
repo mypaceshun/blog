@@ -4,40 +4,30 @@
     <title>Python on mypaceshun blog</title>
     <link>https://mypaceshun.github.io/blog/tags/python/</link>
     <description>Recent content in Python on mypaceshun blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ja-jp</language>
-    <lastBuildDate>Sun, 15 Jan 2023 20:37:41 +0900</lastBuildDate><atom:link href="https://mypaceshun.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Sun, 15 Jan 2023 20:37:41 +0900</lastBuildDate>
+    <atom:link href="https://mypaceshun.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Pythonで自作コマンドをサクっと作る</title>
-      <link>https://mypaceshun.github.io/blog/2023/01/15-python-command-create/</link>
+      <link>https://mypaceshun.github.io/blog/posts/2023/01/15-python-command-create/</link>
       <pubDate>Sun, 15 Jan 2023 20:37:41 +0900</pubDate>
-      
-      <guid>https://mypaceshun.github.io/blog/2023/01/15-python-command-create/</guid>
-      <description>&lt;p&gt;仕事や趣味でPCを操作している時、簡単な処理をコマンドにしてしまいたいことがあります。
-何度もする操作や処理はひとつのコマンドで処理出来るようになると、非常に気持ちよくなれます。
-コマンドの内容はさておき、作成する手順やpipを使ってインストールするまでの手順を紹介します。&lt;/p&gt;</description>
+      <guid>https://mypaceshun.github.io/blog/posts/2023/01/15-python-command-create/</guid>
+      <description>&lt;p&gt;仕事や趣味でPCを操作している時、簡単な処理をコマンドにしてしまいたいことがあります。&#xA;何度もする操作や処理はひとつのコマンドで処理出来るようになると、非常に気持ちよくなれます。&#xA;コマンドの内容はさておき、作成する手順やpipを使ってインストールするまでの手順を紹介します。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Pythonで開発する時のディレクトリ構成を晒します</title>
-      <link>https://mypaceshun.github.io/blog/2022/07/19-my-python-style/</link>
+      <link>https://mypaceshun.github.io/blog/posts/2022/07/19-my-python-style/</link>
       <pubDate>Tue, 19 Jul 2022 22:42:13 +0900</pubDate>
-      
-      <guid>https://mypaceshun.github.io/blog/2022/07/19-my-python-style/</guid>
-      <description>&lt;p&gt;Pythonでコードを書き始めて気づけば5年くらい経ってました&amp;hellip;
-時の流れが早すぎる&amp;hellip;
-Pythonで開発をする際の構成がおおよそ落ち着いてきたので、まとめる意味も含めここで紹介しようと思います。&lt;/p&gt;</description>
+      <guid>https://mypaceshun.github.io/blog/posts/2022/07/19-my-python-style/</guid>
+      <description>&lt;p&gt;Pythonでコードを書き始めて気づけば5年くらい経ってました&amp;hellip;&#xA;時の流れが早すぎる&amp;hellip;&#xA;Pythonで開発をする際の構成がおおよそ落ち着いてきたので、まとめる意味も含めここで紹介しようと思います。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Poetryがとてもいいという話</title>
-      <link>https://mypaceshun.github.io/blog/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/</link>
+      <link>https://mypaceshun.github.io/blog/posts/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/</link>
       <pubDate>Mon, 06 Jun 2022 22:58:56 +0900</pubDate>
-      
-      <guid>https://mypaceshun.github.io/blog/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/</guid>
-      <description>&lt;p&gt;Poetryの使用感がとてもよく、Pythonでコードを書く際はPoetryが必須の体になってしまいました。
-そこでPoetryはいいぞ！という話と、Poetryの簡単な利用方法をまとめたいと思い本記事を書き始めました。&lt;/p&gt;</description>
+      <guid>https://mypaceshun.github.io/blog/posts/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/</guid>
+      <description>&lt;p&gt;Poetryの使用感がとてもよく、Pythonでコードを書く際はPoetryが必須の体になってしまいました。&#xA;そこでPoetryはいいぞ！という話と、Poetryの簡単な利用方法をまとめたいと思い本記事を書き始めました。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,0 +1,40 @@
+baseURL = "https://mypaceshun.github.io/blog/"
+languageCode = "ja-JP"
+title = "mypaceshun blog"
+theme = "beautifulhugo"
+publishdir = "docs/"
+
+[parmalinks]
+posts = "/:year/:month/:contentbasename/"
+
+[params]
+subtitle = "mypaceshunの独り言ブログ"
+mainSections = ["posts"]
+logo = "images/mypaceshun.png"
+favicon = "images/favicon.ico"
+commit = true
+rss = true
+comments = true
+readingTime = true
+socialShare = true
+delayDisqus = false
+
+[params.author]
+name = "KAWAI Shun"
+website = "https://mypaceshun.github.io"
+github = "mypaceshun"
+twitter = "rikanodorei_823"
+instagram = "rikanodorei"
+youtube = "@rikanodorei"
+
+[[menu.main]]
+identifier = "about"
+name = "about me"
+url = "/page/about/"
+weight = 1
+
+[services.disqus]
+shortname = "https-mypaceshun-github-io-blog"
+
+[services.googleAnalytics]
+id = "G-G00JGTHDLH"

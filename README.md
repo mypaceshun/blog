@@ -29,11 +29,11 @@ hugo server
 ## dockerでブログページのビルド
 
 ```
-docker run --rm -it -v $(pwd):/src klakegg/hugo
+make build
 ```
 
 ## dockerでテストサーバーの起動
 
 ```
-docker run --rm -it -v $(pwd):/src -p 1313:1313 klakegg/hugo server
+make run
 ```
