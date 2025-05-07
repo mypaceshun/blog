@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://mypaceshun.github.io/blog/</loc>
+    <lastmod>2025-05-02T06:56:50+09:00</lastmod>
+  </url><url>
+    <loc>https://mypaceshun.github.io/blog/posts/</loc>
+    <lastmod>2025-05-02T06:56:50+09:00</lastmod>
+  </url><url>
     <loc>https://mypaceshun.github.io/blog/tags/cli/</loc>
     <lastmod>2023-01-15T20:37:41+09:00</lastmod>
   </url><url>
-    <loc>https://mypaceshun.github.io/blog/</loc>
-    <lastmod>2023-01-15T20:37:41+09:00</lastmod>
-  </url><url>
     <loc>https://mypaceshun.github.io/blog/tags/poetry/</loc>
-    <lastmod>2023-01-15T20:37:41+09:00</lastmod>
-  </url><url>
-    <loc>https://mypaceshun.github.io/blog/posts/</loc>
     <lastmod>2023-01-15T20:37:41+09:00</lastmod>
   </url><url>
     <loc>https://mypaceshun.github.io/blog/tags/python/</loc>

@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>初投稿 - mypaceshun blog</title>
-  <meta name="description" content="hugoを利用してblogを作成してみました"><script type="application/ld+json">
+  <title>ユーザー名前空間について調べたことをまとめたい - mypaceshun blog</title>
+  <meta name="description" content="Dockerのrootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。"><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -45,8 +45,8 @@
         "@type": "ListItem",
         "position": 3,
         "item": {
-          "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2022\/05\/my-first-post\/",
-          "name": "初投稿"
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/02-user-namespace\/",
+          "name": "ユーザー名前空間について調べたことをまとめたい"
         }
     }]
 }
@@ -57,15 +57,15 @@
   "author": {
     "name" : "KAWAI Shun"
   },
-  "headline": "初投稿",
-  "description" : "hugoを利用してblogを作成してみました",
+  "headline": "ユーザー名前空間について調べたことをまとめたい",
+  "description" : "Dockerのrootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。",
   "inLanguage" : "en",
-  "wordCount":  6 ,
-  "datePublished" : "2022-05-08T17:12:33\u002b09:00",
-  "dateModified" : "2022-05-08T17:12:33\u002b09:00",
+  "wordCount":  91 ,
+  "datePublished" : "2025-05-02T06:56:50\u002b09:00",
+  "dateModified" : "2025-05-02T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
-  "keywords" : [ "blog" ],
-  "mainEntityOfPage" : "https:\/\/mypaceshun.github.io\/blog\/posts\/2022\/05\/my-first-post\/",
+  "keywords" : [ "tech, Linux, Docker, Podman" ],
+  "mainEntityOfPage" : "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/02-user-namespace\/",
   "publisher" : {
     "@type": "Organization",
     "name" : "https:\/\/mypaceshun.github.io\/blog\/",
@@ -80,15 +80,15 @@
 </script>
 
 
-<meta property="og:title" content="初投稿" />
-<meta property="og:description" content="hugoを利用してblogを作成してみました">
+<meta property="og:title" content="ユーザー名前空間について調べたことをまとめたい" />
+<meta property="og:description" content="Dockerのrootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。">
 <meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
-<meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2022/05/my-first-post/" />
+<meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="mypaceshun blog" />
 
-  <meta name="twitter:title" content="初投稿" />
-  <meta name="twitter:description" content="hugoを利用してblogを作成してみました">
+  <meta name="twitter:title" content="ユーザー名前空間について調べたことをまとめたい" />
+  <meta name="twitter:description" content="Dockerのrootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。">
   <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@rikanodorei_823" />
@@ -232,7 +232,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="posts-heading">
               
-                <h1>初投稿</h1>
+                <h1>ユーザー名前空間について調べたことをまとめたい</h1>
               
               
                 <hr class="small">
@@ -253,29 +253,97 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p><code>hugo</code>を利用してblogを作成してみました。</p>
+        <p>DockerのRootlessモード使ってますか？
+RootlessモードではDockerデーモンをroot以外のユーザーで動作させることができるので、セキュリティ的によいとされています。
+Rootlessな環境でコンテナを動かすと、Linuxカーネルのユーザー名前空間という機能を利用して、コンテナ内のUID/GIDをいい感じに変換します。
+このユーザー名前空間の仕組みについて調べたことをまとめておきたいと思います。</p>
+<h1 id="はじめに">はじめに</h1>
+<p>仕事の中でDockerを使うことはちょこちょこあったんですが、最近はRootlessモードで使ったほうがいいと言われ、
+Rootlessモードでコンテナを動かす機会が多くなりました。
+その際volumesマウントしたファイルが、コンテナ内で読み書き出来なかったり、
+逆にコンテナ内で作成したファイルがホストOSで読み書きできなかったりといったことがありました。
+そういった悲しみから解放されたい一新で、ホストOSとコンテナ内のUID/GIDの関係について調べてみました。
+また、PodmanもデフォルトでDockerのRootlessモードと同じような動きをすると聞いたので、
+Podmanでも同様の検証をしてみようと思います。</p>
+<h1 id="バージョン情報">バージョン情報</h1>
+<p>本文章執筆時の検証環境は以下のとおりです。
+基本的にはDockerで検証していますが、Podmanでも軽く動作確認してみます。
+Dockerはよく使いますがPodmanはまだまだ勉強中です。</p>
+<ul>
+<li>
+<p>OS: AlmaLinux 9.5</p>
+</li>
+<li>
+<p>Kernel: <code>5.14.0-503.38.1.el9_5.x86_64</code></p>
+</li>
+<li>
+<p>Docker:</p>
+<pre tabindex="0"><code>$ rpm -qa | grep docker
+docker-buildx-plugin-0.23.0-1.el9.x86_64
+docker-compose-plugin-2.35.1-1.el9.x86_64
+docker-ce-cli-28.1.1-1.el9.x86_64
+docker-ce-rootless-extras-28.1.1-1.el9.x86_64
+docker-ce-28.1.1-1.el9.x86_64
+</code></pre></li>
+<li>
+<p>Podman:</p>
+<pre tabindex="0"><code>$ rpm -qa | grep podman
+podman-5.2.2-15.el9_5.x86_64
+</code></pre></li>
+</ul>
+<h1 id="dockerpodman周りのuidgid事情">Docker・Podman周りのUID/GID事情</h1>
+<p>volumesマウントしたファイルのUID/GIDに関する悲しみは以下の2つの要因が関連しています。</p>
+<ul>
+<li>起動しているデーモンがrootユーザーで動作しているかどうか(rootful/rootless)</li>
+<li>コンテナ内のプロセスがコンテナ内rootユーザーで動作しているかどうか</li>
+</ul>
+<p>Dockerはインストール後そのまま起動すると、rootユーザーでDockerデーモンが起動します。
+Dockerインストール後、 <code>dockerd-rootless-setuptools.sh</code> というスクリプトを実行することで、
+root以外のユーザーでDockerデーモンが起動できる、rootlessモードという環境が構築できます(
+<a href="https://docs.docker.com/engine/security/rootless/#install">参考</a>)。
+PodmanはデフォルトでDockerのrootlessモードと同じような動きをします。</p>
+<p>また、コンテナ内のプロセスを動作させるユーザーもコンテナごとに指定できます。
+Dockerfileの <code>USER</code> や <code>docker run</code> コマンドの <code>--user</code> オプションである程度自由に指定できます。
+<code>docker run</code> コマンドを使った場合、以下のようになります。</p>
+<pre tabindex="0"><code>$ docker run alpine id
+uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+
+$ docker run --user 1000:1000 alpine id
+uid=1000 gid=1000 groups=1000
+</code></pre><p><code>--user</code> オプションで指定したUID/GIDのユーザーで動作していることが確認できます。</p>
+<p>このように、ホストOS上のUID/GIDとコンテナ内のUID/GIDは別々に考える必要があります。</p>
 
 <link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/hugo-easy-gallery.css" />
 <div class="box" >
   <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
     <div class="img">
-      <img itemprop="thumbnail" src="https://mypaceshun.github.io/blog/images/mypaceshun.png" alt="/images/mypaceshun.png"/>
+      <img itemprop="thumbnail" src="../images/test.png" alt="ホストOSとコンテナ内でのUID"/>
     </div>
-    <a href="https://mypaceshun.github.io/blog/images/mypaceshun.png" itemprop="contentUrl"></a>
+    <a href="../images/test.png" itemprop="contentUrl"></a>
   </figure>
 </div>
 
-<p>技術的な備忘録をメモするために利用できればいいと思っています。</p>
-<p>Markdownから静的なサイトを生成するのに興味があったので、
-良さそうなツールを探し<code>hugo</code>でコンテンツを生成し<code>GitHub Pages</code>で公開しました。</p>
-<p>この構成を作るのに興味があったから作成してみた所もあります。</p>
-
+<h1 id="rootfulなdocker環境でのuidgid">rootfulなDocker環境でのUID/GID</h1>
+<p>rootfulなDocker環境ではホストOSのUID/GIDとコンテナ内のUID/GIDは同じになります。</p>
+<h1 id="ユーザー名前空間の仕組み">ユーザー名前空間の仕組み</h1>
+<h1 id="dockerやpodmanでのユーザー名前空間の使い方">DockerやPodmanでのユーザー名前空間の使い方</h1>
+<h1 id="個人的な結論">個人的な結論</h1>
+<h1 id="参考文献">参考文献</h1>
 
         
           <div class="blog-tags">
             
               
-              <a href="https://mypaceshun.github.io/blog/tags/blog/">blog</a>&nbsp;
+              <a href="https://mypaceshun.github.io/blog/tags/tech/">tech</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/linux/">Linux</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/docker/">Docker</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/podman/">Podman</a>&nbsp;
             
           </div>
         
@@ -290,42 +358,42 @@
     <ul class="share">
       
       <li>
-        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f&amp;text=%e5%88%9d%e6%8a%95%e7%a8%bf&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;text=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f" target="_blank" title="Share on Facebook">
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f" target="_blank" title="Share on Facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f&amp;title=%e5%88%9d%e6%8a%95%e7%a8%bf" target="_blank" title="Share on Reddit">
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on Reddit">
           <i class="fab fa-reddit"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f&amp;title=%e5%88%9d%e6%8a%95%e7%a8%bf" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f&amp;title=%e5%88%9d%e6%8a%95%e7%a8%bf" target="_blank" title="Share on StumbleUpon">
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on StumbleUpon">
           <i class="fab fa-stumbleupon"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2022%2f05%2fmy-first-post%2f&amp;description=%e5%88%9d%e6%8a%95%e7%a8%bf" target="_blank" title="Share on Pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;description=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on Pinterest">
           <i class="fab fa-pinterest"></i>
         </a>
       </li>
@@ -343,10 +411,10 @@
       
         <ul class="pager blog-pager">
           
-          
-            <li class="next">
-              <a href="https://mypaceshun.github.io/blog/posts/2022/06/20220607-poetry%E3%81%AF%E3%81%84%E3%81%84%E3%81%9E/" data-toggle="tooltip" data-placement="top" title="Poetryがとてもいいという話">Next Post &rarr;</a>
+            <li class="previous">
+              <a href="https://mypaceshun.github.io/blog/posts/2023/01/15-python-command-create/" data-toggle="tooltip" data-placement="top" title="Pythonで自作コマンドをサクっと作る">&larr; Previous Post</a>
             </li>
+          
           
         </ul>
       
