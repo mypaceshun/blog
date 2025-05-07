@@ -723,11 +723,11 @@ Coverage HTML written to dir htmlcov
 `Coverage HTML written to dir htmlcov` と書かれているように、計測結果がHTMLファイルで`htmlcov`配下に出力されます。
 お好きなWebブラウザで `htmlcov/index.html` を表示すると計測結果がとても見やすく表示されます。
 
-{{< figure src="../images/coverage_report_top.png" >}}
+{{< figure src="images/coverage_report_top.png" >}}
 
 また、コードを直接表示し、テストで実行された行と実行されなかった行を見やすく表示してくれます。
 
-{{< figure src="../images/coverage_report_main_86.png" >}}
+{{< figure src="images/coverage_report_main_86.png" >}}
 
 今回は6行目 `return var` の行が実行されていませんでした。
 つまり `var` が `int` だった場合のテストが無かったわけです。
@@ -744,7 +744,7 @@ def test_func_success_int():
     assert func(10) == 10
 ```
 
-{{< figure src="../images/coverage_report_main_100.png" >}}
+{{< figure src="images/coverage_report_main_100.png" >}}
 
 全てのコードがテストで実行され、カバレッジが100%になりました。
 
@@ -1201,7 +1201,7 @@ $ poetry run sphinx-build docs/ build-docs/
 Welcome to Sample Project's documentation!
 ==========================================
 
-.. include:: ../README.rst
+.. include:: README.rst
 
 Document
 --------
@@ -1231,12 +1231,12 @@ Indices and tables
 * `changelog.rst`
 
 ```
-.. include:: ../CHANGELOG.rst
+.. include:: CHANGELOG.rst
 ```
 
 `changelog.rst` はとてもシンプルで `CHANGELOG.rst` の内容をそのまま出力しています。
 
-`index.rst` の `.. include:: ../README.rst` に関しても同様で、
+`index.rst` の `.. include:: README.rst` に関しても同様で、
 `README.rst`の内容をそのまま出力しています。
 
 `.. toctree::` がリンクのような機能を果たします。
@@ -1319,7 +1319,7 @@ _static  _templates  changelog.rst  conf.py  index.rst  modules.rst  sample_proj
 Welcome to Sample Project's documentation!
 ==========================================
 
-.. include:: ../README.rst
+.. include:: README.rst
 
 Document
 --------
@@ -1357,7 +1357,7 @@ Indices and tables
 上述したようにtoctreeを追加することでリンクを生成します。
 実際にビルドしたら以下のようになります。
 
-{{< figure src="../images/docstring_reST.png" >}}
+{{< figure src="images/docstring_reST.png" >}}
 
 コメント書くだけでここまで自動生成してくれるのは便利ですよね。
 これが `sphinx-apidoc` です。

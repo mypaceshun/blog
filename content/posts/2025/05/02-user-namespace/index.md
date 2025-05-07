@@ -84,13 +84,16 @@ uid=1000 gid=1000 groups=1000
 このように、ホストOS上のUID/GIDとコンテナ内のUID/GIDは別々に考える必要があります。
 
 {{< figure
-    src="../images/test.png"
+    src="images/01_ホストOSとコンテナ内でのUID.png"
     alt="ホストOSとコンテナ内でのUID"
 >}}
+
+混同を避けるため本記事では、 **ホストOS上のxxxユーザー** と **コンテナ内のxxxユーザー** と区別して表記します。
 
 # rootfulなDocker環境でのUID/GID
 
 rootfulなDocker環境ではホストOSのUID/GIDとコンテナ内のUID/GIDは同じになります。
+特にUIDやGIDの変換は行われません。
 
 # ユーザー名前空間の仕組み
 
