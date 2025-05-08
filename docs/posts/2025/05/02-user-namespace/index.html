@@ -60,7 +60,7 @@
   "headline": "ユーザー名前空間について調べたことをまとめたい",
   "description" : "DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。",
   "inLanguage" : "en",
-  "wordCount":  1872 ,
+  "wordCount":  1871 ,
   "datePublished" : "2025-05-02T06:56:50\u002b09:00",
   "dateModified" : "2025-05-02T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -299,8 +299,7 @@ podman-5.2.2-15.el9_5.x86_64
 </ul>
 <p>Dockerはインストール後そのまま起動すると、rootユーザーでDockerデーモンが起動します。
 Dockerインストール後、 <code>dockerd-Rootless-setuptools.sh</code> というスクリプトを実行することで、
-root以外のユーザーでDockerデーモンが起動できる、Rootlessモードという環境が構築できます(
-<a href="https://docs.docker.com/engine/security/Rootless/#install">参考</a>)。
+root以外のユーザーでDockerデーモンが起動できる、Rootlessモードという環境が構築できます。
 PodmanはデフォルトでDockerのRootlessモードと同じような動きをします。</p>
 <p>また、コンテナ内のプロセスを動作させるユーザーもコンテナごとに指定できます。
 Dockerfileの <code>USER</code> や <code>docker run</code> コマンドの <code>--user</code> オプションである程度自由に指定できます。
