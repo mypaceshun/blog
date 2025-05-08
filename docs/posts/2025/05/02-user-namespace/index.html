@@ -60,7 +60,7 @@
   "headline": "ユーザー名前空間について調べたことをまとめたい",
   "description" : "DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。",
   "inLanguage" : "en",
-  "wordCount":  1970 ,
+  "wordCount":  1984 ,
   "datePublished" : "2025-05-02T06:56:50\u002b09:00",
   "dateModified" : "2025-05-02T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -326,7 +326,7 @@ Built:        Fri Mar 28 20:53:03 2025
 OS/Arch:      linux/amd64
 </code></pre></li>
 </ul>
-<h1 id="dockerpodman周りのuidgid事情">Docker・Podman周りのUID/GID事情</h1>
+<h1 id="docker周りのuidgid事情">Docker周りのUID/GID事情</h1>
 <p>volumesマウントしたファイルのUID/GIDに関する悲しみは以下の2つの要因が関連しています。</p>
 <ul>
 <li>起動しているデーモンがrootユーザーで動作しているかどうか(Rootful/Rootless)</li>
@@ -413,7 +413,7 @@ drwxr-xr-x. 6 1001 1001 4096 May  7 16:20 ..
 zsh: permission denied: test2
 </code></pre><p>不便なだけでなく、ホストOS上のrootユーザー(UID=0)としてファイルが作成・編集出来てしまうのは、
 セキュリティ的にもよろしくありませんね。
-これはあまりいい方法では無さそうです。</p>
+これはあまりいい構成では無さそうです。</p>
 <h2 id="コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合">コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合</h2>
 <p>コンテナ内の一般ユーザー(UID=1000)で作成したファイルは、
 ホストOS上でもホストOS上の一般ユーザー(UID=1000)がオーナーのファイルとして扱われます。</p>
@@ -467,16 +467,16 @@ Rootlessな環境を作成する以前は、
 実際に私も <code>--user</code> オプションを付けて起動したらコンテナ内部で権限エラーになってしまい、
 そもそも起動出来なくなってしまったという経験をしたことがあります。</p>
 <p>これもあまりいい構成とは言えなさそうですね。</p>
-<h1 id="rootlessモードのdockerやpodmanでのuidの仕組み">RootlessモードのDockerやPodmanでのUIDの仕組み</h1>
-<p>RootlessモードのDockerやPodmanでは、ホストOS上の一般ユーザーの権限でデーモンプロセスが起動します。
+<h1 id="rootlessモードのdockerでのuidの仕組み">RootlessモードのDockerでのUIDの仕組み</h1>
+<p>RootlessモードのDocker環境では、ホストOS上の一般ユーザーの権限でデーモンプロセスが起動します。
 コンテナ内の環境はLinuxカーネルの機能で分離されてはいますが、ベースはホストOS上のカーネルを利用しています。
 そのためコンテナ内のプロセスで参照するファイルも、実際にはホストOS上のファイルシステムを参照します。
 当然ホストOS上の一般ユーザーで動作しているデーモンが、ホストOS上のrootユーザー権限のファイルを作成・編集することは出来ません。</p>
 <p>そのため、コンテナ内のプロセスはLinuxカーネルのユーザー名前空間という機能を利用して、
 ホストOS上のUID/GIDテーブルとコンテナ内のUID/GIDテーブルをマッピングします。</p>
 <h2 id="ユーザー名前空間内で利用可能なuidgidの範囲">ユーザー名前空間内で利用可能なUID/GIDの範囲</h2>
-<p>Linuxユーザーには自身のUIDの他に利用可能なUID/GIDの範囲を持っています。
-これは <code>getsubids</code> というコマンドで確認出来ます。
+<p>Linuxユーザーには自身のUIDの他に利用可能なUID/GIDの範囲を設定できます。
+この設定は <code>getsubids</code> というコマンドで確認出来ます。
 利用可能なUIDの範囲を開始値と範囲の長さで確認出来ます。
 以下の <code>100000 65536</code> というのは、100000から165535までのUIDを利用可能という意味です。</p>
 <pre tabindex="0"><code>$ rpm -qf /bin/getsubids
@@ -514,9 +514,8 @@ $ getsubids shun
 $ getsubids -g shun
 0: shun 300000 65536
 </code></pre><h2 id="ユーザー名前空間のuidgidマッピング">ユーザー名前空間のUID/GIDマッピング</h2>
-<p>RootlessモードのDockerやPodmanでコンテナを起動すると、
-ユーザー名前空間のUID/GIDマッピングが行われます。
-先述した利用可能な範囲でUID/GIDのマッピングが行われます。</p>
+<p>RootlessモードのDocker環境でコンテナを起動すると、
+ユーザーに設定されているユーザー名前空間の範囲でUID/GIDのマッピングが行われます。</p>
 <p>例として、UID100000番から165535番までのユーザー名前空間の範囲を持つホストOS上の一般ユーザー(UID=1000)でコンテナを起動した場合、
 コンテナ内のUID/GIDマッピングは以下のようになります。</p>
 <ul>
@@ -536,8 +535,8 @@ $ getsubids -g shun
   </figure>
 </div>
 
-<h1 id="rootlessなdocker環境やpodman環境でのuidgid">RootlessなDocker環境やPodman環境でのUID/GID</h1>
-<p>RootlessなDocker環境やPodman環境ではUID/GIDのマッピングが行われます。
+<h1 id="rootlessなdocker環境でのuidgid">RootlessなDocker環境でのUID/GID</h1>
+<p>RootlessなDocker環境ではUID/GIDのマッピングが行われます。
 実際にコンテナ内の実行ユーザーがコンテナ内のrootユーザーの場合とコンテナ内の一般ユーザーの場合で、それぞれ動作を見てみましょう。</p>
 <h2 id="コンテナ内プロセスをコンテナ内のrootユーザーで動かす場合">コンテナ内プロセスをコンテナ内のrootユーザーで動かす場合</h2>
 <p>コンテナ内のrootユーザー(UID=0)はホストOS上のデーモンを実行している一般ユーザーにマッピングされます。
@@ -593,45 +592,6 @@ Dockerデーモンの実行ユーザーのUID/GIDに適宜マッピングして�
 ただし、root権限で動作している以上、潜在的にセキュリティリスクはあります。</p>
 <p>仮にコンテナを乗っ取られたとしても、ホストOS上では一般ユーザー(UID=1003)の権限でしか動作しないので、
 Rootfulな環境よりは安全と言えるでしょう。</p>
-<p>先の実験内容をPodmanでも実施してみます。</p>
-<p>Podman環境での実行です。
-Docker環境同様ユーザー名前空間の設定がされていますが、今回の実験では特に関係ありません。</p>
-<pre tabindex="0"><code>$ id
-uid=1003(shun) gid=1003(shun) groups=1003(shun)
-$ getsubids shun
-0: shun 200000 65536
-$ getsubids -g shun
-0: shun 200000 65536
-</code></pre><p>ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。</p>
-<pre tabindex="0"><code>$ date &gt; test1.txt
-$ ls -aln
-total 4
-drwxr-xr-x  2 1003 1003 23 May  8 11:09 .
-drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
--rw-r--r--  1 1003 1003 32 May  8 11:09 test1.txt
-</code></pre><p>コンテナ内では、コンテナ内のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。</p>
-<pre tabindex="0"><code>$ podman run -v &#34;${PWD}:/tmp&#34; alpine ls -aln /tmp
-total 4
-drwxr-xr-x    2 0        0               23 May  8 02:09 .
-dr-xr-xr-x    1 0        0               28 May  8 02:12 ..
--rw-r--r--    1 0        0               32 May  8 02:09 test1.txt
-</code></pre><p>コンテナ内でファイルを作成します。</p>
-<pre tabindex="0"><code>$ podman run -v &#34;${PWD}:/tmp&#34; alpine sh -c &#34;date &gt; /tmp/test2.txt&#34;
-$ podman run -v &#34;${PWD}:/tmp&#34; alpine ls -aln /tmp
-total 8
-drwxr-xr-x    2 0        0               40 May  8 02:13 .
-dr-xr-xr-x    1 0        0               28 May  8 02:13 ..
--rw-r--r--    1 0        0               32 May  8 02:09 test1.txt
--rw-r--r--    1 0        0               29 May  8 02:13 test2.txt
-</code></pre><p>ホストOS上ではホストOS上の一般ユーザー(UID=1003)がオーナーのファイルとして確認出来ます。</p>
-<pre tabindex="0"><code>$ ls -aln
-total 8
-drwxr-xr-x  2 1003 1003 40 May  8 11:13 .
-drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
--rw-r--r--  1 1003 1003 32 May  8 11:09 test1.txt
--rw-r--r--  1 1003 1003 29 May  8 11:13 test2.txt
-</code></pre><p>RootlessなDocker環境と同様の挙動になりましたね。
-コマンドもオプションも全く同じだったので違和感なく実行できました。Podmanいいな。</p>
 <h2 id="コンテナ内プロセスをコンテナ内の一般ユーザーで動かす場合">コンテナ内プロセスをコンテナ内の一般ユーザーで動かす場合</h2>
 <p>コンテナ内の一般ユーザー(UID=1000)はホストOS上の一般ユーザー(UID=1003)が利用可能なユーザー名前空間の範囲にマッピングされます。
 今回実行した環境では200000番から265535番までの範囲が利用可能なため、コンテナ内の一般ユーザー(UID=1000)はホストOS上ではUID200999番のユーザーとしてマッピングされます。</p>
@@ -728,8 +688,52 @@ Thu May  8 11:45:54 AM JST 2025
 安全かつ便利な構成でとてもいいですね。</p>
 <p>ただし、<code>rootlesskit</code> は実行しているホストOS上の一般ユーザーと、その利用可能なユーザー名前空間の範囲でしか実行できません。
 すべてがすべて <code>rootlesskit</code> で解決するかとまでは言い切れないです。</p>
-<h3 id="podmanの場合">Podmanの場合</h3>
-<p>Podmanでも同様の実験をしてみます。</p>
+<h1 id="podmanでの動作確認">Podmanでの動作確認</h1>
+<p>RootlessなDocker環境での実施内容と、
+同様の内容をRootlessなPodman環境でも実施可能です。</p>
+<p>基本的に <code>docker run</code> コマンドを <code>podman run</code> コマンドに置き換えるだけで実行出来ます。
+<code>rootlesskit</code> コマンドはPodman環境では <code>podman unshare</code> コマンドに置き換えられます。</p>
+<p>これまでの実験内容をPodmanでも実施してみます。</p>
+<h2 id="コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合-1">コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合</h2>
+<p>RootlessなPodman環境での実行です。
+Docker環境同様ユーザー名前空間の設定がされていますが、今回の実験では特に関係ありません。</p>
+<pre tabindex="0"><code>$ id
+uid=1003(shun) gid=1003(shun) groups=1003(shun)
+$ getsubids shun
+0: shun 200000 65536
+$ getsubids -g shun
+0: shun 200000 65536
+</code></pre><p>ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。</p>
+<pre tabindex="0"><code>$ date &gt; test1.txt
+$ ls -aln
+total 4
+drwxr-xr-x  2 1003 1003 23 May  8 11:09 .
+drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
+-rw-r--r--  1 1003 1003 32 May  8 11:09 test1.txt
+</code></pre><p>コンテナ内では、コンテナ内のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。</p>
+<pre tabindex="0"><code>$ podman run -v &#34;${PWD}:/tmp&#34; alpine ls -aln /tmp
+total 4
+drwxr-xr-x    2 0        0               23 May  8 02:09 .
+dr-xr-xr-x    1 0        0               28 May  8 02:12 ..
+-rw-r--r--    1 0        0               32 May  8 02:09 test1.txt
+</code></pre><p>コンテナ内でファイルを作成します。</p>
+<pre tabindex="0"><code>$ podman run -v &#34;${PWD}:/tmp&#34; alpine sh -c &#34;date &gt; /tmp/test2.txt&#34;
+$ podman run -v &#34;${PWD}:/tmp&#34; alpine ls -aln /tmp
+total 8
+drwxr-xr-x    2 0        0               40 May  8 02:13 .
+dr-xr-xr-x    1 0        0               28 May  8 02:13 ..
+-rw-r--r--    1 0        0               32 May  8 02:09 test1.txt
+-rw-r--r--    1 0        0               29 May  8 02:13 test2.txt
+</code></pre><p>ホストOS上ではホストOS上の一般ユーザー(UID=1003)がオーナーのファイルとして確認出来ます。</p>
+<pre tabindex="0"><code>$ ls -aln
+total 8
+drwxr-xr-x  2 1003 1003 40 May  8 11:13 .
+drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
+-rw-r--r--  1 1003 1003 32 May  8 11:09 test1.txt
+-rw-r--r--  1 1003 1003 29 May  8 11:13 test2.txt
+</code></pre><p>RootlessなDocker環境と同様の挙動になりましたね。
+コマンドもオプションも全く同じだったので違和感なく実行できました。Podmanいいな。</p>
+<h2 id="コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合podman環境">コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合(Podman環境)</h2>
 <p>Podman環境での実行です。
 一般ユーザー(UID=1003)で実行し、
 ユーザー名前空間は200000-265535の範囲が設定されています。</p>
