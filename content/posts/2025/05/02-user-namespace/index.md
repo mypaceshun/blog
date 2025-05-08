@@ -62,7 +62,7 @@ volumesマウントしたファイルのUID/GIDに関する悲しみは以下の
 * コンテナ内のプロセスがコンテナ内rootユーザーで動作しているかどうか
 
 Dockerはインストール後そのまま起動すると、rootユーザーでDockerデーモンが起動します。
-Dockerインストール後、 `dockerd-Rootless-setuptools.sh` というスクリプトを実行することで、
+Dockerインストール後、 `dockerd-rootless-setuptools.sh` というスクリプトを実行することで、
 root以外のユーザーでDockerデーモンが起動できる、Rootlessモードという環境が構築できます。
 PodmanはデフォルトでDockerのRootlessモードと同じような動きをします。
 
