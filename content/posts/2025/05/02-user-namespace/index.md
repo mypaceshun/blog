@@ -25,8 +25,7 @@ Rootlessモードでコンテナを動かす機会が多くなりました。
 その際volumesマウントしたファイルが、コンテナ内で読み書き出来なかったり、
 逆にコンテナ内で作成したファイルがホストOSで読み書きできなかったりといったことがありました。
 そういった悲しみから解放されたい一新で、ホストOSとコンテナ内のUID/GIDの関係について調べてみました。
-また、PodmanもデフォルトでDockerのRootlessモードと同じような動きをすると聞いたので、
-Podmanでも同様の検証をしてみようと思います。
+また、PodmanのRootlessモードでも同様の検証をしてみようと思います。
 
 # バージョン情報
 
@@ -39,19 +38,55 @@ Dockerはよく使いますがPodmanはまだまだ勉強中です。
 * Docker:
 
     ```
-    $ rpm -qa | grep docker
-    docker-buildx-plugin-0.23.0-1.el9.x86_64
-    docker-compose-plugin-2.35.1-1.el9.x86_64
-    docker-ce-cli-28.1.1-1.el9.x86_64
-    docker-ce-Rootless-extras-28.1.1-1.el9.x86_64
-    docker-ce-28.1.1-1.el9.x86_64
+    $ docker version
+    Client: Docker Engine - Community
+     Version:           28.1.1
+     API version:       1.49
+     Go version:        go1.23.8
+     Git commit:        4eba377
+     Built:             Fri Apr 18 09:53:36 2025
+     OS/Arch:           linux/amd64
+     Context:           default
+
+    Server: Docker Engine - Community
+     Engine:
+      Version:          28.1.1
+      API version:      1.49 (minimum version 1.24)
+      Go version:       go1.23.8
+      Git commit:       01f442b
+      Built:            Fri Apr 18 09:51:51 2025
+      OS/Arch:          linux/amd64
+      Experimental:     false
+     containerd:
+      Version:          1.7.27
+      GitCommit:        05044ec0a9a75232cad458027ca83437aae3f4da
+     runc:
+      Version:          1.2.5
+      GitCommit:        v1.2.5-0-g59923ef
+     docker-init:
+      Version:          0.19.0
+      GitCommit:        de40ad0
+     rootlesskit:
+      Version:          2.3.4
+      ApiVersion:       1.1.1
+      NetworkDriver:    slirp4netns
+      PortDriver:       builtin
+      StateDir:         /run/user/1003/dockerd-rootless
+     slirp4netns:
+      Version:          1.3.1
+      GitCommit:        e5e368c4f5db6ae75c2fce786e31eef9da6bf236
     ```
 
 * Podman:
 
     ```
-    $ rpm -qa | grep podman
-    podman-5.2.2-15.el9_5.x86_64
+    $ podman version
+    Client:       Podman Engine
+    Version:      5.2.2
+    API Version:  5.2.2
+    Go Version:   go1.22.9 (Red Hat 1.22.9-2.el9_5)
+    Built:        Fri Mar 28 20:53:03 2025
+    OS/Arch:      linux/amd64
     ```
 
 # Docker・Podman周りのUID/GID事情
@@ -64,7 +99,9 @@ volumesマウントしたファイルのUID/GIDに関する悲しみは以下の
 Dockerはインストール後そのまま起動すると、rootユーザーでDockerデーモンが起動します。
 Dockerインストール後、 `dockerd-rootless-setuptools.sh` というスクリプトを実行することで、
 root以外のユーザーでDockerデーモンが起動できる、Rootlessモードという環境が構築できます。
-PodmanはデフォルトでDockerのRootlessモードと同じような動きをします。
+
+Dockerには特権モードという起動方法もありますが、
+少し特殊な起動方法なので本記事では特に言及しません。
 
 また、コンテナ内のプロセスを動作させるユーザーもコンテナごとに指定できます。
 Dockerfileの `USER` や `docker run` コマンドの `--user` オプションである程度自由に指定できます。
@@ -780,3 +817,7 @@ RootlessなDocker環境と同様の挙動になりましたね。
 逆に運用環境などファイル生成・出力がない状況だったり、
 出力したファイルを扱うにしても `rootlesskit` や `podman unshare` を使える環境であれば、
 コンテナ内の一般ユーザー(UID=1000など)で実行するのがより安全で良いでしょう。
+
+# 参考したサイト
+
+* [rootful・rootless・privilegedコンテナの違い](https://speakerdeck.com/moz_sec_/rootful-rootless-privileged-container-difference)
