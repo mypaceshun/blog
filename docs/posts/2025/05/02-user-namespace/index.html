@@ -60,7 +60,7 @@
   "headline": "ユーザー名前空間について調べたことをまとめたい",
   "description" : "DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。",
   "inLanguage" : "en",
-  "wordCount":  1984 ,
+  "wordCount":  1987 ,
   "datePublished" : "2025-05-02T06:56:50\u002b09:00",
   "dateModified" : "2025-05-02T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -535,6 +535,9 @@ $ getsubids -g shun
   </figure>
 </div>
 
+<p>上記はRootlessモードのDocker環境でのデフォルトの動作になります。
+RootlessモードのPodman環境ではオプションでマッピング設定を変更することが出来るようですが、
+本記事では言及しません。</p>
 <h1 id="rootlessなdocker環境でのuidgid">RootlessなDocker環境でのUID/GID</h1>
 <p>RootlessなDocker環境ではUID/GIDのマッピングが行われます。
 実際にコンテナ内の実行ユーザーがコンテナ内のrootユーザーの場合とコンテナ内の一般ユーザーの場合で、それぞれ動作を見てみましょう。</p>

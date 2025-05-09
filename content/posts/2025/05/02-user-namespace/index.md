@@ -372,6 +372,10 @@ RootlessモードのDocker環境でコンテナを起動すると、
     alt="ユーザー名前空間マッピングイメージ"
 >}}
 
+上記はRootlessモードのDocker環境でのデフォルトの動作になります。
+RootlessモードのPodman環境ではオプションでマッピング設定を変更することが出来るようですが、
+本記事では言及しません。
+
 # RootlessなDocker環境でのUID/GID
 
 RootlessなDocker環境ではUID/GIDのマッピングが行われます。
