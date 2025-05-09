@@ -18,7 +18,7 @@ Rootlessな環境でコンテナを動かすと、Linuxカーネルのユーザ�
 
 <!--more-->
 
-# はじめに
+# はじめに {#start}
 
 仕事の中でDockerを使うことはちょこちょこあったんですが、最近はRootlessモードで使ったほうがいいと言われ、
 Rootlessモードでコンテナを動かす機会が多くなりました。
@@ -27,7 +27,7 @@ Rootlessモードでコンテナを動かす機会が多くなりました。
 そういった悲しみから解放されたい一新で、ホストOSとコンテナ内のUID/GIDの関係について調べてみました。
 また、PodmanのRootlessモードでも同様の検証をしてみようと思います。
 
-# バージョン情報
+# バージョン情報 {#version}
 
 本文章執筆時の検証環境は以下のとおりです。
 基本的にはDockerで検証していますが、Podmanでも軽く動作確認してみます。
@@ -89,7 +89,7 @@ Dockerはよく使いますがPodmanはまだまだ勉強中です。
     OS/Arch:      linux/amd64
     ```
 
-# Docker周りのUID/GID事情
+# Docker周りのUID/GID事情 {#docker-uid-gid}
 
 バインドマウントしたファイルのUID/GIDに関する悲しみは以下の2つの要因が関連しています。
 
@@ -126,7 +126,7 @@ uid=1000 gid=1000 groups=1000
 
 混同を避けるため本記事では、 **ホストOS上のxxxユーザー** と **コンテナ内のxxxユーザー** と区別して表記します。
 
-# RootfulなDocker環境でのUID/GID
+# RootfulなDocker環境でのUID/GID {#rootful-docker-uid-gid}
 
 RootfulなDocker環境ではホストOS上のUID/GIDとコンテナ内のUID/GIDは同じになります。
 特にUIDやGIDの変換は行われません。
@@ -139,7 +139,7 @@ RootfulなDocker環境ではホストOS上のUID/GIDとコンテナ内のUID/GID
 コンテナ内のプロセスをコンテナ内のrootユーザー(UID=0)で動かす場合と、
 コンテナ内の一般ユーザー(UID=1000)で動かす場合の2パターンを試してみます。
 
-## コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合
+## コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合 {#rootful-docker-root}
 
 コンテナ内のrootユーザー(UID=0)で作成したファイルは、
 ホストOS上でもホストOS上のrootユーザー(UID=0)がオーナーのファイルとして扱われます。
@@ -206,7 +206,7 @@ zsh: permission denied: test2
 セキュリティ的にもよろしくありませんね。
 これはあまりいい構成では無さそうです。
 
-## コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合
+## コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合 {#rootful-docker-non-root}
 
 コンテナ内の一般ユーザー(UID=1000)で作成したファイルは、
 ホストOS上でもホストOS上の一般ユーザー(UID=1000)がオーナーのファイルとして扱われます。
@@ -292,7 +292,7 @@ Rootlessな環境を作成する以前は、
 
 これもあまりいい構成とは言えなさそうですね。
 
-# RootlessモードのDockerでのUIDの仕組み
+# RootlessモードのDockerでのUIDの仕組み {#rootless-docker-uid}
 
 RootlessモードのDocker環境では、ホストOS上の一般ユーザーの権限でデーモンプロセスが起動します。
 コンテナ内の環境はLinuxカーネルの機能で分離されてはいますが、ベースはホストOS上のカーネルを利用しています。
@@ -302,7 +302,7 @@ RootlessモードのDocker環境では、ホストOS上の一般ユーザーの�
 そのため、コンテナ内のプロセスはLinuxカーネルのユーザー名前空間という機能を利用して、
 ホストOS上のUID/GIDテーブルとコンテナ内のUID/GIDテーブルをマッピングします。
 
-## ユーザー名前空間内で利用可能なUID/GIDの範囲
+## ユーザー名前空間内で利用可能なUID/GIDの範囲 {#userns-uid-gid}
 
 Linuxユーザーには自身のUIDの他に利用可能なUID/GIDの範囲を設定できます。
 この設定は `getsubids` というコマンドで確認出来ます。
@@ -353,7 +353,7 @@ $ getsubids -g shun
 0: shun 300000 65536
 ```
 
-## ユーザー名前空間のUID/GIDマッピング
+## ユーザー名前空間のUID/GIDマッピング {#userns-uid-gid-mapping}
 
 RootlessモードのDocker環境でコンテナを起動すると、
 ユーザーに設定されているユーザー名前空間の範囲でUID/GIDのマッピングが行われます。
@@ -376,12 +376,12 @@ RootlessモードのDocker環境でコンテナを起動すると、
 RootlessモードのPodman環境ではオプションでマッピング設定を変更することが出来るようですが、
 本記事では言及しません。
 
-# RootlessなDocker環境でのUID/GID
+# RootlessなDocker環境でのUID/GID {#rootless-docker-uid-gid}
 
 RootlessなDocker環境ではUID/GIDのマッピングが行われます。
 実際にコンテナ内の実行ユーザーがコンテナ内のrootユーザーの場合とコンテナ内の一般ユーザーの場合で、それぞれ動作を見てみましょう。
 
-## コンテナ内プロセスをコンテナ内のrootユーザーで動かす場合
+## コンテナ内プロセスをコンテナ内のrootユーザーで動かす場合 {#rootless-docker-root}
 
 コンテナ内のrootユーザー(UID=0)はホストOS上のコンテナを実行している一般ユーザーにマッピングされます。
 今回はUID1003番の一般ユーザーでDockerデーモンを実行するので、コンテナ内のrootユーザー(UID=0)はホストOS上の一般ユーザー(UID=1003)にマッピングされます。
@@ -462,7 +462,7 @@ Dockerデーモンの実行ユーザーのUID/GIDに適宜マッピングして�
 仮にコンテナを乗っ取られたとしても、ホストOS上では一般ユーザー(UID=1003)の権限でしか動作しないので、
 Rootfulな環境よりは安全と言えるでしょう。
 
-## コンテナ内プロセスをコンテナ内の一般ユーザーで動かす場合
+## コンテナ内プロセスをコンテナ内の一般ユーザーで動かす場合 {#rootless-docker-non-root}
 
 コンテナ内の一般ユーザー(UID=1000)はホストOS上の一般ユーザー(UID=1003)が利用可能なユーザー名前空間の範囲にマッピングされます。
 今回実行した環境では200000番から265535番までの範囲が利用可能なため、コンテナ内の一般ユーザー(UID=1000)はホストOS上ではUID200999番のユーザーとしてマッピングされます。
@@ -551,7 +551,7 @@ zsh: permission denied: test2.txt
 
 そんなときに使えるとても便利なコマンドを紹介します。
 
-### rootlesskit
+### rootlesskit {#rootlesskit}
 
 DockerをRootlessモードでインストールした際にあわせてインストールされる `rootlesskit` というコマンドがあります。
 これはユーザー名前空間を利用して、コンテナ内のrootユーザー(UID=0)としてコマンドを実行してくれるツールです。
@@ -611,7 +611,7 @@ Thu May  8 11:45:54 AM JST 2025
 ただし、`rootlesskit` は実行しているホストOS上の一般ユーザーと、その利用可能なユーザー名前空間の範囲でしか実行できません。
 すべてがすべて `rootlesskit` で解決するかとまでは言い切れないです。
 
-# Podmanでの動作確認
+# Podmanでの動作確認 {#podman}
 
 RootlessなDocker環境での実施内容と、
 同様の内容をRootlessなPodman環境でも実施可能です。
@@ -621,7 +621,7 @@ RootlessなDocker環境での実施内容と、
 
 これまでの実験内容をPodmanでも実施してみます。
 
-## コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合
+## コンテナ内のプロセスをコンテナ内のrootユーザーで動かす場合(Podman環境) {#podman-root}
 
 RootlessなPodman環境での実行です。
 Docker環境同様ユーザー名前空間の設定がされていますが、今回の実験では特に関係ありません。
@@ -682,7 +682,7 @@ drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
 RootlessなDocker環境と同様の挙動になりましたね。
 コマンドもオプションも全く同じだったので違和感なく実行できました。Podmanいいな。
 
-## コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合(Podman環境)
+## コンテナ内のプロセスをコンテナ内の一般ユーザーで動かす場合(Podman環境) {#podman-non-root}
 
 Podman環境での実行です。
 一般ユーザー(UID=1003)で実行し、
@@ -761,7 +761,7 @@ RootlessなDocker環境と同様の挙動になりましたね。
 Docker環境では `rootlesskit` というコマンドを使いましたが、
 Podman環境では `podman unshare` というコマンドを使います。
 
-### podman unshare
+### podman unshare {#podman-unshare}
 
 Podman環境では `podman unshare` というコマンドを使うと、ユーザー名前空間を、コンテナ内のrootユーザー(UID=0)としてコマンドを実行してくれます。
 試しに使ってみましょう。
@@ -809,7 +809,7 @@ RootlessなDocker環境と同様の挙動になりましたね。
 こちらも `podman unshare` を使うことで、
 安全かつ便利な構成になるのでとてもいいです。
 
-# 個人的な結論
+# 個人的な結論 {#conclusion}
 
 個人的な結論としては、
 特に制約がなければ、RootlessなDocker環境やPodman環境を利用するのが良いと思います。
@@ -829,6 +829,6 @@ RootlessなDocker環境と同様の挙動になりましたね。
 出力したファイルを扱うにしても `rootlesskit` や `podman unshare` を使える環境であれば、
 コンテナ内の一般ユーザー(UID=1000など)で実行するのがより安全で良いでしょう。
 
-# 参考したサイト
+# 参考したサイト {#reference}
 
 * [rootful・rootless・privilegedコンテナの違い](https://speakerdeck.com/moz_sec_/rootful-rootless-privileged-container-difference)
