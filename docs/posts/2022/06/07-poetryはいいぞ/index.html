@@ -97,7 +97,8 @@
   <meta name="generator" content="Hugo 0.145.0">
   <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
@@ -255,10 +256,10 @@
       <article role="main" class="blog-post">
         <p>Poetryの使用感がとてもよく、Pythonでコードを書く際はPoetryが必須の体になってしまいました。
 そこでPoetryはいいぞ！という話と、Poetryの簡単な利用方法をまとめたいと思い本記事を書き始めました。</p>
-<h1 id="poetryに出会うまでのライブラリ管理">Poetryに出会うまでのライブラリ管理</h1>
+<h1 id="poetryに出会うまでのライブラリ管理"><a class="headline-anchor" href="#poetryに出会うまでのライブラリ管理"><i class="bi bi-link-45deg"></i></a>Poetryに出会うまでのライブラリ管理</h1>
 <p>私は4年くらい前からPythonのコードを書くようになりました。
 いろいろ試行錯誤した結果Poetryに行き着きましたが、それまでの経緯を軽くまとめます。</p>
-<h2 id="pip--requirementstxt">pip + requirements.txt</h2>
+<h2 id="pip--requirementstxt"><a class="headline-anchor" href="#pip--requirementstxt"><i class="bi bi-link-45deg"></i></a>pip + requirements.txt</h2>
 <p><code>requirements.txt</code> は例として以下のような内容を記述したテキストファイルになります。
 ファイル名は特に指定はありませんが <code>requirements.txt</code> としているプロジェクトをよく見ます。</p>
 <pre tabindex="0"><code># requirements.txt 
@@ -289,7 +290,7 @@ Successfully installed certifi-2022.5.18.1 charset-normalizer-2.0.12 click-8.0.3
 <code>pip</code>がいい感じですね。</p>
 <p>これでも十分な気がしますが、この構成では依存ライブラリのバージョンが管理されず、
 依存ライブラリのバージョン違いで環境によっては動作しないという悲しい事件も何回か遭遇しました。</p>
-<h2 id="pipenv">Pipenv</h2>
+<h2 id="pipenv"><a class="headline-anchor" href="#pipenv"><i class="bi bi-link-45deg"></i></a>Pipenv</h2>
 <p>その次にPipenvに出会いました。</p>
 <ul>
 <li><a href="https://pipenv-ja.readthedocs.io/ja/translate-ja/">https://pipenv-ja.readthedocs.io/ja/translate-ja/</a></li>
@@ -385,7 +386,7 @@ python_version = &#34;3.10&#34;
 <p><code>Pipfile.lock</code> も含めて管理することで、<code>pipenv sync</code> とするだけで依存ライブラリも含めて同じ環境を再現することができます。</p>
 <p>ちなみにPipenvは他にもいろんな機能があり、自動でvenv環境を作成してくれるところや<code>.env</code>ファイルを自動で読み込んでくれるところ、<code>[scripts]</code>という設定でタスクランナーのような使い方が出来る所も気に入ってました。</p>
 <p>特に不満もなく使えていたのですが、Poetryを知ってしまった今はもうPipenvに戻れません&hellip;</p>
-<h1 id="そしてpoetryへたどり着く">そしてPoetryへたどり着く</h1>
+<h1 id="そしてpoetryへたどり着く"><a class="headline-anchor" href="#そしてpoetryへたどり着く"><i class="bi bi-link-45deg"></i></a>そしてPoetryへたどり着く</h1>
 <p>Pipenvで満足していたのですが、Poetryというものを知って軽い気持ちで使ってみました。</p>
 <ul>
 <li><a href="https://python-poetry.org/">https://python-poetry.org/</a></li>
@@ -393,7 +394,7 @@ python_version = &#34;3.10&#34;
 <p>Poetryは <code>pyproject.toml</code>と<code>poetry.lock</code>というファイルでライブラリのバージョンを管理します。
 これらのファイルは <code>Pipfile</code> <code>Pipfile.lock</code> と機能としてはほぼ同等です。
 使い始めた当初としては「Pipenvと同じようなことが出来るな〜」くらいの認識で、なんなら先述した<code>[scripts]</code>を利用したタスクランナーの機能がなかったりして「これならPipenvでよくないか？」とまで思っていました。あることを知るまでは&hellip;</p>
-<h1 id="pyprojecttoml">pyproject.toml</h1>
+<h1 id="pyprojecttoml"><a class="headline-anchor" href="#pyprojecttoml"><i class="bi bi-link-45deg"></i></a>pyproject.toml</h1>
 <p>この <code>pyproject.toml</code> というファイルですが、なんと<code>setup.py</code>の代替になります。
 <code>v19.0</code>以降のpipコマンドは<code>pyproject.toml</code>を見てくれるのです。これがでかい。</p>
 <p>一度Pythonのライブラリを書いたことがある人はわかると思いますが、
@@ -414,9 +415,9 @@ Pipenvを使ってもこればっかりは自分で作成する必要があり�
 <p>機能的にはPipenvもPoetryもほぼ同等だと思っており、あっちがいいこっちが悪いという話はするつもりは無いですが、</p>
 <p><strong>Poetryで開発したプロジェクトは<code>setup.py</code>を書かなくても<code>pip install</code>することが可能になる。</strong></p>
 <p>この一点で完全にPoetryを利用することを決めました。(どんだけ<code>setup.py</code>書きたくなかったんだw)</p>
-<h1 id="poetryの使い方">Poetryの使い方</h1>
+<h1 id="poetryの使い方"><a class="headline-anchor" href="#poetryの使い方"><i class="bi bi-link-45deg"></i></a>Poetryの使い方</h1>
 <p>ここからはPoetryの利用方法を簡単に紹介しようと思います。</p>
-<h2 id="poetryのインストール">Poetryのインストール</h2>
+<h2 id="poetryのインストール"><a class="headline-anchor" href="#poetryのインストール"><i class="bi bi-link-45deg"></i></a>Poetryのインストール</h2>
 <p>PoetryもPythonのライブラリなのでpipでインストールすることができます。
 私はLinux環境を触ることが多いので以下のコマンドでインストールすることが多いです。</p>
 <pre tabindex="0"><code>$ python3 -m pip install --user poetry
@@ -427,7 +428,7 @@ Pipenvを使ってもこればっかりは自分で作成する必要があり�
 <ul>
 <li><a href="https://python-poetry.org/docs/#installation">https://python-poetry.org/docs/#installation</a></li>
 </ul>
-<h2 id="poetryプロジェクトの作成">Poetryプロジェクトの作成</h2>
+<h2 id="poetryプロジェクトの作成"><a class="headline-anchor" href="#poetryプロジェクトの作成"><i class="bi bi-link-45deg"></i></a>Poetryプロジェクトの作成</h2>
 <p><code>pyproject.toml</code>も1から書こうと思うと大変ですが、もちろんそんなことはしなくて大丈夫です。
 <code>poetry init</code> というコマンドが用意されており、対話的に情報を入れていくだけで<code>pyproject.toml</code>ファイルを生成してくれます。</p>
 <pre tabindex="0"><code>$ poetry init
@@ -484,7 +485,7 @@ Do you confirm generation? (yes/no) [yes]
 <p>これで<code>pyproject.toml</code>の完成です！</p>
 <p>この時点ですでに<code>pip install</code>することが可能です。<code>pip install &lt;ファイルパス&gt;</code>でローカルディレクトリを直接指定してインストールしたり、
 <code>pip install git+https://github.com/mypaceshun/poetry-blog</code>とすることでGitHub経由でインストールすることも可能です。</p>
-<h2 id="依存ライブラリの追加">依存ライブラリの追加</h2>
+<h2 id="依存ライブラリの追加"><a class="headline-anchor" href="#依存ライブラリの追加"><i class="bi bi-link-45deg"></i></a>依存ライブラリの追加</h2>
 <p>これだと依存ライブラリの設定が出来ないので以前の例同様に<code>click</code>と<code>requests</code>を依存ライブラリとしてインストールしてみましょう。
 依存ライブラリの追加は<code>poetry add</code>コマンドを利用します。今回の場合は<code>poetry add click requests</code>とします。</p>
 <pre tabindex="0"><code>poetry add click requests
@@ -522,7 +523,7 @@ Package operations: 6 installs, 0 updates, 0 removals
 </li>
 </ul>
 <p>ほかにも<code>poetry remove</code>で依存ライブラリを削除したり、<code>poetry update</code>で依存ライブラリのアップデートが可能です。</p>
-<h2 id="別環境へのインストール">別環境へのインストール</h2>
+<h2 id="別環境へのインストール"><a class="headline-anchor" href="#別環境へのインストール"><i class="bi bi-link-45deg"></i></a>別環境へのインストール</h2>
 <p><code>pyproject.toml</code>や<code>poetry.lock</code>を利用してライブラリをインストールする際は<code>poetry install</code>を利用します。</p>
 <pre tabindex="0"><code>$ poetry install
 Creating virtualenv poetry-blog in /home/shun/poetry-blog/.venv
@@ -539,7 +540,7 @@ Package operations: 6 installs, 0 updates, 0 removals
 </code></pre><p>ここでも必要に応じてvenv環境を作成し、依存ライブラリをインストールしています。</p>
 <p>また<code>poetry install</code>は、「<code>poetry.lock</code>が存在する場合はそちらを参照し、ない場合は<code>pyproject.toml</code>を参照し<code>poetry.lock</code>を生成する」という動作になります。
 <code>poetry.lock</code>も含めて管理していればこちらを参照してくれるので、依存ライブラリを含めて全く同じ環境がすぐに再現できます。</p>
-<h1 id="whlファイルの作成">whlファイルの作成</h1>
+<h1 id="whlファイルの作成"><a class="headline-anchor" href="#whlファイルの作成"><i class="bi bi-link-45deg"></i></a>whlファイルの作成</h1>
 <p>ビルド手順を説明する前にコードを追加します。
 コード1行も無いともちろんビルドに失敗します。
 ディレクトリ構成としては以下のようになります。</p>
@@ -564,7 +565,7 @@ poetry-blog-0.9.0.tar.gz  poetry_blog-0.9.0-py3-none-any.whl
 </code></pre><p>ここまでくれば後は <code>poetry publish</code>とするだけで<code>PyPI</code>にアップロードすることも可能です。
 今回は空っぽのライブラリなのでさすがにアップロードまではしませんが、
 自分の書いたライブラリが<code>PyPI</code>に登録されるのは便利ですし、<code>pip install</code>出来た時は結構嬉しいですw</p>
-<h1 id="おわり">おわり</h1>
+<h1 id="おわり"><a class="headline-anchor" href="#おわり"><i class="bi bi-link-45deg"></i></a>おわり</h1>
 <p>ここで紹介した機能はほんの一部ですので、興味のある方はPoetryのドキュメントを眺めて見ると面白いと思います。</p>
 <ul>
 <li><a href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a></li>
@@ -574,6 +575,7 @@ poetry-blog-0.9.0.tar.gz  poetry_blog-0.9.0-py3-none-any.whl
 「Poetryよくわかってないんだよね〜」と言われたことをきっかけに、
 Poetryを利用するとっかかりになればいいなと思って書き始めました。</p>
 <p>どこかの誰かのPoetryを使うとっかかりになれば幸いです。</p>
+
 
         
           <div class="blog-tags">

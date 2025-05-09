@@ -97,7 +97,8 @@
   <meta name="generator" content="Hugo 0.145.0">
   <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
@@ -256,13 +257,13 @@
         <p>Pythonでコードを書き始めて気づけば5年くらい経ってました&hellip;
 時の流れが早すぎる&hellip;
 Pythonで開発をする際の構成がおおよそ落ち着いてきたので、まとめる意味も含めここで紹介しようと思います。</p>
-<h1 id="概要">概要</h1>
+<h1 id="概要"><a class="headline-anchor" href="#概要"><i class="bi bi-link-45deg"></i></a>概要</h1>
 <p>一概にPythonを書く時といってもPyPIに公開することを見据えて書く時と、
 自分だけが使う予定のコードを書く時ではさすがに真剣度(とは)が違います。
 そこで今回は雑に書く時、少し真面目に書く時、真剣に書く時の3種類に分けて紹介しようと思います。
 全体を通して <code>Poetry</code> を使った開発、<code>git</code>でバージョン管理し<code>GitHub</code>をリモートリポジトリとすることを前提としています。
 私の開発環境はUbuntuですが、今回の内容ではあまり関係ないと思います。</p>
-<h1 id="雑に書く時の構成">雑に書く時の構成</h1>
+<h1 id="雑に書く時の構成"><a class="headline-anchor" href="#雑に書く時の構成"><i class="bi bi-link-45deg"></i></a>雑に書く時の構成</h1>
 <p>「雑に書く」の基準としては、自分以外に見せる予定が無い、自分も将来使いまわす予定がない、をイメージしています。
 逆に言うならどんなコードを書くときも絶対にしている基本の部分です。
 まず最初にディレクトリ構成がこちらです。</p>
@@ -344,7 +345,7 @@ build-backend = &#34;poetry.core.masonry.api&#34;
 <li>タスクランナーの導入(<code>poethepoet</code>)</li>
 <li><code>pre-commit</code>の導入</li>
 </ul>
-<h2 id="リンターの導入">リンターの導入</h2>
+<h2 id="リンターの導入"><a class="headline-anchor" href="#リンターの導入"><i class="bi bi-link-45deg"></i></a>リンターの導入</h2>
 <p>リンターとはコードのスタイルチェックをしてくれるツールです。
 コードとしてはエラーにならないが、コード記述のルールに沿わないものをチェックしてくれます。
 例として以下のコードに<code>flake8</code>を実行するとエラーになります。</p>
@@ -373,12 +374,12 @@ src/sample_project/command.py:5:5: F841 local variable &#39;no_use_var&#39; is a
 <p>もちろん将来的に<code>flake8</code>が<code>pyproject.toml</code>を設定ファイルとして参照してくれるようになったらお役御免なのですが、
 現状は非常に助かっているので私のなかでは欠かせないライブラリになりました。</p>
 <p>注意点として <code>flake8</code> を実行するときのコマンドは <code>flake8</code> ですが、 <code>pyproject-flake8</code> を利用して実行する際のコマンドは <code>pflake8</code> になります。</p>
-<h2 id="フォーマッターの導入">フォーマッターの導入</h2>
+<h2 id="フォーマッターの導入"><a class="headline-anchor" href="#フォーマッターの導入"><i class="bi bi-link-45deg"></i></a>フォーマッターの導入</h2>
 <p>フォーマッターとはコードのスタイル整形をしてくれるツールです。
 リンターがエラーとする箇所を出来る限り自動で直してくれます。
 現状私が使っているフォーマッターは<code>autoflake</code>、<code>isort</code>、<code>black</code>の3つです。</p>
 <p>それぞれ、順番に解説していきます。</p>
-<h3 id="autoflake">autoflake</h3>
+<h3 id="autoflake"><a class="headline-anchor" href="#autoflake"><i class="bi bi-link-45deg"></i></a>autoflake</h3>
 <p><code>autoflake</code> は使っていない変数や使っていないインポートを削除してくれます。
 特に使っていないインポートを削除してくれる機能が嬉しく、そのためだけに導入していると言っても過言ではありません。</p>
 <p>逆に使っていない変数を削除してくれる機能は最近は使わなくなってきました。</p>
@@ -389,7 +390,7 @@ src/sample_project/command.py:5:5: F841 local variable &#39;no_use_var&#39; is a
 <p>確かに右辺で大事な関数の呼び出しなどしている可能性もあるので、迂闊に削除出来ないのでしょう。
 ただこうなってしまうとコード上問題は無いので、リンターにもかからず永遠に意味のないコードが埋もれてしまう可能性があります。
 そのため利用されていない変数はリンターにエラーとして出してもらい自分で対処するのが一番良さそうです。</p>
-<h3 id="isort">isort</h3>
+<h3 id="isort"><a class="headline-anchor" href="#isort"><i class="bi bi-link-45deg"></i></a>isort</h3>
 <p><code>isort</code> はインポート文をいい感じに並び替えてくれます。</p>
 <p>例として以下のコードを並び替えてもらうと、</p>
 <pre tabindex="0"><code>import sys
@@ -405,7 +406,7 @@ import click
 </code></pre><p>インポート文をアルファベット順で並べ替えるのがメインの機能ですが、標準ライブラリとそうでないライブラリを分けてくれる機能もあります。
 また <code>import</code> 形式と <code>from</code> 形式も区別してくれてますね。
 この後紹介する <code>black</code> と足並みを揃えてもらうために <code>profile = &quot;black&quot;</code> の設定が必須です。</p>
-<h3 id="black">black</h3>
+<h3 id="black"><a class="headline-anchor" href="#black"><i class="bi bi-link-45deg"></i></a>black</h3>
 <p>これも最近知ったフォーマッターですがかなり気に入ってます。
 <code>black</code>に関しては先に紹介した<code>autoflake</code>、<code>isort</code>以外のフォーマットを全てしてくれます。
 最強便利マンだと思ってます。
@@ -433,7 +434,7 @@ Pythonのコードではシングルクオートでもダブルクオートで�
 <p><code>black</code>では全てダブルクオートで統一するように修正してくれます。
 勝手に統一してくれるという点で非常に気に入ってます。
 シングルクオート派の人がいたら鬱陶しい機能でしょうが、私は特にこだわりりがないので問題になっていません。</p>
-<h2 id="タスクランナーの導入">タスクランナーの導入</h2>
+<h2 id="タスクランナーの導入"><a class="headline-anchor" href="#タスクランナーの導入"><i class="bi bi-link-45deg"></i></a>タスクランナーの導入</h2>
 <p>タスクランナーとはよく実行するコマンドを登録しておけるものです。
 例えば <code>autoflake</code> を実行する場合 <code>autoflake -ir --remove-all-unused-impoprts --ignore-init-module-imports src/</code> というコマンドを実行します。
 これを毎回入力して実行するのはあまりにも大変です。
@@ -464,7 +465,7 @@ help = &#34;format code style&#34;
 <p>これで長いオプションを入力する必要もなくなり、<code>autoflake</code>や<code>isort</code>や<code>black</code>もコマンド一発で全て実行出来るようになります。
 <code>poethepoet</code> が無かったらここまで <code>poetry</code> をガッツリ使うようになることも無かったかもしれません。
 それくらい助かってます。</p>
-<h2 id="pre-commitの導入"><code>pre-commit</code>の導入</h2>
+<h2 id="pre-commitの導入"><a class="headline-anchor" href="#pre-commitの導入"><i class="bi bi-link-45deg"></i></a><code>pre-commit</code>の導入</h2>
 <p><code>pre-commit</code> というのはもともと <code>git</code> の <code>hook</code> のひとつです。<a href="https://git-scm.com/book/ja/v2/Git-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%9E%E3%82%A4%E3%82%BA-Git-%E3%83%95%E3%83%83%E3%82%AF">参考</a>
 <code>git commit</code> する際に自動で実行されるスクリプトを設定しやすくしたライブラリが <code>pre-commit</code> です。</p>
 <p><code>pre-commit</code> の設定は <code>.pre-commit-config.yaml</code> に記述します。
@@ -515,7 +516,7 @@ repos:
 私は基本的にコード書きながら <code>poetry run poe format</code> するので必要無いと言えば無いのですが、
 忘れてコミットしようとすることもあるので、その時は <code>pre-commit</code> がエラーになり、
 フォーマット前のコードをコミットすることを防いでくれます。</p>
-<h1 id="少し真面目に書く時の構成">少し真面目に書く時の構成</h1>
+<h1 id="少し真面目に書く時の構成"><a class="headline-anchor" href="#少し真面目に書く時の構成"><i class="bi bi-link-45deg"></i></a>少し真面目に書く時の構成</h1>
 <p>「少し真面目に書く」の基準としては、知人や職場の人も見る予定がある、自分でも今後複数回使う予定がある、をイメージしています。
 ある程度他人に見られる想定をしてコードを書きますが、最終的には直接説明したりすればいいかなという温度感です。
 あと自分以外に利用してもらうことを想定するので、コードの完成度も少し考えるようになります。</p>
@@ -628,7 +629,7 @@ build-backend = &#34;poetry.core.masonry.api&#34;
 <li>poetry-dynamic-versioningの導入</li>
 <li>GitHub Actionsの導入</li>
 </ul>
-<h2 id="mypyの導入">mypyの導入</h2>
+<h2 id="mypyの導入"><a class="headline-anchor" href="#mypyの導入"><i class="bi bi-link-45deg"></i></a>mypyの導入</h2>
 <p>Pythonの<a href="https://docs.python.org/ja/3/library/typing.html">型ヒント</a>というやつですね。最近少しづつ付けられるようになりました。
 <code>mypy</code>は型ヒントを見てチェックをしてくれます。<a href="https://mypy.readthedocs.io/en/stable/">公式</a>曰く「static type checker」です。</p>
 <p>もともとPythonは動的に型を判断する動的型付け言語です。
@@ -694,7 +695,7 @@ print(length)
 </code></pre><p>(そもそもどういう意図のコードなのかは置いておいてください私もわかりません)</p>
 <p>最近ようやく慣れてきましたがまだ直し方のわからないエラーに遭遇することがあります&hellip;</p>
 <p>また<code>poetry run poe lint</code> で <code>mypy</code> の実行も出来るように<code>[tool.poe.tasks.lint]</code> の設定も追加されています。</p>
-<h2 id="テストコードの導入">テストコードの導入</h2>
+<h2 id="テストコードの導入"><a class="headline-anchor" href="#テストコードの導入"><i class="bi bi-link-45deg"></i></a>テストコードの導入</h2>
 <p>コードの動作を保証するためにテストコードも導入します。
 テストコードは実際に動作するコードとは別に、それの動作をテストするためのコードです。
 Pythonのテストコードを導入するライブラリとしては <code>pytest</code> がメジャーだと思います(自分調べ)
@@ -737,7 +738,7 @@ tests/test_func.py  .                                                           
 関数ごとに最低限の機能を満たしているか確認するようなテストコードはあると将来の自分が助かります。</p>
 <p>少し時間をあけた後にプログラムの改修をした際などに、既存の機能が破壊されていないことを手軽に確認出来ますし、
 手作業で確認するのと違って確認漏れなどが発生しづらいので、将来の自分が安心して手を加えられるようにもテストコードはあるに越したことはないと思っています。</p>
-<h3 id="カバレッジ">カバレッジ</h3>
+<h3 id="カバレッジ"><a class="headline-anchor" href="#カバレッジ"><i class="bi bi-link-45deg"></i></a>カバレッジ</h3>
 <p>テストにはカバレッジ(coverage)というもの(?)があります。
 テストカバー率と言えばまだわかりやすいかもしれません。
 簡単に言うと「コード全体の内テストコードでカバー出来た部分の割合」でしょうか。</p>
@@ -835,7 +836,7 @@ def test_func_success_int():
 必ずしも適切なテストコードになるとは限らないからです。</p>
 <p>ただカバレッジが100%になったときは達成感があるので、100%に出来るならしてしまいます。(小声)</p>
 <p>カバレッジをどこまで求めるかは人によって意見の分かれそうなところですね。</p>
-<h2 id="poetry-dynamic-versioningの導入">poetry-dynamic-versioningの導入</h2>
+<h2 id="poetry-dynamic-versioningの導入"><a class="headline-anchor" href="#poetry-dynamic-versioningの導入"><i class="bi bi-link-45deg"></i></a>poetry-dynamic-versioningの導入</h2>
 <p><a href="https://github.com/mtkennerly/poetry-dynamic-versioning"><code>poetry-dynamic-versiong</code></a>というライブラリを導入します。
 導入するといってもこれは今までのライブとは少しテイストが違います。</p>
 <p>というのも、<code>Poetry</code> 自体の拡張ライブラリになります。
@@ -860,7 +861,7 @@ sample-project 0.9.1
 </code></pre><p>設定をすることでタグから追加のコミットがあった場合、バージョン名に開発版を示すタグをつけたり出来ます。
 私はそこまでは必要としていないので使っていません。興味がある方は公式のドキュメントを読んでみてください。
 結構いろんなことが出来ます。</p>
-<h3 id="__version__"><code>__version__</code></h3>
+<h3 id="__version__"><a class="headline-anchor" href="#__version__"><i class="bi bi-link-45deg"></i></a><code>__version__</code></h3>
 <p>ライブラリには <code>__version__</code> という変数を設定しているものをよく見ます。
 <del>正直必要性はよくわかっていませんが</del> せっかくなら定義しておきたいですね。</p>
 <p>私がよく書く <code>__init__.py</code> はこちらです。</p>
@@ -899,7 +900,7 @@ $ poetry run poe lint
 Poe =&gt; pflake8 src/ tests/
 Poe =&gt; mypy src/
 Success: no issues found in 2 source files
-</code></pre><h2 id="github-actionsの導入">GitHub Actionsの導入</h2>
+</code></pre><h2 id="github-actionsの導入"><a class="headline-anchor" href="#github-actionsの導入"><i class="bi bi-link-45deg"></i></a>GitHub Actionsの導入</h2>
 <p>GitHub ActionsはGitHubが提供しているCIツールです。
 CIとは継続的インテグレーションというもので、継続的インテグレーションが何かと言うと&hellip;なんでしょう()</p>
 <p>テストコードの実行やカバレッジ計測、パッケージのリリースなどの自動化が出来ます。</p>
@@ -1025,7 +1026,7 @@ jobs:
 <p>開発中は特に気にせずコミットし続けるだけでテストやカバレッジの計測をしてくれる上、
 タグをプッシュした際はパッケージを作成しReleaseの作成まで自動でしてくれます。</p>
 <p>上の設定はどのプロジェクトでもほぼコピペで動作するのでとても重宝しています。</p>
-<h1 id="真剣に書くときの構成">真剣に書くときの構成</h1>
+<h1 id="真剣に書くときの構成"><a class="headline-anchor" href="#真剣に書くときの構成"><i class="bi bi-link-45deg"></i></a>真剣に書くときの構成</h1>
 <p>「真剣に書く」の基準としては、PyPIに公開する予定がある、をイメージしています。
 赤の他人が見て利用出来ることを想定するので、ドキュメントをしっかり書きます。
 逆にここまでしっかり作り込まない時は<code>README</code>につらつら書いて済ませてしまいます。</p>
@@ -1171,7 +1172,7 @@ Sphinx 5.0.2 クイックスタートユーティリティへようこそ。
 <li><code>.readthedocs.yaml</code> の導入</li>
 <li>PyPIへの公開</li>
 </ul>
-<h2 id="sphinxの導入">Sphinxの導入</h2>
+<h2 id="sphinxの導入"><a class="headline-anchor" href="#sphinxの導入"><i class="bi bi-link-45deg"></i></a>Sphinxの導入</h2>
 <p><a href="https://www.sphinx-doc.org/ja/master/"><code>Sphinx</code></a>とはドキュメント生成ツールです。
 <a href="https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html"><code>reStructuredText</code></a>というマークアップランゲージを利用してドキュメントを記述出来ます。
 まだあまり長い文章を書いたことはありませんが、当然1からHTMLを書くよりははるかに楽です。</p>
@@ -1235,7 +1236,7 @@ Indices and tables
 </code></pre><p>とすることで <code>quickstart.rst</code> へのリンクが作成されます。
 あとは <code>quickstart.rst</code> をせっせと書いたり、
 はたまた追加のreSTファイルを作成し、toctreeに追記したりします。</p>
-<h3 id="sphinx-apidoc">sphinx-apidoc</h3>
+<h3 id="sphinx-apidoc"><a class="headline-anchor" href="#sphinx-apidoc"><i class="bi bi-link-45deg"></i></a>sphinx-apidoc</h3>
 <p>Sphinxをインストールした環境には<code>sphinx-apidoc</code> というコマンドが存在します。
 これが非常に便利でこれを使うだけでそれっぽいAPIリファレンスが生成出来ます。</p>
 <p>sphinx-apidocは適切な箇所(関数やクラスの先頭)に適切な構文でコメントを書くと、
@@ -1332,7 +1333,7 @@ Indices and tables
 
 <p>コメント書くだけでここまで自動生成してくれるのは便利ですよね。
 これが <code>sphinx-apidoc</code> です。</p>
-<h3 id="sphinxextnapoleon"><code>sphinx.ext.napoleon</code></h3>
+<h3 id="sphinxextnapoleon"><a class="headline-anchor" href="#sphinxextnapoleon"><i class="bi bi-link-45deg"></i></a><code>sphinx.ext.napoleon</code></h3>
 <p><code>docstring</code> の書き方には様々な流派があります。
 中でも<code>Google Style</code>というのがわかりやすくて良いという記事を見たことがあります。</p>
 <ul>
@@ -1361,7 +1362,7 @@ def func(var: Union[str, int]) -&gt; int:
 <p>Google Styleのdocstringを解釈出来るようにするために <code>sphinx.ext.napoleon</code> という拡張を有効にする必要があります。
 有効にしてはいるもののGoogle Styleをあまり使っていないので、これもまた私は使いこなせていませんw</p>
 <p>ビルド結果は先程と同様になるので割愛します。</p>
-<h2 id="read-the-docsの導入">Read the Docsの導入</h2>
+<h2 id="read-the-docsの導入"><a class="headline-anchor" href="#read-the-docsの導入"><i class="bi bi-link-45deg"></i></a>Read the Docsの導入</h2>
 <p><a href="https://readthedocs.org/"><code>Read the Docs</code></a> はドキュメントの自動ホスティングサービスで、
 <code>Sphinx</code>と相性がいいので多くのPythonライブラリのドキュメントに利用されています。</p>
 <p>ログイン時にGitHubと連携することで簡単にプロジェクトと連携することができます。</p>
@@ -1393,7 +1394,7 @@ release = __version__
 <p>Read the Docsの設定画面から簡単にプロジェクトを連携でき、
 またRead the Docsでドキュメントをビルド、公開までしてくれるのでとても楽ちんです。</p>
 <p><a href="https://mypaceshun-sample-project.readthedocs.io/en/latest/">https://mypaceshun-sample-project.readthedocs.io/en/latest/</a></p>
-<h2 id="pypiへの公開">PyPIへの公開</h2>
+<h2 id="pypiへの公開"><a class="headline-anchor" href="#pypiへの公開"><i class="bi bi-link-45deg"></i></a>PyPIへの公開</h2>
 <p><a href="https://pypi.org/">PyPI</a> とはPythonのパッケージレポジトリ(?)です。
 自分の作ったPythonパッケージを公開することが出来ます。
 そもそも <code>pip install click</code> とした場合、clickの実体はPyPIから検索されます。
@@ -1449,7 +1450,7 @@ Publishing sample-project (1.0.0) to PyPI
       #    POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
       #  run: poetry publish
 </code></pre><p>そうすると、タグをプッシュした際にPyPIへのアップロードまで実施してくれるようになります。</p>
-<h1 id="まとめ">まとめ</h1>
+<h1 id="まとめ"><a class="headline-anchor" href="#まとめ"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
 <p>長々と書きましたがここまで全て設定すると以下のことが出来るようになっているはずです。</p>
 <ul>
 <li><code>poetry run poe format</code> で自動でコードスタイル整形</li>
@@ -1465,6 +1466,7 @@ Publishing sample-project (1.0.0) to PyPI
 オススメのツールなどあれば教えていただけると嬉しいです。
 Pythonの書き方に悩んでいるどこかの誰かの参考になれば幸いです。</p>
 <p>(今回サンプル用に作成した<code>sample-project</code>は <a href="https://github.com/mypaceshun/sample-project/">https://github.com/mypaceshun/sample-project/</a> に置いてあります)</p>
+
 
         
           <div class="blog-tags">

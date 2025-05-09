@@ -97,7 +97,8 @@
   <meta name="generator" content="Hugo 0.145.0">
   <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
@@ -256,7 +257,7 @@
         <p>仕事や趣味でPCを操作している時、簡単な処理をコマンドにしてしまいたいことがあります。
 何度もする操作や処理はひとつのコマンドで処理出来るようになると、非常に気持ちよくなれます。
 コマンドの内容はさておき、作成する手順やpipを使ってインストールするまでの手順を紹介します。</p>
-<h1 id="概要">概要</h1>
+<h1 id="概要"><a class="headline-anchor" href="#概要"><i class="bi bi-link-45deg"></i></a>概要</h1>
 <p>最近仕事で簡単なコマンドをPythonで作成する機会が多くあったので、
 私がコマンドを作成するまでの手順と、それを <code>pip</code> でインストールするまでの手順を紹介します。
 私が <code>Poetry</code> 人間なので開発には <code>Poetry</code> を使います。
@@ -264,10 +265,10 @@
 <ul>
 <li><a href="https://python-poetry.org/docs/#installation">https://python-poetry.org/docs/#installation</a></li>
 </ul>
-<h1 id="コマンドを作る">コマンドを作る</h1>
+<h1 id="コマンドを作る"><a class="headline-anchor" href="#コマンドを作る"><i class="bi bi-link-45deg"></i></a>コマンドを作る</h1>
 <p><code>Poetry</code> を使って初期設定をして行きます。
 詳細については<a href="https://mypaceshun.github.io/blog/2022/07/19-my-python-style/">以前書いた記事</a>をご覧ください。</p>
-<h2 id="初期設定">初期設定</h2>
+<h2 id="初期設定"><a class="headline-anchor" href="#初期設定"><i class="bi bi-link-45deg"></i></a>初期設定</h2>
 <p>初期設定は <code>poetry init</code> コマンドでほぼ完了します。</p>
 <pre tabindex="0"><code>$ poetry init
 
@@ -298,7 +299,7 @@ python = &#34;^3.10&#34;
 [build-system]
 requires = [&#34;poetry-core&#34;]
 build-backend = &#34;poetry.core.masonry.api&#34;
-</code></pre><h2 id="プログラム作成">プログラム作成</h2>
+</code></pre><h2 id="プログラム作成"><a class="headline-anchor" href="#プログラム作成"><i class="bi bi-link-45deg"></i></a>プログラム作成</h2>
 <p><code>src/</code> ディレクトリを作成し、その中にプログラムの実体を作成します。</p>
 <pre tabindex="0"><code>omikuji
 ├── README.md
@@ -319,7 +320,7 @@ def cmd():
 </code></pre><p>かんたんなおみくじコマンドにしてみました。
 これは <code>omikuji</code>パッケージの中にある、<code>command</code>モジュールの中の、<code>cmd</code>という関数が実体になります。
 これをコマンドにするには <code>pyproject.toml</code>の設定を編集します。</p>
-<h2 id="pyprojecttoml-の設定変更"><code>pyproject.toml</code> の設定変更</h2>
+<h2 id="pyprojecttoml-の設定変更"><a class="headline-anchor" href="#pyprojecttoml-の設定変更"><i class="bi bi-link-45deg"></i></a><code>pyproject.toml</code> の設定変更</h2>
 <pre tabindex="0"><code>[tool.poetry]
 name = &#34;omikuji&#34;
 version = &#34;0.9.0&#34;
@@ -347,11 +348,11 @@ build-backend = &#34;poetry.core.masonry.api&#34;
 本日の運勢は... 大凶
 </code></pre><p>残念です&hellip;</p>
 <p>これでインストール可能なコマンドの作成は完了です。</p>
-<h1 id="コマンドをインストールする">コマンドをインストールする</h1>
+<h1 id="コマンドをインストールする"><a class="headline-anchor" href="#コマンドをインストールする"><i class="bi bi-link-45deg"></i></a>コマンドをインストールする</h1>
 <p>作成したコマンドは <code>pip</code> を使ってインストール可能です。
 適宜 <code>venv</code> などを作って仮想環境にインストールするのがおすすめです。
 また何通りかインストール方法がありますが、今回は GitHub 経由でインストールする方法と、wheelファイルからインストールする方法を紹介します。</p>
-<h2 id="github-からインストールする方法">GitHub からインストールする方法</h2>
+<h2 id="github-からインストールする方法"><a class="headline-anchor" href="#github-からインストールする方法"><i class="bi bi-link-45deg"></i></a>GitHub からインストールする方法</h2>
 <p><code>git clone</code> でダウンロードしてインストールする方法です。GitHubを例に上げていますがもちろん他のリモートリポジトリでも問題ありません。
 インストールするコマンドは以下になります。</p>
 <pre tabindex="0"><code>$ python -m pip install git+&lt;GitHubのURL&gt;
@@ -386,7 +387,7 @@ $ ./venv/bin/omikuji
 本日の運勢は... 大凶
 </code></pre><p>しょんなぁ&hellip;</p>
 <p>これにて GitHubからのインストールは完了です。</p>
-<h2 id="wheelファイルからインストールする方法">wheelファイルからインストールする方法</h2>
+<h2 id="wheelファイルからインストールする方法"><a class="headline-anchor" href="#wheelファイルからインストールする方法"><i class="bi bi-link-45deg"></i></a>wheelファイルからインストールする方法</h2>
 <p>GitHubに常にアップロード出来るわけでもないですし、GitHubから常にクローン出来るわけでもありません。
 その場合はwheelファイルを使ってインストールすることが出来ます。
 まず wheelファイルを作りましょう。<code>poetry build</code> コマンドを使って簡単に作成することが出来ます。</p>
@@ -410,7 +411,7 @@ Successfully installed omikuji-0.9.0
 $ ./venv/bin/omikuji
 本日の運勢は... 大吉
 </code></pre><p>やったー！</p>
-<h1 id="まとめ">まとめ</h1>
+<h1 id="まとめ"><a class="headline-anchor" href="#まとめ"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
 <p>今回はおみくじくをしただけでしたが、
 何度も行う作業などをコマンドにすることで効率化出来るようになります。</p>
 <p>今回紹介したコードはGitHubに上げているので参考になれば幸いです。</p>
@@ -418,6 +419,7 @@ $ ./venv/bin/omikuji
 <li><a href="https://github.com/mypaceshun/omikuji">https://github.com/mypaceshun/omikuji</a></li>
 </ul>
 <p>慣れると簡単に作れるのでぜひお試しあれ</p>
+
 
         
           <div class="blog-tags">
