@@ -1,7 +1,7 @@
 ---
-title: ユーザー名前空間について調べたことをまとめたい
+title: ホストOSとコンテナ間でのUID/GIDマッピング
 date: 2025-05-02T06:56:50+09:00
-description: DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。
+description: DockerのRootlessモードを触る際に、ホストOSとコンテナ間でのUID/GIDマッピングについて色々調べる機会があったので、その内容をまとめておきたいと思います。
 draft: false
 
 tags:

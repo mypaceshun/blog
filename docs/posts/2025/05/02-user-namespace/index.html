@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>ユーザー名前空間について調べたことをまとめたい - mypaceshun blog</title>
-  <meta name="description" content="DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。"><script type="application/ld+json">
+  <title>ホストOSとコンテナ間でのUID/GIDマッピング - mypaceshun blog</title>
+  <meta name="description" content="DockerのRootlessモードを触る際に、ホストOSとコンテナ間でのUID/GIDマッピングについて色々調べる機会があったので、その内容をまとめておきたいと思います。"><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -46,7 +46,7 @@
         "position": 3,
         "item": {
           "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/02-user-namespace\/",
-          "name": "ユーザー名前空間について調べたことをまとめたい"
+          "name": "ホスト osとコンテナ間での uid gidマッピング"
         }
     }]
 }
@@ -57,8 +57,8 @@
   "author": {
     "name" : "KAWAI Shun"
   },
-  "headline": "ユーザー名前空間について調べたことをまとめたい",
-  "description" : "DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。",
+  "headline": "ホストOSとコンテナ間でのUID\/GIDマッピング",
+  "description" : "DockerのRootlessモードを触る際に、ホストOSとコンテナ間でのUID\/GIDマッピングについて色々調べる機会があったので、その内容をまとめておきたいと思います。",
   "inLanguage" : "en",
   "wordCount":  1987 ,
   "datePublished" : "2025-05-02T06:56:50\u002b09:00",
@@ -80,15 +80,15 @@
 </script>
 
 
-<meta property="og:title" content="ユーザー名前空間について調べたことをまとめたい" />
-<meta property="og:description" content="DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。">
+<meta property="og:title" content="ホストOSとコンテナ間でのUID/GIDマッピング" />
+<meta property="og:description" content="DockerのRootlessモードを触る際に、ホストOSとコンテナ間でのUID/GIDマッピングについて色々調べる機会があったので、その内容をまとめておきたいと思います。">
 <meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
 <meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="mypaceshun blog" />
 
-  <meta name="twitter:title" content="ユーザー名前空間について調べたことをまとめたい" />
-  <meta name="twitter:description" content="DockerのRootlessモードを触る際に、ユーザー名前空間について色々調べる機会があったので、その内容をまとめておきたいと思います。">
+  <meta name="twitter:title" content="ホストOSとコンテナ間でのUID/GIDマッピング" />
+  <meta name="twitter:description" content="DockerのRootlessモードを触る際に、ホストOSとコンテナ間でのUID/GIDマッピングについて色々調べる機会があったので、その内容をまとめておきたいと思います。">
   <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@rikanodorei_823" />
@@ -233,7 +233,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="posts-heading">
               
-                <h1>ユーザー名前空間について調べたことをまとめたい</h1>
+                <h1>ホストOSとコンテナ間でのUID/GIDマッピング</h1>
               
               
                 <hr class="small">
@@ -870,7 +870,7 @@ Podman環境では <code>podman unshare</code> というコマンドを使いま
     <ul class="share">
       
       <li>
-        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;text=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;text=%e3%83%9b%e3%82%b9%e3%83%88OS%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e9%96%93%e3%81%a7%e3%81%aeUID%2fGID%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -884,28 +884,28 @@ Podman環境では <code>podman unshare</code> というコマンドを使いま
   
       
       <li>
-        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on Reddit">
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%9b%e3%82%b9%e3%83%88OS%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e9%96%93%e3%81%a7%e3%81%aeUID%2fGID%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0" target="_blank" title="Share on Reddit">
           <i class="fab fa-reddit"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%9b%e3%82%b9%e3%83%88OS%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e9%96%93%e3%81%a7%e3%81%aeUID%2fGID%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0" target="_blank" title="Share on LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on StumbleUpon">
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;title=%e3%83%9b%e3%82%b9%e3%83%88OS%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e9%96%93%e3%81%a7%e3%81%aeUID%2fGID%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0" target="_blank" title="Share on StumbleUpon">
           <i class="fab fa-stumbleupon"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;description=%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%bf%e3%81%b9%e3%81%9f%e3%81%93%e3%81%a8%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%9f%e3%81%84" target="_blank" title="Share on Pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f02-user-namespace%2f&amp;description=%e3%83%9b%e3%82%b9%e3%83%88OS%e3%81%a8%e3%82%b3%e3%83%b3%e3%83%86%e3%83%8a%e9%96%93%e3%81%a7%e3%81%aeUID%2fGID%e3%83%9e%e3%83%83%e3%83%94%e3%83%b3%e3%82%b0" target="_blank" title="Share on Pinterest">
           <i class="fab fa-pinterest"></i>
         </a>
       </li>

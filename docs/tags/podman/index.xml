@@ -9,7 +9,7 @@
     <lastBuildDate>Fri, 02 May 2025 06:56:50 +0900</lastBuildDate>
     <atom:link href="https://mypaceshun.github.io/blog/tags/podman/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ユーザー名前空間について調べたことをまとめたい</title>
+      <title>ホストOSとコンテナ間でのUID/GIDマッピング</title>
       <link>https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/</link>
       <pubDate>Fri, 02 May 2025 06:56:50 +0900</pubDate>
       <guid>https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/</guid>
