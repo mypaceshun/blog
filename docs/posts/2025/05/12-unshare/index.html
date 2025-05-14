@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>unshareコマンドで遊んでみた - mypaceshun blog</title>
-  <meta name="description" content="unshareコマンドを使って色々遊んでみました。"><script type="application/ld+json">
+  <title>unshareコマンドでユーザー名前空間を作成してみる - mypaceshun blog</title>
+  <meta name="description" content="unshareコマンドを使ってユーザー名前空間の作成を実施してみました。"><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -46,7 +46,7 @@
         "position": 3,
         "item": {
           "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/12-unshare\/",
-          "name": "Unshareコマンドで遊んでみた"
+          "name": "Unshareコマンドでユーザー名前空間を作成してみる"
         }
     }]
 }
@@ -57,10 +57,10 @@
   "author": {
     "name" : "KAWAI Shun"
   },
-  "headline": "unshareコマンドで遊んでみた",
-  "description" : "unshareコマンドを使って色々遊んでみました。",
+  "headline": "unshareコマンドでユーザー名前空間を作成してみる",
+  "description" : "unshareコマンドを使ってユーザー名前空間の作成を実施してみました。",
   "inLanguage" : "en",
-  "wordCount":  814 ,
+  "wordCount":  813 ,
   "datePublished" : "2025-05-12T06:56:50\u002b09:00",
   "dateModified" : "2025-05-12T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -80,15 +80,15 @@
 </script>
 
 
-<meta property="og:title" content="unshareコマンドで遊んでみた" />
-<meta property="og:description" content="unshareコマンドを使って色々遊んでみました。">
+<meta property="og:title" content="unshareコマンドでユーザー名前空間を作成してみる" />
+<meta property="og:description" content="unshareコマンドを使ってユーザー名前空間の作成を実施してみました。">
 <meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
 <meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="mypaceshun blog" />
 
-  <meta name="twitter:title" content="unshareコマンドで遊んでみた" />
-  <meta name="twitter:description" content="unshareコマンドを使って色々遊んでみました。">
+  <meta name="twitter:title" content="unshareコマンドでユーザー名前空間を作成してみる" />
+  <meta name="twitter:description" content="unshareコマンドを使ってユーザー名前空間の作成を実施してみました。">
   <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@rikanodorei_823" />
@@ -233,7 +233,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="posts-heading">
               
-                <h1>unshareコマンドで遊んでみた</h1>
+                <h1>unshareコマンドでユーザー名前空間を作成してみる</h1>
               
               
                 <hr class="small">
@@ -256,12 +256,11 @@
       <article role="main" class="blog-post">
         <p>DockerのRootlessモードを調べている中で、<code>unshare</code> というコマンドを見つけました。
 Linuxカーネルの機能である名前空間の分離が出来るコマンドです。
-<code>unshare</code> コマンドを使ってユーザー名前空間の分離を試してみました。</p>
+今回は <code>unshare</code> コマンドを使ってユーザー名前空間の分離を試してみました。</p>
 <h1 id="introduction"><a class="headline-anchor" href="#introduction"><i class="bi bi-link-45deg"></i></a>はじめに</h1>
 <p>以前、DockerのRootlessモードを調べている中で、<code>unshare</code> というコマンドを見つけました。
-<code>unshare</code> を使ってユーザー名前空間の分離を試してみようと思ったところ、
-結構苦戦したけれどなんとか動かせたので、
-メモがてらまとめておこうと思います。</p>
+<code>unshare</code> を使ってユーザー名前空間の分離を試してみましたが、
+なかなか苦戦したので、メモがてら残しておこうと思います。</p>
 <h1 id="environment"><a class="headline-anchor" href="#environment"><i class="bi bi-link-45deg"></i></a>検証環境</h1>
 <p>本文章執筆時の検証環境の情報は以下のとおりです。</p>
 <ul>
@@ -298,10 +297,9 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 </span></span><span style="display:flex;"><span> -U, --user[=&lt;file&gt;]       unshare user namespace
 </span></span><span style="display:flex;"><span> -C, --cgroup[=&lt;file&gt;]     unshare cgroup namespace
 </span></span><span style="display:flex;"><span> -T, --time[=&lt;file&gt;]       unshare time namespace
-</span></span></code></pre></div><p>勉強がてらユーザー名前空間の分離を試してみました。
+</span></span></code></pre></div><p>今回はユーザー名前空間の分離を試してみました。
 その他の名前空間の分離に関しては本記事では触れていません。</p>
 <h1 id="user-namespace"><a class="headline-anchor" href="#user-namespace"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の分離</h1>
-<p>ユーザー名前空間の分離を試してみます。</p>
 <p>新しいユーザー名前空間でコマンドを実行するには <code>--user</code> オプションを指定します。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
 </span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun)
@@ -448,7 +446,7 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-user<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> --map-group<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>
 </span></span><span style="display:flex;"><span>$ id
 </span></span><span style="display:flex;"><span>uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),65534(nobody)
-</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
+</span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>      1000       1001          1
 </span></span><span style="display:flex;"><span>      1000       1001          1
 </span></span></code></pre></div><p>名前空間内のUID=1000,GID=1000のユーザーがホスト側のUID=1001,GID=1001のユーザーにマッピングされていることが確認出来ます。</p>
@@ -457,7 +455,7 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-root
 </span></span><span style="display:flex;"><span>$ id
 </span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
-</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map 
+</span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>         0       1001          1
 </span></span><span style="display:flex;"><span>         0       1001          1
 </span></span></code></pre></div><p>また、 <code>--map-current-user</code> オプションを指定すると、名前空間内の実行ユーザーが現在のユーザー(UID=1001)になり、名前空間内の一般ユーザー(UID=1001)をホスト側の一般ユーザー(UID=1001)にマッピングしてくれます。</p>
@@ -465,7 +463,7 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-current-user
 </span></span><span style="display:flex;"><span>$ id
 </span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun),65534(nobody)
-</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
+</span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>      1001       1001          1
 </span></span><span style="display:flex;"><span>      1001       1001          1
 </span></span></code></pre></div><p>他にも <code>util-linux</code> のバージョンが <code>2.39</code> 以降くらいから、
@@ -505,7 +503,7 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
     <ul class="share">
       
       <li>
-        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;text=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;text=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -519,28 +517,28 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
   
       
       <li>
-        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on Reddit">
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b" target="_blank" title="Share on Reddit">
           <i class="fab fa-reddit"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b" target="_blank" title="Share on LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on StumbleUpon">
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b" target="_blank" title="Share on StumbleUpon">
           <i class="fab fa-stumbleupon"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;description=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on Pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;description=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8d%e5%89%8d%e7%a9%ba%e9%96%93%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b" target="_blank" title="Share on Pinterest">
           <i class="fab fa-pinterest"></i>
         </a>
       </li>

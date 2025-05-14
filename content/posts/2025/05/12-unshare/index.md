@@ -1,7 +1,7 @@
 ---
-title: "unshareコマンドで遊んでみた"
+title: "unshareコマンドでユーザー名前空間を作成してみる"
 date: 2025-05-12T06:56:50+09:00
-description: "unshareコマンドを使って色々遊んでみました。"
+description: "unshareコマンドを使ってユーザー名前空間の作成を実施してみました。"
 draft: false
 
 tags:
@@ -12,16 +12,15 @@ tags:
 
 DockerのRootlessモードを調べている中で、`unshare` というコマンドを見つけました。
 Linuxカーネルの機能である名前空間の分離が出来るコマンドです。
-`unshare` コマンドを使ってユーザー名前空間の分離を試してみました。
+今回は `unshare` コマンドを使ってユーザー名前空間の分離を試してみました。
 
 <!--more-->
 
 # はじめに {#introduction}
 
 以前、DockerのRootlessモードを調べている中で、`unshare` というコマンドを見つけました。
-`unshare` を使ってユーザー名前空間の分離を試してみようと思ったところ、
-結構苦戦したけれどなんとか動かせたので、
-メモがてらまとめておこうと思います。
+`unshare` を使ってユーザー名前空間の分離を試してみましたが、
+なかなか苦戦したので、メモがてら残しておこうと思います。
 
 # 検証環境 {#environment}
 
@@ -62,12 +61,10 @@ Options:
  -T, --time[=<file>]       unshare time namespace
 ```
 
-勉強がてらユーザー名前空間の分離を試してみました。
+今回はユーザー名前空間の分離を試してみました。
 その他の名前空間の分離に関しては本記事では触れていません。
 
 # ユーザー名前空間の分離 {#user-namespace}
-
-ユーザー名前空間の分離を試してみます。
 
 新しいユーザー名前空間でコマンドを実行するには `--user` オプションを指定します。
 
@@ -287,7 +284,7 @@ RootlessなDocker環境でのホストOSとコンテナ間のUID/GIDマッピン
 $ unshare --user --map-user=1000 --map-group=1000
 $ id
 uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),65534(nobody)
-$ cat /proc/$$/{u,g}id_map
+$ cat /proc/self/{u,g}id_map
       1000       1001          1
       1000       1001          1
 ```
@@ -302,7 +299,7 @@ $ cat /proc/$$/{u,g}id_map
 $ unshare --user --map-root
 $ id
 uid=0(root) gid=0(root) groups=0(root),65534(nobody)
-$ cat /proc/$$/{u,g}id_map 
+$ cat /proc/self/{u,g}id_map
          0       1001          1
          0       1001          1
 ```
@@ -315,7 +312,7 @@ $ cat /proc/$$/{u,g}id_map
 $ unshare --user --map-current-user
 $ id
 uid=1001(shun) gid=1001(shun) groups=1001(shun),65534(nobody)
-$ cat /proc/$$/{u,g}id_map
+$ cat /proc/self/{u,g}id_map
       1001       1001          1
       1001       1001          1
 ```
