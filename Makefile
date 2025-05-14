@@ -8,7 +8,7 @@ PORT="8080"
 BASEURL="http://localhost:${PORT}/"
 
 NEW_FILENAME=""
-NEW_FILEPATH="posts/$(shell date +%Y)/$(shell date +%m)/$(shell date +%d)-${NEW_FILENAME}.md"
+NEW_FILEPATH="posts/$(shell date +%Y)/$(shell date +%m)/$(shell date +%d)-${NEW_FILENAME}/index.md"
 
 .PHONY: usage
 usage:

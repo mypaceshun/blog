@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>unshareコマンドで遊んでみた - mypaceshun blog</title>
+  <meta name="description" content="unshareコマンドを使って色々遊んでみました。"><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "mypaceshun blog",
+    
+    "url": "https:\/\/mypaceshun.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/mypaceshun.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/12-unshare\/",
+          "name": "Unshareコマンドで遊んでみた"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "KAWAI Shun"
+  },
+  "headline": "unshareコマンドで遊んでみた",
+  "description" : "unshareコマンドを使って色々遊んでみました。",
+  "inLanguage" : "en",
+  "wordCount":  814 ,
+  "datePublished" : "2025-05-12T06:56:50\u002b09:00",
+  "dateModified" : "2025-05-12T06:56:50\u002b09:00",
+  "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+  "keywords" : [ "tech, Linux, unshare" ],
+  "mainEntityOfPage" : "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/05\/12-unshare\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/mypaceshun.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="unshareコマンドで遊んでみた" />
+<meta property="og:description" content="unshareコマンドを使って色々遊んでみました。">
+<meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+<meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="mypaceshun blog" />
+
+  <meta name="twitter:title" content="unshareコマンドで遊んでみた" />
+  <meta name="twitter:description" content="unshareコマンドを使って色々遊んでみました。">
+  <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@rikanodorei_823" />
+  <meta name="twitter:creator" content="@rikanodorei_823" />
+  <link href='https://mypaceshun.github.io/blog/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.145.0">
+  <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-G00JGTHDLH"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-G00JGTHDLH');
+        }
+      </script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="about me" href="https://mypaceshun.github.io/blog/page/about/">about me</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="mypaceshun blog" href="https://mypaceshun.github.io/blog/">
+            <img class="avatar-img" src="https://mypaceshun.github.io/blog/images/mypaceshun.png" alt="mypaceshun blog" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>unshareコマンドで遊んでみた</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>DockerのRootlessモードを調べている中で、<code>unshare</code> というコマンドを見つけました。
+Linuxカーネルの機能である名前空間の分離が出来るコマンドです。
+<code>unshare</code> コマンドを使ってユーザー名前空間の分離を試してみました。</p>
+<h1 id="introduction"><a class="headline-anchor" href="#introduction"><i class="bi bi-link-45deg"></i></a>はじめに</h1>
+<p>以前、DockerのRootlessモードを調べている中で、<code>unshare</code> というコマンドを見つけました。
+<code>unshare</code> を使ってユーザー名前空間の分離を試してみようと思ったところ、
+結構苦戦したけれどなんとか動かせたので、
+メモがてらまとめておこうと思います。</p>
+<h1 id="environment"><a class="headline-anchor" href="#environment"><i class="bi bi-link-45deg"></i></a>検証環境</h1>
+<p>本文章執筆時の検証環境の情報は以下のとおりです。</p>
+<ul>
+<li>
+<p>OS: AlmaLinux 9.5</p>
+</li>
+<li>
+<p>Kernel: <code>5.14.0-503.38.1.el9_5.x86_64</code></p>
+</li>
+<li>
+<p>unshare:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>unshare --version
+</span></span><span style="display:flex;"><span>unshare from util-linux 2.37.4
+</span></span></code></pre></div></li>
+</ul>
+<h1 id="unshare"><a class="headline-anchor" href="#unshare"><i class="bi bi-link-45deg"></i></a><code>unshare</code> コマンドとは</h1>
+<p><code>unshare</code> コマンドは、Linuxカーネルの機能である名前空間を作成し、新しい名前空間で任意のコマンドを実行するためのコマンドです。
+引数が指定されない場合はデフォルトで <code>/bin/sh</code> が実行されます。
+また、 <code>$SHELL</code> の環境変数が定義されている場合は、 <code>$SHELL</code> の値が実行されます。
+オプションを指定することで様々な名前空間を分離することが出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --help
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>Usage:
+</span></span><span style="display:flex;"><span> unshare [options] [&lt;program&gt; [&lt;argument&gt;...]]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>Run a program with some namespaces unshared from the parent.
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>Options:
+</span></span><span style="display:flex;"><span> -m, --mount[=&lt;file&gt;]      unshare mounts namespace
+</span></span><span style="display:flex;"><span> -u, --uts[=&lt;file&gt;]        unshare UTS namespace (hostname etc)
+</span></span><span style="display:flex;"><span> -i, --ipc[=&lt;file&gt;]        unshare System V IPC namespace
+</span></span><span style="display:flex;"><span> -n, --net[=&lt;file&gt;]        unshare network namespace
+</span></span><span style="display:flex;"><span> -p, --pid[=&lt;file&gt;]        unshare pid namespace
+</span></span><span style="display:flex;"><span> -U, --user[=&lt;file&gt;]       unshare user namespace
+</span></span><span style="display:flex;"><span> -C, --cgroup[=&lt;file&gt;]     unshare cgroup namespace
+</span></span><span style="display:flex;"><span> -T, --time[=&lt;file&gt;]       unshare time namespace
+</span></span></code></pre></div><p>勉強がてらユーザー名前空間の分離を試してみました。
+その他の名前空間の分離に関しては本記事では触れていません。</p>
+<h1 id="user-namespace"><a class="headline-anchor" href="#user-namespace"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の分離</h1>
+<p>ユーザー名前空間の分離を試してみます。</p>
+<p>新しいユーザー名前空間でコマンドを実行するには <code>--user</code> オプションを指定します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun)
+</span></span><span style="display:flex;"><span>$ unshare --user /bin/bash
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span></code></pre></div><p>UID/GIDはそのままだと <code>65534(nobody)</code> になってしまいます。
+ここから <code>newuidmap</code> <code>newgidmap</code> コマンドを使って、UID/GIDのマッピングを行います。
+マッピング設定は <code>unshare</code> で作成した名前空間内では行えないので、
+別の端末を開いて実行します。</p>
+<h2 id="userns-setup"><a class="headline-anchor" href="#userns-setup"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の設定</h2>
+<p>UID/GIDマッピングは <code>/etc/subuid</code> <code>/etc/subgid</code> に記載されている範囲でのみ設定可能です。
+現在の設定は <code>getsubids</code> コマンドで確認出来ます。
+詳しくは <a href="https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/#userns-uid-gid">以前の記事</a>を参照してください。</p>
+<p>今回はUID1001番のユーザーに <code>300000-365535</code> の範囲を、ユーザー名前空間で利用なUID/GIDとして割り当てます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ sudo usermod --add-subuids 300000-365535 --add-subgids 300000-365535 $USER
+</span></span><span style="display:flex;"><span>$ getsubids $USER; getsubids -g $USER
+</span></span><span style="display:flex;"><span>0: shun 300000 65536
+</span></span><span style="display:flex;"><span>0: shun 300000 65536
+</span></span></code></pre></div><p>再度 <code>unshare</code> コマンドで新しい名前空間を作成します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span></code></pre></div><p>プロセスごとに設定されているUID/GIDのマッピングは
+<code>/proc/&lt;pid&gt;/uid_map</code> <code>/proc/&lt;pid&gt;/gid_map</code> で確認出来ます。
+<code>unshare --user</code> で作成した名前空間はまだ何も設定がいないので、
+<code>/proc/self/uid_map</code> <code>/proc/self/gid_map</code> は空です。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/uid_map
+</span></span><span style="display:flex;"><span>$ cat /proc/self/gid_map
+</span></span></code></pre></div><p>次に <code>newuidmap</code> <code>newgidmap</code> コマンドを使って、UID/GIDのマッピングを行います。
+<code>newuidmap &lt;PID&gt; &lt;名前空間内でのUID&gt; &lt;ホスト側でのUID&gt; &lt;マッピング数&gt;</code> の形式で指定します。
+<code>unshare</code> で実行しているプロセスのPIDは <code>$$</code> という変数で確認出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ echo $$
+</span></span><span style="display:flex;"><span>37180
+</span></span></code></pre></div><p>試しに名前空間内のrootユーザー(UID=0,GID=0)をホスト側の一般ユーザー(UID=1001,GID=1001)にマッピングしてみます。
+<code>unshare</code> を実行している端末とは別の端末を開いて実行してください。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ newuidmap <span style="color:#ae81ff">37180</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>$ newgidmap <span style="color:#ae81ff">37180</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p><code>unshare</code> で実行している端末に戻ると、実行ユーザーがrootユーザー(UID=0,GID=0)に変わっていることが確認出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+</span></span></code></pre></div><p><code>/proc/self/uid_map</code> <code>/proc/self/gid_map</code> を確認すると、マッピングが設定されていることが確認出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
+</span></span><span style="display:flex;"><span>     0       1001          1
+</span></span><span style="display:flex;"><span>     0       1001          1
+</span></span></code></pre></div><p>ホスト側での一般ユーザー(UID=1001,GID=1001)で作成したファイルは、
+<code>unshare</code> で作成した名前空間内でrootユーザー(UID=0,GID=0)がオーナーのファイルとして確認出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># ホスト側
+</span></span><span style="display:flex;"><span>$ date &gt; test1.txt
+</span></span><span style="display:flex;"><span>$ ls -aln
+</span></span><span style="display:flex;"><span>total 4
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 1001 1001 23 May 13 16:19 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 1001 1001 26 May 13 11:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 1001 1001 32 May 13 16:19 test1.txt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># unshareで作成した名前空間内
+</span></span><span style="display:flex;"><span>$ ls -aln
+</span></span><span style="display:flex;"><span>total 4
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 0 0 23 May 13 16:19 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 0 0 26 May 13 11:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 0 0 32 May 13 16:19 test1.txt
+</span></span></code></pre></div><p>以前の記事で紹介した <a href="https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/#rootless-docker-root">RootlessなDocker環境でコンテナ内プロセスをコンテナ内rootユーザーで動かす場合</a> と似たようなマッピングになりましたね。
+ただこのままでは名前空間内のrootユーザー(UID=0)がホスト側の一般ユーザー(UID=1001)にマッピングしただけで、
+先の記事のようにコンテナ内の一般ユーザー(UID=1000)がホスト側の一般ユーザー(UID=300999)にマッピングされることはありません。
+そのためには <code>newuidmap</code> <code>newgidmap</code> コマンドでマッピングを設定する際に、追加の設定を行う必要があります。</p>
+<h2 id="userns-multi-mapping"><a class="headline-anchor" href="#userns-multi-mapping"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の複数マッピング</h2>
+<p>RootlessモードのDocker環境にならって、名前空間内のrootユーザー(UID=0)をホスト側の一般ユーザー(UID=1001)にマッピングし、
+名前空間内の一般ユーザー(UID=1)以降のユーザーをホスト側の一般ユーザー(UID=300000)以降にマッピングしてみます。</p>
+<p><code>unshare</code> コマンドで新しく名前空間を作成します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span><span style="display:flex;"><span>$ echo $$
+</span></span><span style="display:flex;"><span>37820
+</span></span></code></pre></div><p>別端末からUID/GIDマッピングを設定します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ newuidmap <span style="color:#ae81ff">37820</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">300000</span> <span style="color:#ae81ff">5000</span>
+</span></span><span style="display:flex;"><span>$ newgidmap <span style="color:#ae81ff">37820</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">300000</span> <span style="color:#ae81ff">5000</span>
+</span></span></code></pre></div><p>名前空間内に戻ってみます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+</span></span><span style="display:flex;"><span>$ ls -aln
+</span></span><span style="display:flex;"><span>total 4
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 0 0 23 May 13 16:19 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 0 0 26 May 13 11:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 0 0 32 May 13 16:19 test1.txt
+</span></span></code></pre></div><p>先程と同様名前空間内のrootユーザー(UID=0)がホスト側の一般ユーザー(UID=1001)にマッピングされていることが確認出来ます。</p>
+<p>ここで名前空間内の一般ユーザーがオーナーのファイルをいくつか作成してみます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ date &gt; tmp
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">for</span> f in <span style="color:#66d9ef">$(</span>seq 3<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span> echo <span style="color:#e6db74">&#34;[UID=</span>$f<span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">&amp;&amp;</span> install -v -o $f -g $f -m <span style="color:#ae81ff">644</span> tmp namespace-$f.txt; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>[UID=1]
+</span></span><span style="display:flex;"><span>removed &#39;namespace-1.txt&#39;
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-1.txt&#39;
+</span></span><span style="display:flex;"><span>[UID=2]
+</span></span><span style="display:flex;"><span>removed &#39;namespace-2.txt&#39;
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-2.txt&#39;
+</span></span><span style="display:flex;"><span>[UID=3]
+</span></span><span style="display:flex;"><span>removed &#39;namespace-3.txt&#39;
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-3.txt&#39;
+</span></span><span style="display:flex;"><span>$ <span style="color:#66d9ef">for</span> f in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">1000</span> 1003<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span> echo <span style="color:#e6db74">&#34;[UID=</span>$f<span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">&amp;&amp;</span> install -v -o $f -g $f -m <span style="color:#ae81ff">644</span> tmp namespace-$f.txt; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>[UID=1000]
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-1000.txt&#39;
+</span></span><span style="display:flex;"><span>[UID=1001]
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-1001.txt&#39;
+</span></span><span style="display:flex;"><span>[UID=1002]
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-1002.txt&#39;
+</span></span><span style="display:flex;"><span>[UID=1003]
+</span></span><span style="display:flex;"><span>&#39;tmp&#39; -&gt; &#39;namespace-1003.txt&#39;
+</span></span><span style="display:flex;"><span>$ mv -v tmp namespace-0.txt
+</span></span><span style="display:flex;"><span>renamed &#39;tmp&#39; -&gt; &#39;namespace-0.txt&#39;
+</span></span><span style="display:flex;"><span>$ ls -aln
+</span></span><span style="display:flex;"><span>total 40
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2    0    0 4096 May 14 10:57 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3    0    0   26 May 13 11:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1    0    0   32 May 14 10:52 namespace-0.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 1000 1000   32 May 14 10:56 namespace-1000.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 1001 1001   32 May 14 10:56 namespace-1001.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 1002 1002   32 May 14 10:56 namespace-1002.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 1003 1003   32 May 14 10:56 namespace-1003.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1    1    1   32 May 14 10:56 namespace-1.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1    2    2   32 May 14 10:56 namespace-2.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1    3    3   32 May 14 10:56 namespace-3.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1    0    0   32 May 13 16:19 test1.txt
+</span></span></code></pre></div><p>ではホスト側から確認してみましょう。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ ls -aln
+</span></span><span style="display:flex;"><span>total 40
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2   1001   1001 4096 May 14 10:57 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3   1001   1001   26 May 13 11:36 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1   1001   1001   32 May 14 10:52 namespace-0.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 300999 300999   32 May 14 10:56 namespace-1000.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 301000 301000   32 May 14 10:56 namespace-1001.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 301001 301001   32 May 14 10:56 namespace-1002.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 301002 301002   32 May 14 10:56 namespace-1003.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 300000 300000   32 May 14 10:56 namespace-1.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 300001 300001   32 May 14 10:56 namespace-2.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 300002 300002   32 May 14 10:56 namespace-3.txt
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1   1001   1001   32 May 13 16:19 test1.txt
+</span></span></code></pre></div><p>いい感じにマッピング出来ていますね。
+名前空間内のrootユーザー(UID=0)のみホスト側の一般ユーザー(UID=1001)にマッピングされていて、
+名前空間内の一般ユーザー(UID=1)以降はホスト側の一般ユーザー(UID=300000)以降にマッピングされています。</p>
+<p>RootlessなDocker環境でのホストOとコンテナ間のUID/GIDマッピングと同じような形になりました。
+<code>/etc/subuid</code> <code>/etc/subgid</code> の設定範囲内であれば結構自由にマッピング設定が出来そうですね。</p>
+<h2 id="userns-unshare-option"><a class="headline-anchor" href="#userns-unshare-option"><i class="bi bi-link-45deg"></i></a><code>unshare</code> コマンドのオプションで設定</h2>
+<p>一部のマッピング設定は <code>unshare</code> のオプションを指定することでも。</p>
+<p><code>--map-user</code> <code>--map-group</code> オプションを指定すると、名前空間内の実行ユーザーのUID/GID指定でき、指定されたユーザーはホスト側の実行ユーザー(UID=1001,GID=1001)にマッピングされます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-user<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> --map-group<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
+</span></span><span style="display:flex;"><span>      1000       1001          1
+</span></span><span style="display:flex;"><span>      1000       1001          1
+</span></span></code></pre></div><p>名前空間内のUID=1000,GID=1000のユーザーがホスト側のUID=1001,GID=1001のユーザーにマッピングされていることが確認出来ます。</p>
+<p><code>--map-root</code> オプションを指定すると、名前空間内の実行ユーザーがroot(UID=0)のユーザーになり、名前空間内のrootユーザー(UID=0)をホスト側の一般ユーザー(UID=1001)にマッピングしてくれます。</p>
+<p><code>--map-user=0</code> <code>--map-group=0</code> と同じような動作ですね。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-root
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map 
+</span></span><span style="display:flex;"><span>         0       1001          1
+</span></span><span style="display:flex;"><span>         0       1001          1
+</span></span></code></pre></div><p>また、 <code>--map-current-user</code> オプションを指定すると、名前空間内の実行ユーザーが現在のユーザー(UID=1001)になり、名前空間内の一般ユーザー(UID=1001)をホスト側の一般ユーザー(UID=1001)にマッピングしてくれます。</p>
+<p>こちらは <code>--map-user=1001</code> <code>--map-group=1001</code> と同じような動作になります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-current-user
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/$$/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
+</span></span><span style="display:flex;"><span>      1001       1001          1
+</span></span><span style="display:flex;"><span>      1001       1001          1
+</span></span></code></pre></div><p>他にも <code>util-linux</code> のバージョンが <code>2.39</code> 以降くらいから、
+<code>--map-users</code> <code>--map-groups</code> というオプションが追加されているようで、
+さらに複雑な設定が <code>unshare</code> のオプションで出来るようになっているようです。
+詳しくは <a href="https://man7.org/linux/man-pages/man1/unshare.1.html"><code>unshare(1)</code></a> を参照してください。</p>
+<h1 id="summary"><a class="headline-anchor" href="#summary"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
+<p>今回は <code>unshare</code> コマンドを使ってユーザー名前空間の分離を試してみました。
+<code>newuidmap</code> <code>newgidmap</code> コマンドの使い方や、
+名前空間内でのUID/GIDマッピングについての理解が深まった気がします。</p>
+<p>お手軽にユーザー名前空間のマッピング設定が試せたのでだいぶ面白いです。
+他の名前空間の分離も試してみたいですね。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/tech/">tech</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/linux/">Linux</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/unshare/">unshare</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;text=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;title=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f05%2f12-unshare%2f&amp;description=unshare%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%a7%e9%81%8a%e3%82%93%e3%81%a7%e3%81%bf%e3%81%9f" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/" data-toggle="tooltip" data-placement="top" title="ホストOSとコンテナ間でのUID/GIDマッピング">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-mypaceshun-github-io-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="https://github.com/mypaceshun" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://twitter.com/rikanodorei_823" title="Twitter">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-x-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.instagram.com/rikanodorei" title="Instagram">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.youtube.com/@rikanodorei" title="Youtube">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://mypaceshun.github.io">KAWAI Shun</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.145.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://mypaceshun.github.io/blog/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://mypaceshun.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

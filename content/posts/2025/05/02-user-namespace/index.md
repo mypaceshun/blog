@@ -18,7 +18,7 @@ Rootlessな環境でコンテナを動かすと、Linuxカーネルのユーザ�
 
 <!--more-->
 
-# はじめに {#start}
+# はじめに {#introduction}
 
 仕事の中でDockerを使うことはちょこちょこあったんですが、最近はRootlessモードで使ったほうがいいと言われ、
 Rootlessモードでコンテナを動かす機会が多くなりました。
@@ -27,9 +27,9 @@ Rootlessモードでコンテナを動かす機会が多くなりました。
 そういった悲しみから解放されたい一新で、ホストOSとコンテナ内のUID/GIDの関係について調べてみました。
 また、PodmanのRootlessモードでも同様の検証をしてみようと思います。
 
-# バージョン情報 {#version}
+# 検証環境 {#environment}
 
-本文章執筆時の検証環境は以下のとおりです。
+本文章執筆時の検証環境の情報は以下のとおりです。
 基本的にはDockerで検証していますが、Podmanでも軽く動作確認してみます。
 Dockerはよく使いますがPodmanはまだまだ勉強中です。
 
@@ -37,7 +37,7 @@ Dockerはよく使いますがPodmanはまだまだ勉強中です。
 * Kernel: `5.14.0-503.38.1.el9_5.x86_64`
 * Docker:
 
-    ```bash
+    ```console
     $ docker version
     Client: Docker Engine - Community
      Version:           28.1.1
@@ -79,7 +79,7 @@ Dockerはよく使いますがPodmanはまだまだ勉強中です。
 
 * Podman:
 
-    ```bash
+    ```console
     $ podman version
     Client:       Podman Engine
     Version:      5.2.2
@@ -107,7 +107,7 @@ Dockerには特権モードという起動方法もありますが、
 Dockerfileの `USER` や `docker run` コマンドの `--user` オプションである程度自由に指定できます。
 `docker run` コマンドを使った場合、以下のようになります。
 
-```bash
+```console
 $ docker run alpine id
 uid=0(root) gid=0(root) groups=0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
 
@@ -150,20 +150,20 @@ RootfulなDocker環境での実行です。
 一般ユーザー(UID=1001)をdockerグループに追加することで、dockerコマンドを実行できるようにしています。
 コンテナ内プロセスはコンテナ内のrootユーザー(UID=0)として動作させます。
 
-```bash
+```console
 $ id
 uid=1001(shun) gid=1001(shun) groups=1001(shun),989(docker)
 ```
 
 ホストOS上の一般ユーザーでファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 ```
 
 コンテナ内では、コンテナ内の一般ユーザー(UID=1001)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ docker run -v "$(pwd):/tmp" alpine ls -anl /tmp
 total 8
 drwxr-xr-x    2 1001     1001          4096 May  7 07:23 .
@@ -173,7 +173,7 @@ drwxr-xr-x    1 0        0                6 May  7 07:25 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ docker run -v "$(pwd):/tmp" alpine sh -c "date > /tmp/test2"
 $ docker run -v "$(pwd):/tmp" alpine ls -anl /tmp
 total 12
@@ -185,7 +185,7 @@ drwxr-xr-x    1 0        0                6 May  7 07:31 ..
 
 ホストOS上でもホストOS上のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 16
 drwxr-xr-x. 2 1001 1001 4096 May  7 16:28 .
@@ -197,7 +197,7 @@ drwxr-xr-x. 6 1001 1001 4096 May  7 16:20 ..
 ホストOS上の一般ユーザー(UID=1001)では権限不足でファイルの編集が出来なくなります。
 不便ですね。
 
-```bash
+```console
 $ date > test2
 zsh: permission denied: test2
 ```
@@ -217,20 +217,20 @@ RootfulなDocker環境での実行です。
 一般ユーザー(UID=1001)をdockerグループに追加することで、dockerコマンドを実行できるようにしています。
 コンテナ内プログラムはコンテナ内の一般ユーザー(UID=1000)として動作させます。
 
-```bash
+```console
 $ id
 uid=1001(shun) gid=1001(shun) groups=1001(shun),989(docker)
 ```
 
 ホストOS上の一般ユーザーでファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 ```
 
 コンテナ内では、コンテナ内の一般ユーザー(UID=1001)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ docker run -v "$(pwd):/tmp" --user 1000:1000 alpine ls -aln /tmp             
 total 4
 drwxr-xr-x    2 1001     1001            19 May  7 07:56 .
@@ -240,7 +240,7 @@ drwxr-xr-x    1 0        0                6 May  7 07:56 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ docker run -v "$(pwd):/tmp" --user 1000:1000 alpine sh -c "date > /tmp/test2"
 sh: can't create /tmp/test2: Permission denied
 ```
@@ -251,7 +251,7 @@ sh: can't create /tmp/test2: Permission denied
 
 一時的にマウントディレクトリの権限を 777 に変更して、誰でも書き込みが出来るようにして実行します。
 
-```bash
+```console
 $ chmod 777 .
 $ docker run -v "$(pwd):/tmp" --user 1000:1000 alpine sh -c "date > /tmp/test2"
 $ chmod 755 .
@@ -265,7 +265,7 @@ drwxr-xr-x    1 0        0                6 May  7 08:03 ..
 
 ホストOS上でもホストOS上の一般ユーザー(UID=1000)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x. 2 1001 1001 32 May  7 17:01 .
@@ -309,7 +309,7 @@ Linuxユーザーには自身のUIDの他に利用可能なUID/GIDの範囲を�
 利用可能なUIDの範囲を開始値と範囲の長さで確認出来ます。
 以下の `100000 65536` というのは、100000から165535までのUIDを利用可能という意味です。
 
-```bash
+```console
 $ rpm -qf /bin/getsubids
 shadow-utils-subid-4.9-10.el9_5.x86_64
 $ getsubids testuser
@@ -327,7 +327,7 @@ $ getsubids -g testuser
 
 ユーザー名前空間の設定が存在しない場合は以下のように出力されます。
 
-```bash
+```console
 $ getsubids shun
 Error fetching ranges
 ```
@@ -335,7 +335,7 @@ Error fetching ranges
 ちなみに存在しないユーザーを指定しても同じ出力でした。
 混乱しそう...
 
-```bash
+```console
 $ getsubids damedame
 Error fetching ranges
 ```
@@ -344,7 +344,7 @@ Error fetching ranges
 こちらは利用可能なUID/GIDの範囲を`開始値-終了値` で指定します。
 `getsubids` の表記と違うので少し混乱しますね。
 
-```bash
+```console
 $ sudo usermod --add-subuids 300000-365535 --add-subgids 300000-365535 shun
 $ getsubids shun
 0: shun 300000 65536
@@ -393,7 +393,7 @@ RootlessなDocker環境での実行です。
 Rootlessモードを動作させる都合上ユーザー名前空間の設定がされていますが、
 今回の実験では特に関係ありません。
 
-```bash
+```console
 $ id
 uid=1003(shun) gid=1003(shun) groups=1003(shun)
 $ getsubids shun
@@ -404,7 +404,7 @@ $ getsubids -g shun
 
 ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 $ ls -aln
 total 4
@@ -415,7 +415,7 @@ drwxr-xr-x. 3 1003 1003 57 May  8 10:42 ..
 
 コンテナ内では、コンテナ内のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ docker run -v "${PWD}:/tmp" alpine ls -aln /tmp
 total 4
 drwxr-xr-x    2 0        0               23 May  8 01:47 .
@@ -425,7 +425,7 @@ drwxr-xr-x   19 0        0                6 May  8 01:48 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ docker run -v "${PWD}:/tmp" alpine sh -c "date > /tmp/test2.txt"
 $ docker run -v "${PWD}:/tmp" alpine ls -aln /tmp
 total 8
@@ -437,7 +437,7 @@ drwxr-xr-x   19 0        0                6 May  8 01:49 ..
 
 ホストOS上ではホストOS上の一般ユーザー(UID=1003)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2 1003 1003 40 May  8 10:49 .
@@ -473,7 +473,7 @@ RootlessなDocker環境での実行です。
 一般ユーザー(UID=1003)の権限でDockerデーモンが起動しています。
 ユーザー名前空間は200000-265535の範囲が設定されています。
 
-```bash
+```console
 $ id
 uid=1003(shun) gid=1003(shun) groups=1003(shun)
 $ getsubids shun
@@ -484,7 +484,7 @@ $ getsubids -g shun
 
 ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 $ ls -aln
 total 4
@@ -495,7 +495,7 @@ drwxr-xr-x. 3 1003 1003 57 May  8 10:42 ..
 
 コンテナ内では、コンテナ内の一般ユーザー(UID=1000)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ docker run --rm -v "${PWD}:/tmp" --user "1000:1000" alpine ls -aln /tmp
 total 4
 drwxr-xr-x    2 0        0               23 May  8 02:24 .
@@ -505,7 +505,7 @@ drwxr-xr-x   19 0        0                6 May  8 02:25 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ docker run --rm -v "${PWD}:/tmp" --user "1000:1000" alpine sh -c "date > /tmp/test2.txt"
 sh: can't create /tmp/test2.txt: Permission denied
 ```
@@ -516,7 +516,7 @@ sh: can't create /tmp/test2.txt: Permission denied
 
 一時的にマウントディレクトリの権限を 777 に変更して、誰でも書き込みが出来るようにして実行します。
 
-```bash
+```console
 $ chmod 777 .
 $ chmod 755 .
 $ docker run -v "${PWD}:/tmp" --user "1000:1000" alpine ls -aln /tmp
@@ -529,7 +529,7 @@ drwxr-xr-x   19 0        0                6 May  8 02:33 ..
 
 ホストOS上ではホストOS上の一般ユーザー(UID=1003)が利用可能なユーザー名前空間の範囲でマッピングされた、UID200999番/GID200999番のユーザーがオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2   1003   1003 40 May  8 11:33 .
@@ -544,7 +544,7 @@ drwxr-xr-x. 3   1003   1003 57 May  8 10:42 ..
 
 ただこのままではホストOS上の一般ユーザー(UID=1003)ではファイルの編集が出来ません。
 
-```bash
+```console
 $ date >> test2.txt
 zsh: permission denied: test2.txt
 ```
@@ -560,7 +560,7 @@ DockerをRootlessモードでインストールした際にあわせてインス
 先程RootlessなDocker環境でコンテナ内の一般ユーザー(UID=1000)でファイルを作成したら、
 ホストOS上の一般ユーザー(UID=1003)では編集出来なくなってしまいました。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2   1003   1003 40 May  8 11:33 .
@@ -571,7 +571,7 @@ drwxr-xr-x. 3   1003   1003 57 May  8 10:42 ..
 
 `rootlesskit` を介すとコンテナ内のrootユーザー(UID=0)としてコマンドを実行してくれます。
 
-```bash
+```console
 $ rootlesskit ls -aln
 total 8
 drwxr-xr-x  2    0    0 40 May  8 11:33 .
@@ -586,7 +586,7 @@ drwxr-xr-x. 3    0    0 57 May  8 10:42 ..
 
 `rootlesskit` を使ってファイルを編集出来ました。
 
-```bash
+```console
 $ rootlesskit sh -c "date >> test2.txt"
 $ ls -aln
 total 8
@@ -626,7 +626,7 @@ RootlessなDocker環境での実施内容と、
 RootlessなPodman環境での実行です。
 Docker環境同様ユーザー名前空間の設定がされていますが、今回の実験では特に関係ありません。
 
-```bash
+```console
 $ id
 uid=1003(shun) gid=1003(shun) groups=1003(shun)
 $ getsubids shun
@@ -637,7 +637,7 @@ $ getsubids -g shun
 
 ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 $ ls -aln
 total 4
@@ -648,7 +648,7 @@ drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
 
 コンテナ内では、コンテナ内のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ podman run -v "${PWD}:/tmp" alpine ls -aln /tmp
 total 4
 drwxr-xr-x    2 0        0               23 May  8 02:09 .
@@ -658,7 +658,7 @@ dr-xr-xr-x    1 0        0               28 May  8 02:12 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ podman run -v "${PWD}:/tmp" alpine sh -c "date > /tmp/test2.txt"
 $ podman run -v "${PWD}:/tmp" alpine ls -aln /tmp
 total 8
@@ -670,7 +670,7 @@ dr-xr-xr-x    1 0        0               28 May  8 02:13 ..
 
 ホストOS上ではホストOS上の一般ユーザー(UID=1003)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2 1003 1003 40 May  8 11:13 .
@@ -688,7 +688,7 @@ Podman環境での実行です。
 一般ユーザー(UID=1003)で実行し、
 ユーザー名前空間は200000-265535の範囲が設定されています。
 
-```bash
+```console
 $ id
 uid=1003(shun) gid=1003(shun) groups=1003(shun)
 $ getsubids shun
@@ -699,7 +699,7 @@ $ getsubids -g shun
 
 ホストOS上の一般ユーザー(UID=1003)でファイルを作成します。
 
-```bash
+```console
 $ date > test1.txt
 $ ls -aln
 total 4
@@ -710,7 +710,7 @@ drwxr-xr-x. 3 1003 1003 41 May  8 11:08 ..
 
 コンテナ内では、コンテナ内のrootユーザー(UID=0)がオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ podman run -v "${PWD}:/tmp" --user "1000:1000" alpine ls -aln /tmp
 total 4
 drwxr-xr-x    2 0        0               23 May  8 02:58 .
@@ -720,7 +720,7 @@ dr-xr-xr-x    1 0        0               28 May  8 02:59 ..
 
 コンテナ内でファイルを作成します。
 
-```bash
+```console
 $ podman run -v "${PWD}:/tmp" --user "1000:1000" alpine sh -c "date > /tmp/test2.txt"
 sh: can't create /tmp/test2.txt: Permission denied
 ```
@@ -731,7 +731,7 @@ sh: can't create /tmp/test2.txt: Permission denied
 
 一時的にマウントディレクトリの権限を 777 に変更して、誰でも書き込みが出来るようにして実行します。
 
-```bash
+```console
 $ chmod 777 .
 $ podman run -v "${PWD}:/tmp" --user "1000:1000" alpine sh -c "date > /tmp/test2.txt"
 $ chmod 755 .
@@ -746,7 +746,7 @@ dr-xr-xr-x    1 0        0               28 May  8 03:01 ..
 
 ホストOS上ではホストOS上の一般ユーザー(UID=1003)が利用可能なユーザー名前空間の範囲でマッピングされた、UID200999番/GID200999番のユーザーがオーナーのファイルとして確認出来ます。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2   1003   1003 40 May  8 12:00 .
@@ -769,7 +769,7 @@ Podman環境では `podman unshare` というコマンドを使うと、ユー�
 先程Podman環境でコンテナ内の一般ユーザー(UID=1000)でファイルを作成したら、
 ホストOS上の一般ユーザー(UID=1003)では編集出来なくなってしまいました。
 
-```bash
+```console
 $ ls -aln
 total 8
 drwxr-xr-x  2   1003   1003 40 May  8 12:00 .
@@ -780,7 +780,7 @@ drwxr-xr-x. 3   1003   1003 41 May  8 11:08 ..
 
 `podman unshare` を介すとコンテナ内のrootユーザー(UID=0)としてコマンドを実行してくれます。
 
-```bash
+```console
 $ podman unshare ls -aln
 total 8
 drwxr-xr-x  2    0    0 40 May  8 12:00 .
@@ -792,7 +792,7 @@ drwxr-xr-x. 3    0    0 41 May  8 11:08 ..
 `rootlesskit` と同様ですね。
 `podman unshare` を使ってファイルの編集も出来ました。
 
-```bash
+```console
 $ podman unshare sh -c "date >> test2.txt"
 $ ls -aln
 total 8

@@ -6,8 +6,15 @@
     <description>Recent content in Linux on mypaceshun blog</description>
     <generator>Hugo</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Fri, 02 May 2025 06:56:50 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 12 May 2025 06:56:50 +0900</lastBuildDate>
     <atom:link href="https://mypaceshun.github.io/blog/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>unshareコマンドで遊んでみた</title>
+      <link>https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/</link>
+      <pubDate>Mon, 12 May 2025 06:56:50 +0900</pubDate>
+      <guid>https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/</guid>
+      <description>&lt;p&gt;DockerのRootlessモードを調べている中で、&lt;code&gt;unshare&lt;/code&gt; というコマンドを見つけました。&#xA;Linuxカーネルの機能である名前空間の分離が出来るコマンドです。&#xA;&lt;code&gt;unshare&lt;/code&gt; コマンドを使ってユーザー名前空間の分離を試してみました。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>ホストOSとコンテナ間でのUID/GIDマッピング</title>
       <link>https://mypaceshun.github.io/blog/posts/2025/05/02-user-namespace/</link>
