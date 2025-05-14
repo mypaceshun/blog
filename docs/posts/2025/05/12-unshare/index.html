@@ -440,7 +440,7 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 </span></span></code></pre></div><p>いい感じにマッピング出来ていますね。
 名前空間内のrootユーザー(UID=0)のみホスト側の一般ユーザー(UID=1001)にマッピングされていて、
 名前空間内の一般ユーザー(UID=1)以降はホスト側の一般ユーザー(UID=300000)以降にマッピングされています。</p>
-<p>RootlessなDocker環境でのホストOとコンテナ間のUID/GIDマッピングと同じような形になりました。
+<p>RootlessなDocker環境でのホストOSとコンテナ間のUID/GIDマッピングと同じような形になりました。
 <code>/etc/subuid</code> <code>/etc/subgid</code> の設定範囲内であれば結構自由にマッピング設定が出来そうですね。</p>
 <h2 id="userns-unshare-option"><a class="headline-anchor" href="#userns-unshare-option"><i class="bi bi-link-45deg"></i></a><code>unshare</code> コマンドのオプションで設定</h2>
 <p>一部のマッピング設定は <code>unshare</code> のオプションを指定することでも。</p>
