@@ -81,6 +81,15 @@ Groups:	65534 65534
 ```
 
 UID/GIDはそのままだと `65534(nobody)` になってしまいます。
+これはマッピングがないときのUID/GIDが `kernel.overflowgid` `kernel.overflowuid` で定義されているためです。
+
+```console
+$ sysctl kernel.overflowuid
+kernel.overflowgid = 65534
+$ sysctl kernel.overflowgid
+kernel.overflowgid = 65534
+```
+
 ここから `newuidmap` `newgidmap` コマンドを使って、UID/GIDのマッピングを行います。
 マッピング設定は `unshare` で作成した名前空間内では行えないので、
 別の端末を開いて実行します。

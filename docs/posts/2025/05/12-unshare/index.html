@@ -60,7 +60,7 @@
   "headline": "unshareコマンドでユーザー名前空間を作成してみる",
   "description" : "unshareコマンドを使ってユーザー名前空間の作成を実施してみました。",
   "inLanguage" : "en",
-  "wordCount":  948 ,
+  "wordCount":  964 ,
   "datePublished" : "2025-05-12T06:56:50\u002b09:00",
   "dateModified" : "2025-05-12T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -311,7 +311,12 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 </span></span><span style="display:flex;"><span>Gid:	65534	65534	65534	65534
 </span></span><span style="display:flex;"><span>Groups:	65534 65534
 </span></span></code></pre></div><p>UID/GIDはそのままだと <code>65534(nobody)</code> になってしまいます。
-ここから <code>newuidmap</code> <code>newgidmap</code> コマンドを使って、UID/GIDのマッピングを行います。
+これはマッピングがないときのUID/GIDが <code>kernel.overflowgid</code> <code>kernel.overflowuid</code> で定義されているためです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ sysctl kernel.overflowuid
+</span></span><span style="display:flex;"><span>kernel.overflowgid = 65534
+</span></span><span style="display:flex;"><span>$ sysctl kernel.overflowgid
+</span></span><span style="display:flex;"><span>kernel.overflowgid = 65534
+</span></span></code></pre></div><p>ここから <code>newuidmap</code> <code>newgidmap</code> コマンドを使って、UID/GIDのマッピングを行います。
 マッピング設定は <code>unshare</code> で作成した名前空間内では行えないので、
 別の端末を開いて実行します。</p>
 <h2 id="userns-setup"><a class="headline-anchor" href="#userns-setup"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の設定</h2>
