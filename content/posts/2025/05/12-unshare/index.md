@@ -69,11 +69,15 @@ Options:
 新しいユーザー名前空間でコマンドを実行するには `--user` オプションを指定します。
 
 ```console
-$ id
-uid=1001(shun) gid=1001(shun) groups=1001(shun)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	1001	1001	1001	1001
+Gid:	1001	1001	1001	1001
+Groups:	989 1001
 $ unshare --user /bin/bash
-$ id
-uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	65534	65534	65534	65534
+Gid:	65534	65534	65534	65534
+Groups:	65534 65534
 ```
 
 UID/GIDはそのままだと `65534(nobody)` になってしまいます。
@@ -100,8 +104,10 @@ $ getsubids $USER; getsubids -g $USER
 
 ```console
 $ unshare --user
-$ id
-uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	65534	65534	65534	65534
+Gid:	65534	65534	65534	65534
+Groups:	65534 65534
 ```
 
 プロセスごとに設定されているUID/GIDのマッピングは
@@ -134,8 +140,10 @@ $ newgidmap 37180 0 1001 1
 `unshare` で実行している端末に戻ると、実行ユーザーがrootユーザー(UID=0,GID=0)に変わっていることが確認出来ます。
 
 ```console
-$ id
-uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+Groups:	65534 0
 ```
 
 `/proc/self/uid_map` `/proc/self/gid_map` を確認すると、マッピングが設定されていることが確認出来ます。
@@ -182,8 +190,10 @@ RootlessモードのDocker環境にならって、名前空間内のrootユー�
 
 ```console
 $ unshare --user
-$ id
-uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	65534	65534	65534	65534
+Gid:	65534	65534	65534	65534
+Groups:	65534 65534
 $ echo $$
 37820
 ```
@@ -198,8 +208,10 @@ $ newgidmap 37820 0 1001 1 1 300000 5000
 名前空間内に戻ってみます。
 
 ```console
-$ id
-uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+Groups:	65534 0
 $ ls -aln
 total 4
 drwxr-xr-x 2 0 0 23 May 13 16:19 .
@@ -282,8 +294,10 @@ RootlessなDocker環境でのホストOSとコンテナ間のUID/GIDマッピン
 
 ```console
 $ unshare --user --map-user=1000 --map-group=1000
-$ id
-uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+Groups:	65534 1000
 $ cat /proc/self/{u,g}id_map
       1000       1001          1
       1000       1001          1
@@ -297,8 +311,10 @@ $ cat /proc/self/{u,g}id_map
 
 ```console
 $ unshare --user --map-root
-$ id
-uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+Groups:	65534 0
 $ cat /proc/self/{u,g}id_map
          0       1001          1
          0       1001          1
@@ -310,8 +326,10 @@ $ cat /proc/self/{u,g}id_map
 
 ```console
 $ unshare --user --map-current-user
-$ id
-uid=1001(shun) gid=1001(shun) groups=1001(shun),65534(nobody)
+$ cat /proc/self/status | grep -E "Uid|Gid|Groups"
+Uid:	1001	1001	1001	1001
+Gid:	1001	1001	1001	1001
+Groups:	65534 1001
 $ cat /proc/self/{u,g}id_map
       1001       1001          1
       1001       1001          1

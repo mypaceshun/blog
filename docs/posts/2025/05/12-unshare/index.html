@@ -60,7 +60,7 @@
   "headline": "unshareコマンドでユーザー名前空間を作成してみる",
   "description" : "unshareコマンドを使ってユーザー名前空間の作成を実施してみました。",
   "inLanguage" : "en",
-  "wordCount":  813 ,
+  "wordCount":  948 ,
   "datePublished" : "2025-05-12T06:56:50\u002b09:00",
   "dateModified" : "2025-05-12T06:56:50\u002b09:00",
   "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
@@ -301,11 +301,15 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 その他の名前空間の分離に関しては本記事では触れていません。</p>
 <h1 id="user-namespace"><a class="headline-anchor" href="#user-namespace"><i class="bi bi-link-45deg"></i></a>ユーザー名前空間の分離</h1>
 <p>新しいユーザー名前空間でコマンドを実行するには <code>--user</code> オプションを指定します。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	1001	1001	1001	1001
+</span></span><span style="display:flex;"><span>Gid:	1001	1001	1001	1001
+</span></span><span style="display:flex;"><span>Groups:	989 1001
 </span></span><span style="display:flex;"><span>$ unshare --user /bin/bash
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Gid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Groups:	65534 65534
 </span></span></code></pre></div><p>UID/GIDはそのままだと <code>65534(nobody)</code> になってしまいます。
 ここから <code>newuidmap</code> <code>newgidmap</code> コマンドを使って、UID/GIDのマッピングを行います。
 マッピング設定は <code>unshare</code> で作成した名前空間内では行えないので、
@@ -321,8 +325,10 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 </span></span><span style="display:flex;"><span>0: shun 300000 65536
 </span></span></code></pre></div><p>再度 <code>unshare</code> コマンドで新しい名前空間を作成します。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Gid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Groups:	65534 65534
 </span></span></code></pre></div><p>プロセスごとに設定されているUID/GIDのマッピングは
 <code>/proc/&lt;pid&gt;/uid_map</code> <code>/proc/&lt;pid&gt;/gid_map</code> で確認出来ます。
 <code>unshare --user</code> で作成した名前空間はまだ何も設定がいないので、
@@ -339,8 +345,10 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ newuidmap <span style="color:#ae81ff">37180</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>$ newgidmap <span style="color:#ae81ff">37180</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span>
 </span></span></code></pre></div><p><code>unshare</code> で実行している端末に戻ると、実行ユーザーがrootユーザー(UID=0,GID=0)に変わっていることが確認出来ます。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Gid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Groups:	65534 0
 </span></span></code></pre></div><p><code>/proc/self/uid_map</code> <code>/proc/self/gid_map</code> を確認すると、マッピングが設定されていることが確認出来ます。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>     0       1001          1
@@ -369,16 +377,20 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 名前空間内の一般ユーザー(UID=1)以降のユーザーをホスト側の一般ユーザー(UID=300000)以降にマッピングしてみます。</p>
 <p><code>unshare</code> コマンドで新しく名前空間を作成します。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Gid:	65534	65534	65534	65534
+</span></span><span style="display:flex;"><span>Groups:	65534 65534
 </span></span><span style="display:flex;"><span>$ echo $$
 </span></span><span style="display:flex;"><span>37820
 </span></span></code></pre></div><p>別端末からUID/GIDマッピングを設定します。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ newuidmap <span style="color:#ae81ff">37820</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">300000</span> <span style="color:#ae81ff">5000</span>
 </span></span><span style="display:flex;"><span>$ newgidmap <span style="color:#ae81ff">37820</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1001</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">300000</span> <span style="color:#ae81ff">5000</span>
 </span></span></code></pre></div><p>名前空間内に戻ってみます。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Gid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Groups:	65534 0
 </span></span><span style="display:flex;"><span>$ ls -aln
 </span></span><span style="display:flex;"><span>total 4
 </span></span><span style="display:flex;"><span>drwxr-xr-x 2 0 0 23 May 13 16:19 .
@@ -444,8 +456,10 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <p>一部のマッピング設定は <code>unshare</code> のオプションを指定することでも。</p>
 <p><code>--map-user</code> <code>--map-group</code> オプションを指定すると、名前空間内の実行ユーザーのUID/GID指定でき、指定されたユーザーはホスト側の実行ユーザー(UID=1001,GID=1001)にマッピングされます。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-user<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> --map-group<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	1000	1000	1000	1000
+</span></span><span style="display:flex;"><span>Gid:	1000	1000	1000	1000
+</span></span><span style="display:flex;"><span>Groups:	65534 1000
 </span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>      1000       1001          1
 </span></span><span style="display:flex;"><span>      1000       1001          1
@@ -453,16 +467,20 @@ Linuxカーネルの機能である名前空間の分離が出来るコマンド
 <p><code>--map-root</code> オプションを指定すると、名前空間内の実行ユーザーがroot(UID=0)のユーザーになり、名前空間内のrootユーザー(UID=0)をホスト側の一般ユーザー(UID=1001)にマッピングしてくれます。</p>
 <p><code>--map-user=0</code> <code>--map-group=0</code> と同じような動作ですね。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-root
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Gid:	0	0	0	0
+</span></span><span style="display:flex;"><span>Groups:	65534 0
 </span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>         0       1001          1
 </span></span><span style="display:flex;"><span>         0       1001          1
 </span></span></code></pre></div><p>また、 <code>--map-current-user</code> オプションを指定すると、名前空間内の実行ユーザーが現在のユーザー(UID=1001)になり、名前空間内の一般ユーザー(UID=1001)をホスト側の一般ユーザー(UID=1001)にマッピングしてくれます。</p>
 <p>こちらは <code>--map-user=1001</code> <code>--map-group=1001</code> と同じような動作になります。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ unshare --user --map-current-user
-</span></span><span style="display:flex;"><span>$ id
-</span></span><span style="display:flex;"><span>uid=1001(shun) gid=1001(shun) groups=1001(shun),65534(nobody)
+</span></span><span style="display:flex;"><span>$ cat /proc/self/status | grep -E <span style="color:#e6db74">&#34;Uid|Gid|Groups&#34;</span>
+</span></span><span style="display:flex;"><span>Uid:	1001	1001	1001	1001
+</span></span><span style="display:flex;"><span>Gid:	1001	1001	1001	1001
+</span></span><span style="display:flex;"><span>Groups:	65534 1001
 </span></span><span style="display:flex;"><span>$ cat /proc/self/<span style="color:#f92672">{</span>u,g<span style="color:#f92672">}</span>id_map
 </span></span><span style="display:flex;"><span>      1001       1001          1
 </span></span><span style="display:flex;"><span>      1001       1001          1
