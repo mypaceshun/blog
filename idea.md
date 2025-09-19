@@ -9,3 +9,7 @@
 ## コミットのgpg署名
 
 コミットにverifyをつける手順
+
+## winrm
+
+AnsibleでWindowsを操作するためのwinrmの設定
