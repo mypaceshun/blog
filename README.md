@@ -10,19 +10,19 @@ https://mypaceshun.github.io/blog/
 
 ## ブログページの作成
 
-```
+``` console
 hugo new posts/ファイル名.md
 ```
 
 ## ブログページのビルド
 
-```
+``` console
 hugo
 ```
 
 ## テストサーバーの起動
 
-```
+``` console
 hugo server
 ```
 # dockerを利用した開発方法
@@ -33,18 +33,30 @@ dockerはrootlessモードでインストールすることを前提としてい
 
 ## dockerでブログページの作成
 
-```
+``` console
 make new NEW_FILENAME=ファイル名
+```
+
+現在の日付からパスはいい感じに生成してくれます。
+
+```console
+$ make new NEW_FILENAME=socks-proxy
+posts/2025/10/20-socks-proxy/index.md
+docker run -it --rm \
+	-v /home/shun/document/github/mypaceshun/blog:/src \
+	"hugomods/hugo:0.145.0" \
+	hugo new "posts/2025/10/20-socks-proxy/index.md"
+Content "/src/content/posts/2025/10/20-socks-proxy/index.md" created
 ```
 
 ## dockerでブログページのビルド
 
-```
+``` console
 make build
 ```
 
 ## dockerでテストサーバーの起動
 
-```
+``` console
 make run
 ```
