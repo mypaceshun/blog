@@ -254,10 +254,10 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p>私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshポート転送をよく使います。
+        <p>私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshのTCPポート転送をよく使います。
 様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。</p>
 <h1 id="introduction"><a class="headline-anchor" href="#introduction"><i class="bi bi-link-45deg"></i></a>はじめに</h1>
-<p>sshポート転送使いますか？ssh先のリモートサーバーのポートをローカルに転送したり、またその逆も出来ます。
+<p>sshのTCPポート転送使いますか？ssh先のリモートサーバーのポートをローカルに転送したり、またその逆も出来ます。
 私はリモートサーバー上で開発することが多く、特に開発中のWebアプリの動作確認なんかはsshポート転送を駆使して行います。
 単純にポート転送するだけで大体の場合は事足りますが、利用している中で苦労することがちょこちょこあり、試行錯誤していく中でSOCKSプロキシが一番使いやすいと感じました。
 その結論に至るまでの経緯と、SOCKSプロキシの使い方についてまとめます。</p>
@@ -278,7 +278,7 @@
 <ul>
 <li>リモートサーバーへはsshでのみアクセス可能</li>
 <li>リモートサーバー同士の通信は可能</li>
-<li>リモート環境にはDNSサーバーもあり、リモート環境内で名前解決可能なFQDNが存在する（例: <code>server1.localnet.example.com</code> ）</li>
+<li>リモート環境にはローカルドメイン名を持つDNSコンテンツサーバーと、それを参照するDNSキャッシュサーバーもあり、リモート環境内で名前解決可能なFQDNが存在する（例: <code>server1.localnet.example.com</code> ）</li>
 <li>リモートサーバーも接続端末もLinuxマシン
 <ul>
 <li>リモートサーバー

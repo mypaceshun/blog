@@ -13,7 +13,7 @@
       <link>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</link>
       <pubDate>Mon, 20 Oct 2025 07:44:27 +0000</pubDate>
       <guid>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</guid>
-      <description>&lt;p&gt;私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshポート転送をよく使います。&#xA;様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。&lt;/p&gt;</description>
+      <description>&lt;p&gt;私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshのTCPポート転送をよく使います。&#xA;様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
