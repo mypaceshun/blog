@@ -22,7 +22,7 @@ sshポート転送使いますか？ssh先のリモートサーバーのポー�
 単純にポート転送するだけで大体の場合は事足りますが、利用している中で苦労することがちょこちょこあり、試行錯誤していく中でSOCKSプロキシが一番使いやすいと感じました。
 その結論に至るまでの経緯と、SOCKSプロキシの使い方についてまとめます。
 
-# 前提条件
+# 前提条件 {#precondition}
 
 今回想定している環境イメージは以下のようになります。
 
@@ -47,7 +47,7 @@ sshポート転送使いますか？ssh先のリモートサーバーのポー�
 
 `ssh server1.localnet.example.com` は通るが、 `curl https://server1.localnet.example.com` は通らない環境を想定します。
 
-# 単純なsshポート転送
+# 単純なsshポート転送 {#ssh-port-forward}
 
 さて、リモートサーバーでWebアプリを開発しているとします。
 接続端末上のブラウザから画面を確認したい場合、sshポート転送の出番ですね。
@@ -78,7 +78,7 @@ ssh -f -N -L 10443:localhost:443 server1.localnet.example.com
 Linuxマシンではデフォルトで 1024未満のポートは一般ユーザーが利用できません。
 そのため443ポートを直接利用せず、10443など1024番以上のポートを利用しています。
 
-# Originが異なってしまう問題
+# Originが異なってしまう問題 {#origin-check}
 
 単純なWebアプリをポート転送する場合は上記の方法で十分ですが、最近のWebアプリではバックエンドのAPIサーバーと通信する際など、セキュリティ対策にOriginのチェックが行われることがあります。
 具体的にはアクセス時のFQDNやポート番号がチェックされ、許可されたFQDN以外での通信が拒否されます。
@@ -127,7 +127,7 @@ ssh -f -N -L 443:localhost:443 server1.localnet.example.com
 
 Webサーバー側でOriginの設定をわざわざ変更せずに済むので楽になりましたね。
 
-# サーバーが複数台ある場合
+# サーバーが複数台ある場合 {#multiple-servers}
 
 これでめでたしめでたし、と行きたいところでしたが新たな問題が出てきました。
 
@@ -142,7 +142,7 @@ Webサーバー側でOriginの設定をわざわざ変更せずに済むので�
 
 なんと面倒な。 `server1` を見て → `server2` を見て... と繰り返すととんでもない手間が発生します。
 
-# 僕が考えた最強の複数サーバー対応sshポート転送方法
+# 僕が考えた最強の複数サーバー対応sshポート転送方法 {#ssh-port-forward-multi}
 
 そこで私が思いついたのが、`127.0.0.1` 以外のアドレスを利用する方法です。
 ループバックアドレスは `127.0.0.1/8` が利用できるので、 `127.0.0.2` や `127.0.1.1` でも問題なく利用できます。
@@ -194,7 +194,7 @@ Originの問題にも当たらない理想郷が完成しました。
 
 SOCKS...??
 
-# SOCKSプロキシ
+# SOCKSプロキシ {#socks-proxy}
 
 はい、ここからが本題です。
 私が知らなかった(忘れていた)だけで、今までの要件をすべてスッキリ解決出来るのがSOCKSプロキシです。
@@ -220,7 +220,7 @@ ssh -f -N -D 1080 server1.localnet.example.com
 
 これを利用する方法をいくつか紹介します。
 
-## `curl` でSOCKSプロキシ
+## `curl` でSOCKSプロキシ {#curl-socks}
 
 `curl` をSOCKSプロキシ経由で実行する場合は以下のようになります。
 
@@ -232,7 +232,7 @@ curl --proxy socks5h://localhost:1080 https://server1.localnet.example.com
 接続端末で `/etc/hosts` を編集することなく、
 そのままリモート環境のWebサーバーにアクセス出来ます。
 
-## Google Chrome でSOCKSプロキシ
+## Google Chrome でSOCKSプロキシ {#chrome-socks}
 
 Google Chrome は起動時のオプションでSOCKSプロキシを指定出来ます。
 
@@ -243,7 +243,7 @@ google-chrome --proxy-server="socks5://localhost:1080"
 これで起動したGoogle Chromeで、 `https://server1.localnet.example.com` にアクセスすることで、
 問題なくリモート環境のWebサーバーにアクセス出来ます。
 
-## FireFox でSOCKSプロキシ
+## FireFox でSOCKSプロキシ {#firefox-socks}
 
 FireFox は設定画面からSOCKSプロキシを指定出来ます。
 
@@ -265,7 +265,7 @@ FireFox は設定画面からSOCKSプロキシを指定出来ます。
 これで `https://server1.localnet.example.com` にアクセスすることで、
 問題なくリモート環境のWebサーバーにアクセス出来ます。
 
-# まとめ
+# まとめ {#summary}
 
 長々と書きましたが結局は SOCKSプロキシ便利で最高だった！ という事が言いたいだけでした。
 私自身2年くらい前に一度SOCKSプロキシを使っていたんですが、綺麗サッパリ忘れて様々なsshポート転送の試行錯誤をしてしまいました。

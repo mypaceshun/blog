@@ -261,7 +261,7 @@
 私はリモートサーバー上で開発することが多く、特に開発中のWebアプリの動作確認なんかはsshポート転送を駆使して行います。
 単純にポート転送するだけで大体の場合は事足りますが、利用している中で苦労することがちょこちょこあり、試行錯誤していく中でSOCKSプロキシが一番使いやすいと感じました。
 その結論に至るまでの経緯と、SOCKSプロキシの使い方についてまとめます。</p>
-<h1 id="前提条件"><a class="headline-anchor" href="#前提条件"><i class="bi bi-link-45deg"></i></a>前提条件</h1>
+<h1 id="precondition"><a class="headline-anchor" href="#precondition"><i class="bi bi-link-45deg"></i></a>前提条件</h1>
 <p>今回想定している環境イメージは以下のようになります。</p>
 
 <link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/hugo-easy-gallery.css" />
@@ -297,7 +297,7 @@
 </ul>
 <p>使ってるOSのディストリビューションまではあまり関係ないと思いますが念の為。</p>
 <p><code>ssh server1.localnet.example.com</code> は通るが、 <code>curl https://server1.localnet.example.com</code> は通らない環境を想定します。</p>
-<h1 id="単純なsshポート転送"><a class="headline-anchor" href="#単純なsshポート転送"><i class="bi bi-link-45deg"></i></a>単純なsshポート転送</h1>
+<h1 id="ssh-port-forward"><a class="headline-anchor" href="#ssh-port-forward"><i class="bi bi-link-45deg"></i></a>単純なsshポート転送</h1>
 <p>さて、リモートサーバーでWebアプリを開発しているとします。
 接続端末上のブラウザから画面を確認したい場合、sshポート転送の出番ですね。</p>
 <p>以下のコマンドでリモートサーバーの443ポートをローカルの10443ポートに転送出来ます。</p>
@@ -321,7 +321,7 @@
 今回はWebサーバーなので443ポートを転送しましたが、他のポートでも同様に転送できるのでWebサーバー以外でも利用可能です。</p>
 <p>Linuxマシンではデフォルトで 1024未満のポートは一般ユーザーが利用できません。
 そのため443ポートを直接利用せず、10443など1024番以上のポートを利用しています。</p>
-<h1 id="originが異なってしまう問題"><a class="headline-anchor" href="#originが異なってしまう問題"><i class="bi bi-link-45deg"></i></a>Originが異なってしまう問題</h1>
+<h1 id="origin-check"><a class="headline-anchor" href="#origin-check"><i class="bi bi-link-45deg"></i></a>Originが異なってしまう問題</h1>
 <p>単純なWebアプリをポート転送する場合は上記の方法で十分ですが、最近のWebアプリではバックエンドのAPIサーバーと通信する際など、セキュリティ対策にOriginのチェックが行われることがあります。
 具体的にはアクセス時のFQDNやポート番号がチェックされ、許可されたFQDN以外での通信が拒否されます。
 上記のポート転送をした場合、ブラウザからは <code>https://localhost:10443</code> にアクセスしていることになるため、Originチェックに引っかかってしまいます。</p>
@@ -354,7 +354,7 @@
 </div>
 
 <p>Webサーバー側でOriginの設定をわざわざ変更せずに済むので楽になりましたね。</p>
-<h1 id="サーバーが複数台ある場合"><a class="headline-anchor" href="#サーバーが複数台ある場合"><i class="bi bi-link-45deg"></i></a>サーバーが複数台ある場合</h1>
+<h1 id="multiple-servers"><a class="headline-anchor" href="#multiple-servers"><i class="bi bi-link-45deg"></i></a>サーバーが複数台ある場合</h1>
 <p>これでめでたしめでたし、と行きたいところでしたが新たな問題が出てきました。</p>
 <p><strong>他のWebサーバーにもアクセスしたい！</strong></p>
 <p>リモート環境に <code>server1.localnet.example.com</code> の他にも、<code>server2.localnet.example.com</code> や <code>server3.localnet.example.com</code> といった複数のWebサーバーが存在していました。
@@ -365,7 +365,7 @@
 <li><code>/etc/hosts</code> を書き換える</li>
 </ol>
 <p>なんと面倒な。 <code>server1</code> を見て → <code>server2</code> を見て&hellip; と繰り返すととんでもない手間が発生します。</p>
-<h1 id="僕が考えた最強の複数サーバー対応sshポート転送方法"><a class="headline-anchor" href="#僕が考えた最強の複数サーバー対応sshポート転送方法"><i class="bi bi-link-45deg"></i></a>僕が考えた最強の複数サーバー対応sshポート転送方法</h1>
+<h1 id="ssh-port-forward-multi"><a class="headline-anchor" href="#ssh-port-forward-multi"><i class="bi bi-link-45deg"></i></a>僕が考えた最強の複数サーバー対応sshポート転送方法</h1>
 <p>そこで私が思いついたのが、<code>127.0.0.1</code> 以外のアドレスを利用する方法です。
 ループバックアドレスは <code>127.0.0.1/8</code> が利用できるので、 <code>127.0.0.2</code> や <code>127.0.1.1</code> でも問題なく利用できます。</p>
 <p><code>/etc/hosts</code> を以下のように編集します。</p>
@@ -404,7 +404,7 @@ Originの問題にも当たらない理想郷が完成しました。</p>
 <blockquote>
 <p>SOCKSプロクシーの方が簡単ではないだろうか。</p></blockquote>
 <p>SOCKS&hellip;??</p>
-<h1 id="socksプロキシ"><a class="headline-anchor" href="#socksプロキシ"><i class="bi bi-link-45deg"></i></a>SOCKSプロキシ</h1>
+<h1 id="socks-proxy"><a class="headline-anchor" href="#socks-proxy"><i class="bi bi-link-45deg"></i></a>SOCKSプロキシ</h1>
 <p>はい、ここからが本題です。
 私が知らなかった(忘れていた)だけで、今までの要件をすべてスッキリ解決出来るのがSOCKSプロキシです。</p>
 <p>OpenSSHでは <code>-D</code> オプションを利用することでSOCKSプロキシを簡単に立ち上げることが出来ます。
@@ -426,18 +426,18 @@ SOCKSプロキシを経由することで、リモート環境内への通信が
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -f -N -D 1080 server1.localnet.example.com
 </span></span></code></pre></div><p>これで <code>localhost:1080</code> がSOCKSプロキシの受け口となります。</p>
 <p>これを利用する方法をいくつか紹介します。</p>
-<h2 id="curl-でsocksプロキシ"><a class="headline-anchor" href="#curl-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a><code>curl</code> でSOCKSプロキシ</h2>
+<h2 id="curl-socks"><a class="headline-anchor" href="#curl-socks"><i class="bi bi-link-45deg"></i></a><code>curl</code> でSOCKSプロキシ</h2>
 <p><code>curl</code> をSOCKSプロキシ経由で実行する場合は以下のようになります。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>curl --proxy socks5h://localhost:1080 https://server1.localnet.example.com
 </span></span></code></pre></div><p><code>socks5h</code> とすることで名前解決もSOCKSプロキシ先で行われるため、
 接続端末で <code>/etc/hosts</code> を編集することなく、
 そのままリモート環境のWebサーバーにアクセス出来ます。</p>
-<h2 id="google-chrome-でsocksプロキシ"><a class="headline-anchor" href="#google-chrome-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a>Google Chrome でSOCKSプロキシ</h2>
+<h2 id="chrome-socks"><a class="headline-anchor" href="#chrome-socks"><i class="bi bi-link-45deg"></i></a>Google Chrome でSOCKSプロキシ</h2>
 <p>Google Chrome は起動時のオプションでSOCKSプロキシを指定出来ます。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>google-chrome --proxy-server=&#34;socks5://localhost:1080&#34;
 </span></span></code></pre></div><p>これで起動したGoogle Chromeで、 <code>https://server1.localnet.example.com</code> にアクセスすることで、
 問題なくリモート環境のWebサーバーにアクセス出来ます。</p>
-<h2 id="firefox-でsocksプロキシ"><a class="headline-anchor" href="#firefox-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a>FireFox でSOCKSプロキシ</h2>
+<h2 id="firefox-socks"><a class="headline-anchor" href="#firefox-socks"><i class="bi bi-link-45deg"></i></a>FireFox でSOCKSプロキシ</h2>
 <p>FireFox は設定画面からSOCKSプロキシを指定出来ます。</p>
 <p>設定画面内、ネットワーク設定から接続設定をクリック。</p>
 
@@ -466,7 +466,7 @@ SOCKSプロキシを経由することで、リモート環境内への通信が
 
 <p>これで <code>https://server1.localnet.example.com</code> にアクセスすることで、
 問題なくリモート環境のWebサーバーにアクセス出来ます。</p>
-<h1 id="まとめ"><a class="headline-anchor" href="#まとめ"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
+<h1 id="summary"><a class="headline-anchor" href="#summary"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
 <p>長々と書きましたが結局は SOCKSプロキシ便利で最高だった！ という事が言いたいだけでした。
 私自身2年くらい前に一度SOCKSプロキシを使っていたんですが、綺麗サッパリ忘れて様々なsshポート転送の試行錯誤をしてしまいました。
 この記事を書いたことで2年後の私もSOCKSプロキシを利用して快適な開発ライフを送っていることを願っています。</p>
