@@ -1,7 +1,7 @@
 ---
-title: "SOCKSプロキシ"
+title: SOCKSプロキシ
 date: 2025-10-20T07:44:27Z
-description: this is description
+description: SOCKSプロキシが便利だったので簡単な使い方と、それにたどり着くまでの経緯をまとめました。
 draft: false
 
 tags:
