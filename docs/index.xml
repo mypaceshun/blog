@@ -6,8 +6,15 @@
     <description>Recent content on mypaceshun blog</description>
     <generator>Hugo</generator>
     <language>ja-JP</language>
-    <lastBuildDate>Mon, 12 May 2025 06:56:50 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 20 Oct 2025 07:44:27 +0000</lastBuildDate>
     <atom:link href="https://mypaceshun.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SOCKSプロキシ</title>
+      <link>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</link>
+      <pubDate>Mon, 20 Oct 2025 07:44:27 +0000</pubDate>
+      <guid>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</guid>
+      <description>&lt;p&gt;私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshポート転送をよく使います。&#xA;様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>unshareコマンドでユーザー名前空間を作成してみる</title>
       <link>https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/</link>

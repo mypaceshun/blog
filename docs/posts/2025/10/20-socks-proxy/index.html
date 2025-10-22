@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>SOCKSプロキシ - mypaceshun blog</title>
+  <meta name="description" content="this is description"><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "mypaceshun blog",
+    
+    "url": "https:\/\/mypaceshun.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/mypaceshun.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/10\/20-socks-proxy\/",
+          "name": "Socksプロキシ"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "KAWAI Shun"
+  },
+  "headline": "SOCKSプロキシ",
+  "description" : "this is description",
+  "inLanguage" : "en",
+  "wordCount":  296 ,
+  "datePublished" : "2025-10-20T07:44:27\u002b00:00",
+  "dateModified" : "2025-10-20T07:44:27\u002b00:00",
+  "image" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+  "keywords" : [ "tech, ssh, SOCKS" ],
+  "mainEntityOfPage" : "https:\/\/mypaceshun.github.io\/blog\/posts\/2025\/10\/20-socks-proxy\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/mypaceshun.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/mypaceshun.github.io\/blog\/images\/mypaceshun.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="SOCKSプロキシ" />
+<meta property="og:description" content="this is description">
+<meta property="og:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+<meta property="og:url" content="https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="mypaceshun blog" />
+
+  <meta name="twitter:title" content="SOCKSプロキシ" />
+  <meta name="twitter:description" content="this is description">
+  <meta name="twitter:image" content="https://mypaceshun.github.io/blog/images/mypaceshun.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@rikanodorei_823" />
+  <meta name="twitter:creator" content="@rikanodorei_823" />
+  <link href='https://mypaceshun.github.io/blog/images/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.145.0">
+  <link rel="alternate" href="https://mypaceshun.github.io/blog/index.xml" type="application/rss+xml" title="mypaceshun blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-G00JGTHDLH"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-G00JGTHDLH');
+        }
+      </script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="about me" href="https://mypaceshun.github.io/blog/page/about/">about me</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="mypaceshun blog" href="https://mypaceshun.github.io/blog/">
+            <img class="avatar-img" src="https://mypaceshun.github.io/blog/images/mypaceshun.png" alt="mypaceshun blog" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>SOCKSプロキシ</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshポート転送をよく使います。
+様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。</p>
+<h1 id="introduction"><a class="headline-anchor" href="#introduction"><i class="bi bi-link-45deg"></i></a>はじめに</h1>
+<p>sshポート転送使いますか？ssh先のリモートサーバーのポートをローカルに転送したり、またその逆も出来ます。
+私はリモートサーバー上で開発することが多く、特に開発中のWebアプリの動作確認なんかはsshポート転送を駆使して行います。
+単純にポート転送するだけで大体の場合は事足りますが、利用している中で苦労することがちょこちょこあり、試行錯誤していく中でSOCKSプロキシが一番使いやすいと感じました。
+その結論に至るまでの経緯と、SOCKSプロキシの使い方についてまとめます。</p>
+<h1 id="前提条件"><a class="headline-anchor" href="#前提条件"><i class="bi bi-link-45deg"></i></a>前提条件</h1>
+<p>今回想定している環境イメージは以下のようになります。</p>
+
+<link rel="stylesheet" href="https://mypaceshun.github.io/blog/css/hugo-easy-gallery.css" />
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/ssh-to-localnet.png" alt="今回想定する環境イメージ"/>
+    </div>
+    <a href="images/ssh-to-localnet.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>と言っても実際に私が開発している環境がこのような構成になっています。</p>
+<ul>
+<li>リモートサーバーへはsshでのみアクセス可能</li>
+<li>リモートサーバー同士の通信は可能</li>
+<li>リモート環境にはDNSサーバーもあり、リモート環境内で名前解決可能なFQDNが存在する（例: <code>server1.localnet.example.com</code> ）</li>
+<li>リモートサーバーも接続端末もLinuxマシン
+<ul>
+<li>リモートサーバー
+<ul>
+<li>OS: AlmaLinuxを想定</li>
+<li>例としてFQDNは <code>server1.localnet.example.com</code> とします</li>
+</ul>
+</li>
+<li>接続端末
+<ul>
+<li>OS: Ubuntuを想定</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>使ってるOSのディストリビューションまではあまり関係ないと思いますが念の為。</p>
+<p><code>ssh server1.localnet.example.com</code> は通るが、 <code>curl https://server1.localnet.example.com</code> は通らない環境を想定します。</p>
+<h1 id="単純なsshポート転送"><a class="headline-anchor" href="#単純なsshポート転送"><i class="bi bi-link-45deg"></i></a>単純なsshポート転送</h1>
+<p>さて、リモートサーバーでWebアプリを開発しているとします。
+接続端末上のブラウザから画面を確認したい場合、sshポート転送の出番ですね。</p>
+<p>以下のコマンドでリモートサーバーの443ポートをローカルの10443ポートに転送出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -L 10443:localhost:443 server1.localnet.example.com
+</span></span></code></pre></div><p>このまま実行すると <code>server1.localnet.example.com</code> にsshログインし、リモートサーバーのシェルが立ち上がってしまうので、
+私が実際に実行する際は <code>-f -N</code> オプションを合わせてつけて以下のようにします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -f -N -L 10443:localhost:443 server1.localnet.example.com
+</span></span></code></pre></div><p>これによりリモートサーバーのシェルを起動することなく、バックグラウンドでポート転送だけが行われます。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/ssh-port-forward-10443.png" alt="単純なsshポート転送"/>
+    </div>
+    <a href="images/ssh-port-forward-10443.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>この状態で接続端末上のブラウザから <code>https://localhost:10443</code> にアクセスすると、リモートサーバー上のWebアプリにアクセス出来ます。
+今回はWebサーバーなので443ポートを転送しましたが、他のポートでも同様に転送できるのでWebサーバー以外でも利用可能です。</p>
+<p>Linuxマシンではデフォルトで 1024未満のポートは一般ユーザーが利用できません。
+そのため443ポートを直接利用せず、10443など1024番以上のポートを利用しています。</p>
+<h1 id="originが異なってしまう問題"><a class="headline-anchor" href="#originが異なってしまう問題"><i class="bi bi-link-45deg"></i></a>Originが異なってしまう問題</h1>
+<p>単純なWebアプリをポート転送する場合は上記の方法で十分ですが、最近のWebアプリではバックエンドのAPIサーバーと通信する際など、セキュリティ対策にOriginのチェックが行われることがあります。
+具体的にはアクセス時のFQDNやポート番号がチェックされ、許可されたFQDN以外での通信が拒否されます。
+上記のポート転送をした場合、ブラウザからは <code>https://localhost:10443</code> にアクセスしていることになるため、Originチェックに引っかかってしまいます。</p>
+<p>解決策としてLinuxマシンでは <code>/etc/hosts</code> ファイルを編集し、 <code>server1.localnet.example.com</code> が <code>127.0.0.1</code> に解決されるようにします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>127.0.0.1    localhost
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>127.0.0.1    server1.localnet.example.com
+</span></span></code></pre></div><p>このとき <code>ssh server1.localnet.example.com</code> も <code>127.0.0.1</code> に解決されてしまうので、 <code>~/.ssh/config</code> ファイルに直接IPアドレスを指定するようにしてください。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Host server1.localnet.example.com
+</span></span><span style="display:flex;"><span>    HostName &lt;リモートサーバーの実IPアドレス&gt;
+</span></span></code></pre></div><p>これで <code>https://server1.localnet.example.com:10443</code> にアクセスして、リモートサーバー上のWebアプリにアクセス出来ます。
+ただ、まだポート番号が10443のままなので、Originチェックに引っかかる可能性があります。</p>
+<p>その場合は以下のコマンドを実行してください。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>sudo sysctl -w net.ipv4.ip_unprivileged_port_start=443
+</span></span></code></pre></div><p>利用可能なポートを1024番以上から443番以上に変更します。
+443番以上のすべてのポートが一般ユーザーに利用可能になるので、変更は慎重に行ってください。</p>
+<p>これで443ポートでポート転送が利用可能になりました。
+以下のコマンドを実行することでリモートサーバーの443ポートをローカルの443ポートに転送出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -f -N -L 443:localhost:443 server1.localnet.example.com
+</span></span></code></pre></div><p>これで接続端末上のブラウザからは、 <code>https://server1.localnet.example.com</code> でリモートサーバー上のWebアプリにアクセス出来るようになりました。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/ssh-port-forward-443.png" alt="443ポートを直接sshポート転送"/>
+    </div>
+    <a href="images/ssh-port-forward-443.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>Webサーバー側でOriginの設定をわざわざ変更せずに済むので楽になりましたね。</p>
+<h1 id="サーバーが複数台ある場合"><a class="headline-anchor" href="#サーバーが複数台ある場合"><i class="bi bi-link-45deg"></i></a>サーバーが複数台ある場合</h1>
+<p>これでめでたしめでたし、と行きたいところでしたが新たな問題が出てきました。</p>
+<p><strong>他のWebサーバーにもアクセスしたい！</strong></p>
+<p>リモート環境に <code>server1.localnet.example.com</code> の他にも、<code>server2.localnet.example.com</code> や <code>server3.localnet.example.com</code> といった複数のWebサーバーが存在していました。
+これらを閲覧したいとなった時に、以下の手順が必要になります</p>
+<ol>
+<li>既存のsshポート転送を停止する</li>
+<li>他のサーバー(<code>server2.localnet.example.com</code>など)に対して、sshポート転送を設定する</li>
+<li><code>/etc/hosts</code> を書き換える</li>
+</ol>
+<p>なんと面倒な。 <code>server1</code> を見て → <code>server2</code> を見て&hellip; と繰り返すととんでもない手間が発生します。</p>
+<h1 id="僕が考えた最強の複数サーバー対応sshポート転送方法"><a class="headline-anchor" href="#僕が考えた最強の複数サーバー対応sshポート転送方法"><i class="bi bi-link-45deg"></i></a>僕が考えた最強の複数サーバー対応sshポート転送方法</h1>
+<p>そこで私が思いついたのが、<code>127.0.0.1</code> 以外のアドレスを利用する方法です。
+ループバックアドレスは <code>127.0.0.1/8</code> が利用できるので、 <code>127.0.0.2</code> や <code>127.0.1.1</code> でも問題なく利用できます。</p>
+<p><code>/etc/hosts</code> を以下のように編集します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>127.0.0.1   localhost
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>127.0.1.1   server1.localnet.example.com
+</span></span><span style="display:flex;"><span>127.0.1.2   server2.localnet.example.com
+</span></span><span style="display:flex;"><span>127.0.1.3   server3.localnet.example.com
+</span></span></code></pre></div><p>前回同様 <code>ssh server1.localnet.example.com</code> も <code>127.0.1.1</code> に解決されてしまうので、 <code>~/.ssh/config</code> ファイルに直接IPアドレスを指定するようにしてください。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Host server1.localnet.example.com
+</span></span><span style="display:flex;"><span>    HostName &lt;server1.localnet.example.comの実IPアドレス&gt;
+</span></span><span style="display:flex;"><span>Host server2.localnet.example.com
+</span></span><span style="display:flex;"><span>    HostName &lt;server2.localnet.example.comの実IPアドレス&gt;
+</span></span><span style="display:flex;"><span>Host server3.localnet.example.com
+</span></span><span style="display:flex;"><span>    HostName &lt;server3.localnet.example.comの実IPアドレス&gt;
+</span></span></code></pre></div><p>この状態でsshのポート転送を実行します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -f -N -L server1.localnet.example.com:443:localhost:443 server1.localnet.example.com
+</span></span><span style="display:flex;"><span>ssh -f -N -L server2.localnet.example.com:443:localhost:443 server2.localnet.example.com
+</span></span><span style="display:flex;"><span>ssh -f -N -L server3.localnet.example.com:443:localhost:443 server3.localnet.example.com
+</span></span></code></pre></div><p>これは <code>server1.localnet.example.com</code> の443ポートをローカルの <code>server1.localnet.example.com(127.0.1.1)</code> の443ポートに転送しています。 <code>127.0.1.1</code> のアドレスにバインドすると、 <code>localhost(127.0.0.1)</code> ではなく、 <code>server1.localnet.example.com(127.0.1.1)</code> にアクセスする必要がある点がポイントです。</p>
+<p>これでブラウザからは <code>https://server1.localnet.example.com</code> 、 <code>https://server2.localnet.example.com</code> 、 <code>https://server3.localnet.example.com</code> とアクセスすることで、複数のWebサーバーに同時にアクセス出来るようになります。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/ssh-port-forward-multi.png" alt="複数サーバーのsshポート転送"/>
+    </div>
+    <a href="images/ssh-port-forward-multi.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>ついに複数サーバーでも問題なくアクセス出来て、
+Originの問題にも当たらない理想郷が完成しました。</p>
+<p>ウキウキで社内に共有したところ先輩から一言。</p>
+<blockquote>
+<p>SOCKSプロクシーの方が簡単ではないだろうか。</p></blockquote>
+<p>SOCKS&hellip;??</p>
+<h1 id="socksプロキシ"><a class="headline-anchor" href="#socksプロキシ"><i class="bi bi-link-45deg"></i></a>SOCKSプロキシ</h1>
+<p>はい、ここからが本題です。
+私が知らなかった(忘れていた)だけで、今までの要件をすべてスッキリ解決出来るのがSOCKSプロキシです。</p>
+<p>OpenSSHでは <code>-D</code> オプションを利用することでSOCKSプロキシを簡単に立ち上げることが出来ます。
+SOCKSプロキシを経由することで、リモート環境内への通信が可能になります。
+クライアントもSOCKSプロキシに対応している必要がありますが、私がよく使う FireFox、Google Chrome、curl などは対応していたので特に困ることはありませんでした。</p>
+<p>また設定によっては名前解決もプロキシ先で行えるので、今までやっていた <code>/etc/hosts</code> の編集もすべて不要になります。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/socks-proxy.png" alt="SOCKSプロキシのイメージ"/>
+    </div>
+    <a href="images/socks-proxy.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>以下のコマンドでSOCKSプロキシを立ち上げます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>ssh -f -N -D 1080 server1.localnet.example.com
+</span></span></code></pre></div><p>これで <code>localhost:1080</code> がSOCKSプロキシの受け口となります。</p>
+<p>これを利用する方法をいくつか紹介します。</p>
+<h2 id="curl-でsocksプロキシ"><a class="headline-anchor" href="#curl-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a><code>curl</code> でSOCKSプロキシ</h2>
+<p><code>curl</code> をSOCKSプロキシ経由で実行する場合は以下のようになります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>curl --proxy socks5h://localhost:1080 https://server1.localnet.example.com
+</span></span></code></pre></div><p><code>socks5h</code> とすることで名前解決もSOCKSプロキシ先で行われるため、
+接続端末で <code>/etc/hosts</code> を編集することなく、
+そのままリモート環境のWebサーバーにアクセス出来ます。</p>
+<h2 id="google-chrome-でsocksプロキシ"><a class="headline-anchor" href="#google-chrome-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a>Google Chrome でSOCKSプロキシ</h2>
+<p>Google Chrome は起動時のオプションでSOCKSプロキシを指定出来ます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>google-chrome --proxy-server=&#34;socks5://localhost:1080&#34;
+</span></span></code></pre></div><p>これで起動したGoogle Chromeで、 <code>https://server1.localnet.example.com</code> にアクセスすることで、
+問題なくリモート環境のWebサーバーにアクセス出来ます。</p>
+<h2 id="firefox-でsocksプロキシ"><a class="headline-anchor" href="#firefox-でsocksプロキシ"><i class="bi bi-link-45deg"></i></a>FireFox でSOCKSプロキシ</h2>
+<p>FireFox は設定画面からSOCKSプロキシを指定出来ます。</p>
+<p>設定画面内、ネットワーク設定から接続設定をクリック。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/firefox-socks-1.png" alt="FireFoxの接続設定画面"/>
+    </div>
+    <a href="images/firefox-socks-1.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>手動でプロキシーを設定するを選択し、SOCKSホストに <code>localhost</code> 、ポートに <code>1080</code> を指定します。
+このとき <code>SOCKS v5</code> を選択し、 SOCKS v5 を使用するときはDNSもプロキシーを使用する にチェックを入れてください。</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="images/firefox-socks-2.png" alt="FireFoxのプロキシ設定画面"/>
+    </div>
+    <a href="images/firefox-socks-2.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>これで <code>https://server1.localnet.example.com</code> にアクセスすることで、
+問題なくリモート環境のWebサーバーにアクセス出来ます。</p>
+<h1 id="まとめ"><a class="headline-anchor" href="#まとめ"><i class="bi bi-link-45deg"></i></a>まとめ</h1>
+<p>長々と書きましたが結局は SOCKSプロキシ便利で最高だった！ という事が言いたいだけでした。
+私自身2年くらい前に一度SOCKSプロキシを使っていたんですが、綺麗サッパリ忘れて様々なsshポート転送の試行錯誤をしてしまいました。
+この記事を書いたことで2年後の私もSOCKSプロキシを利用して快適な開発ライフを送っていることを願っています。</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/tech/">tech</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/ssh/">ssh</a>&nbsp;
+            
+              
+              <a href="https://mypaceshun.github.io/blog/tags/socks/">SOCKS</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f&amp;text=SOCKS%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7&amp;via=rikanodorei_823" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f&amp;title=SOCKS%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f&amp;title=SOCKS%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f&amp;title=SOCKS%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fmypaceshun.github.io%2fblog%2fposts%2f2025%2f10%2f20-socks-proxy%2f&amp;description=SOCKS%e3%83%97%e3%83%ad%e3%82%ad%e3%82%b7" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://mypaceshun.github.io/blog/posts/2025/05/12-unshare/" data-toggle="tooltip" data-placement="top" title="unshareコマンドでユーザー名前空間を作成してみる">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-mypaceshun-github-io-blog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="https://github.com/mypaceshun" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://twitter.com/rikanodorei_823" title="Twitter">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-x-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.instagram.com/rikanodorei" title="Instagram">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.youtube.com/@rikanodorei" title="Youtube">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://mypaceshun.github.io">KAWAI Shun</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://mypaceshun.github.io/blog/">mypaceshun blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.145.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://mypaceshun.github.io/blog/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://mypaceshun.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

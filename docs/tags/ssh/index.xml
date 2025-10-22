@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ssh on mypaceshun blog</title>
+    <link>https://mypaceshun.github.io/blog/tags/ssh/</link>
+    <description>Recent content in Ssh on mypaceshun blog</description>
+    <generator>Hugo</generator>
+    <language>ja-JP</language>
+    <lastBuildDate>Mon, 20 Oct 2025 07:44:27 +0000</lastBuildDate>
+    <atom:link href="https://mypaceshun.github.io/blog/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SOCKSプロキシ</title>
+      <link>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</link>
+      <pubDate>Mon, 20 Oct 2025 07:44:27 +0000</pubDate>
+      <guid>https://mypaceshun.github.io/blog/posts/2025/10/20-socks-proxy/</guid>
+      <description>&lt;p&gt;私はWebアプリを開発することがあり、Webアプリの動作確認のためにsshポート転送をよく使います。&#xA;様々な試行錯誤を経て、SOCKSプロキシが一番使いやすいと感じました。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
